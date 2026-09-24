@@ -60,6 +60,15 @@ LIST_URL_FULL = LIST_URL + "&size=50"   # default page is 20 rows; revisions can
 LIST_HDR = ["Accept: */*",
             "Referer: https://www.nseindia.com/companies-listing/corporate-filings-financial-results"]
 N_QUARTERS = 6
+# NSE carries no results for these: they are BSE-listed and only "permitted to
+# trade" on NSE. api.bseindia.com answered Akamai 403 "Access Denied" to every
+# request on 2026-09-25 (suggest, AnnSubCategoryGetData), so they stay open.
+KNOWN_GAPS = {
+    "ABBOTINDIA": "files results with BSE only (scrip 500488); api.bseindia.com refused (403) 2026-09-25",
+    "BAYERCROP": "files results with BSE only (scrip 506285); api.bseindia.com refused (403) 2026-09-25",
+    "MCX": "files results with BSE only (scrip 534091); api.bseindia.com refused (403) 2026-09-25",
+    "DUMMYHEG": "Nifty 500 placeholder symbol (HEG demerger) - no filings exist",
+}
 TODAY = date.today()
 
 
@@ -724,6 +733,52 @@ def build(sym, lj, alpha_rows, log):
     return out, {"flags": flags, "alpha_diff": cmp_, "gate_eps": gate_eps}
 
 
+# ------------------------------------------------- Ind AS 117 supplement
+
+MANUAL_117 = HERE / "nseresults" / "manual_indas117.json"
+
+
+def indas117_block(sym):
+    """Q1 FY27 figures filed only as a PDF under Ind AS 117 (STARHEALTH, NIVABUPA).
+
+    Kept OUT of the IGAAP-format quarter series on purpose: the bases differ
+    (e.g. NIVABUPA Q4 FY26 PAT is 345.13 cr IGAAP vs 159.36 cr Ind AS 117).
+    Values are the filed Rs-lakh figures, transcribed from the PDF table images
+    (pipeline/nseresults/manual_indas117.json), gate-checked here.
+    """
+    if not MANUAL_117.exists():
+        return None, []
+    m = json.loads(MANUAL_117.read_text()).get(sym)
+    if not m:
+        return None, []
+    flags, qs = [], []
+    for i, per in enumerate(m["periods"]):
+        cr = lambda k: None if m[k][i] is None else round(m[k][i] / 100, 2)   # lakhs -> crore
+        shares = m["share_capital"][i] * 1e5 / m["face_value"]
+        rec = {"period": per, "insurance_revenue": cr("insurance_revenue"), "pbt": cr("pbt"),
+               "pat": cr("pat"), "pat_owners": cr("pat"), "eps": m["eps_basic"][i],
+               "eps_diluted": m["eps_diluted"][i], "gwp": cr("gwp"),
+               "total_equity_cr": cr("total_equity"), "shares": round(shares)}
+        if per != "FY26":
+            d = date.fromisoformat(per)
+            rec["q"], rec["d"] = qlabel(d)
+        implied = rec["eps"] * shares / 1e7
+        if rec["pat"] and abs(implied - rec["pat"]) > max(0.05 * abs(rec["pat"]), 0.0051 * shares / 1e7):
+            flags.append(f"Ind AS 117 {per}: EPS {rec['eps']} x {shares / 1e7:.3f} cr sh = {implied:.1f} "
+                         f"vs PAT {rec['pat']}")
+        qs.append(rec)
+    latest = qs[0]
+    block = {"basis": ("Ind AS 117 (IRDAI circular IRDAI/F&I/CIR/MISC/92/7/2026, 8-Jul-2026); "
+                       "filed only as a PDF - no XBRL on NSE; transcribed from the table images; "
+                       "NOT comparable with the IGAAP-format quarters in `quarters`"),
+             "src": m["src"], "pages": m["pages"], "announced": m["announced"], "scope": m["scope"],
+             "rev_basis": "insurance revenue (Ind AS 117)",
+             "latest": latest, "comparatives": qs[1:],
+             "bvps_2026_06_30": round(latest["total_equity_cr"] * 1e7 / latest["shares"], 2),
+             "flags": flags}
+    return block, flags
+
+
 # ------------------------------------------------------------ cross-check
 
 def crosscheck(n, seed, log):
@@ -827,8 +882,14 @@ def main():
                 failed[s] = f"build error: {exc!r}"
                 continue
             if res is None:
-                failed[s] = "; ".join(info)
+                failed[s] = KNOWN_GAPS.get(s) or "; ".join(info)
                 continue
+            ia, ia_flags = indas117_block(s)
+            if ia:
+                res["ind_as117"] = ia
+                res["notes"].append(f"{ia['latest']['q']} filed only under Ind AS 117 (PDF): see "
+                                    "`ind_as117`; `quarters` stays on the IGAAP-format series")
+                info["flags"] = info["flags"] + ia_flags
             (OUT / f"{s}.json").write_text(json.dumps(res, indent=1, ensure_ascii=False))
             done.append(s)
             report.setdefault("companies", {})[s] = {"group": gname, **info,

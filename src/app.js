@@ -471,7 +471,7 @@ function viewUniverse() {
     <div style="display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end;min-width:200px"><label for="uq" class="vh">Filter companies</label><input id="uq" class="field" type="search" placeholder="Filter by name or symbol" value="${esc(S.uQ)}" style="flex:1;max-width:280px;min-width:0">
     <label for="uSortSel" class="vh">Sort</label><select id="uSortSel" class="field pm2" data-sortsel="u">${[['m', 'Market cap'], ['q', 'QTD'], ['pr', 'Promoter %'], ['fi', 'FII %'], ['di', 'DII %'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.uSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></div></div>
     <div id="uBody">${uBody()}</div>
-  </section>${footer('holdermap database (' + U.length + ' companies) · NSE shareholding XBRL, latest filing per company · NSE bhavcopy close of ' + dfmt(NOW.d) + ', refreshed every trading day. QTD is from the ' + dfmt(LP ? LP.qbase : '2026-06-30') + ' close. Promoter 0.00 = no promoter group, as at HDFC Bank, ICICI Bank, ITC and L&amp;T.')}`;
+  </section>${footer('holdermap database (' + U.length + ' companies) · NSE shareholding XBRL, latest filing per company · NSE bhavcopy close of ' + dfmt(LP ? LP.asof : NOW ? NOW.d : '2026-09-23') + ', refreshed every trading day. QTD is from the ' + dfmt(LP ? LP.qbase : '2026-06-30') + ' close. Promoter 0.00 = no promoter group, as at HDFC Bank, ICICI Bank, ITC and L&amp;T.')}`;
 }
 function uBody() {
   const L = uList(), shown = L.slice(0, S.uN);
