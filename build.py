@@ -1,7 +1,10 @@
 """Assemble the dashboard from src/ into dashboard/site (for S3/CloudFront) and dashboard/standalone.html.
 
     python3 pipeline/export.py   # optional: rebuild src/data.json from pipeline/inputs
+    python3 pipeline/live.py     # optional: latest NSE closes -> dashboard/site/prices.js
     python3 build.py
+
+Without prices.js the page shows the snapshot's own prices from data.json.
 """
 import re
 from pathlib import Path
@@ -21,6 +24,11 @@ links = "\n".join(re.findall(r"<link[^>]+>", head))
 (site / "app.css").write_text(css)
 (site / "app.js").write_text(js)
 (site / "data.js").write_text("window.__HM__ = " + data + ";\n")
+prices = site / "prices.js"
+if not prices.exists():
+    prices.write_text("window.__PX__ = null;\n")
+px = prices.read_text()
+assert "</script" not in px
 (site / "index.html").write_text(f"""<!doctype html>
 <html lang="en">
 <head>
@@ -35,10 +43,11 @@ links = "\n".join(re.findall(r"<link[^>]+>", head))
 <body>
 {body}
 <script src="data.js"></script>
+<script src="prices.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
 """)
 (ROOT / "dashboard" / "standalone.html").write_text(
-    head + "\n" + body + "\n<script>window.__HM__=" + data + ";</script>\n<script>\n" + js + "</script>\n")
+    head + "\n" + body + "\n<script>window.__HM__=" + data + ";</script>\n<script>" + px + "</script>\n<script>\n" + js + "</script>\n")
 print("built", site, "and dashboard/standalone.html")

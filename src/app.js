@@ -40,6 +40,28 @@ const S = {
 const ROUTES = ['universe', 'watchlist', 'overview', 'holders', 'flows', 'evidence'];
 const ALIAS = { fii: ['holders', 'fii'], dii: ['holders', 'dii'], individuals: ['holders', 'ind'], buyers: ['flows'], sellers: ['flows'] };
 
+/* ---------- live prices ---------- */
+// prices.js (window.__PX__) is written at deploy time by pipeline/live.py from NSE's daily files.
+// Without it (a plain local build) the page uses the snapshot's own prices in data.js.
+const LP = window.__PX__ || null;
+if (LP) {
+  D.px_series = LP.series; D.w52 = LP.w52;
+  D.univ.forEach(u => { const x = LP.univ[u.s]; if (x) { u.p = x[0]; u.q = x[1]; u.m = x[2]; } });
+  D.univ.sort((a, b) => b.m - a.m);
+}
+const LASTR = D.px_series[D.px_series.length - 1], PREVR = D.px_series[D.px_series.length - 2];
+const NOW = LP ? LP.now : { d: LASTR[0], c: LASTR[1], prev: PREVR[1], n50: D.bench.nifty50[LASTR[0]], n500: D.bench.nifty500[LASTR[0]] };
+const OQ = LP ? LP.oq : { d: NOW.d, c: NOW.c };  // close behind the open quarter's "to date" values
+const OQP = D.prices[D.prices.length - 1], QE = D.prices[D.prices.length - 2];  // open quarter · last quarter-end
+if (LP) { OQP.d = OQ.d; OQP.c = OQ.raw; OQP.a = OQ.c; OQP.note = OQ.open ? 'quarter still open on ' + OQ.d + '; latest close used' : ''; }
+D.px[D.px.length - 1] = OQ.c;
+['buy', 'sell', 'all'].forEach(k => D.flows.B[k].forEach(o => { o.v = o.d * OQ.c / 1e7; }));
+const BVPS = 60.1, DPS = 6.5;  // Mar-26 book value per share; trailing DPS, bonus-adjusted
+const TTM = D.earn.pat.slice(-4), TTMP = Math.round(TTM.reduce((a, b) => a + b, 0) * 100) / 100 + 1e-9;
+const MCAP = D.tot * NOW.c / 1e7;
+const Y1 = (+NOW.d.slice(0, 4) - 1) + NOW.d.slice(4);
+const sdate = s => { const p = s.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; };
+
 /* ---------- derived data ---------- */
 const T = D.trend, TOT = D.tot, FF = D.ff, PX = D.px, HQ = D.hq;
 T.forEach(t => { t.orest = t.oth - t.bc - t.nri; });
@@ -106,8 +128,8 @@ const PRICES = [956.1, 1079.85, 1413.4, 1556.2, 1517.7, 1976.7, 2073.7, 2204.2, 
 const PRL = ['28 Mar 25', '30 Jun 25', '30 Sep 25', '31 Dec 25', '30 Mar 26', '30 Jun 26', '31 Jul 26', '31 Aug 26', '23 Sep 26'];
 function companyHeader() {
   const w = S.watch.includes('ANANDRATHI');
-  const stats = [['Market cap', cu(36018, 0, '₹', ' cr'), '+9.7% since 30 Jun', 'overview'], ['P/E (TTM)', '77.2×', 'TTM PAT ₹466.5 cr', 'overview'], ['P/B', '36.1×', 'BVPS ₹60.1', 'overview'], ['Dividend yield', '0.30%', 'FY26 DPS ₹6.50 adj.', 'overview'], ['ROE', '46.7%', 'FY26, company-reported', 'overview'], ['Free float', '58.63%', 'Jun-26 filing', 'holders'], ['Shareholders', cu(80729), '+24.3% QoQ', 'overview']];
-  const W5 = D.w52, lo = W5.lo, hi = W5.hi, pos = (2169.2 - lo) / (hi - lo) * 100;
+  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), sgn(100 * (NOW.c / QE.a - 1), 1, '%') + ' since ' + sdate(QE.d), 'overview'], ['P/E (TTM)', (MCAP / TTMP).toFixed(1) + '×', 'TTM PAT ₹' + fin(TTMP, 1) + ' cr', 'overview'], ['P/B', (NOW.c / BVPS).toFixed(1) + '×', 'BVPS ₹' + BVPS.toFixed(1), 'overview'], ['Dividend yield', (100 * DPS / NOW.c).toFixed(2) + '%', 'FY26 DPS ₹' + DPS.toFixed(2) + ' adj.', 'overview'], ['ROE', '46.7%', 'FY26, company-reported', 'overview'], ['Free float', '58.63%', 'Jun-26 filing', 'holders'], ['Shareholders', cu(80729), '+24.3% QoQ', 'overview']];
+  const W5 = D.w52, lo = W5.lo, hi = W5.hi, pos = Math.max(0, Math.min(100, (NOW.c - lo) / (hi - lo) * 100));
   const tabs = [['overview', 'Overview'], ['holders', 'Shareholding'], ['flows', 'Buyers &amp; sellers'], ['evidence', 'Evidence &amp; gates']];
   const sparkPts = PRICES.map((p, i) => ({ p, l: PRL[i] }));
   return `<section class="co" aria-label="Company summary"><div class="wrap">
@@ -119,11 +141,11 @@ function companyHeader() {
     </div>
     <div class="px">
       <div class="pxs"><small>Daily close, 1 year, bonus-adjusted</small><div class="chart" data-c="price" style="width:200px;height:44px"></div></div>
-      <div class="pxv"><span class="big">₹${cu(2169.2, 2)}</span><span class="chg dn">−9.80 (−0.45%)</span><small>NSE close · 23 Sep 2026</small></div>
+      <div class="pxv"><span class="big">₹${cu(NOW.c, 2)}</span><span class="chg ${cl(NOW.c - NOW.prev)}">${sgn(NOW.c - NOW.prev, 2)} (${sgn(100 * (NOW.c / NOW.prev - 1), 2, '%')})</span><small>NSE close · ${dfmt(NOW.d)}</small></div>
     </div>
   </div>
   <div class="stats">${stats.map(s => `<a class="stat" href="#${s[3]}"><span class="lbl">${s[0]}</span><span class="v">${s[1]}</span><span class="s">${s[2]}</span></a>`).join('')}
-    <div class="stat"><span class="lbl">52-week range</span><div class="range" data-tip="<b>52-week range (intraday)</b><br>Low ₹${fin(lo, 2)} · ${dfmt(W5.lod)}<br>High ₹${fin(hi, 2)} · ${dfmt(W5.hid)}<br>Now ₹2,169.20<br>NSE daily data, bonus-adjusted"><i style="width:${pos.toFixed(1)}%"></i><b style="left:${pos.toFixed(1)}%"></b></div><span class="s num" style="display:flex;justify-content:space-between;width:180px"><span>${fin(lo, 0)}</span><span>${fin(hi, 0)}</span></span></div>
+    <div class="stat"><span class="lbl">52-week range</span><div class="range" data-tip="<b>52-week range (intraday)</b><br>Low ₹${fin(lo, 2)} · ${dfmt(W5.lod)}<br>High ₹${fin(hi, 2)} · ${dfmt(W5.hid)}<br>Now ₹${fin(NOW.c, 2)}<br>NSE daily data, bonus-adjusted"><i style="width:${pos.toFixed(1)}%"></i><b style="left:${pos.toFixed(1)}%"></b></div><span class="s num" style="display:flex;justify-content:space-between;width:180px"><span>${fin(lo, 0)}</span><span>${fin(hi, 0)}</span></span></div>
   </div>
   <nav class="tabs" aria-label="Company sections">${tabs.map(t => `<a href="#${t[0]}" data-tab="${t[0]}" ${S.route === t[0] ? 'aria-current="page"' : ''}>${t[1]}</a>`).join('')}<span class="tl" aria-hidden="true"></span></nav>
   </div></section>`;
@@ -168,14 +190,14 @@ function viewOverview() {
   const pat = `<div class="pbar">${CATS.map((c, i) => `<i style="width:${(100 * L[c.k] / L.tot).toFixed(2)}%;background:${CC[c.k]};animation-delay:${i * 80}ms" data-tip="<b>${c.l}</b><br>${(100 * L[c.k] / L.tot).toFixed(2)}% of shares"></i>`).join('')}</div>
     <div>${CATS.map(c => `<button type="button" class="prow" data-act="catgo" data-k="${c.k}" style="width:100%;background:none;border:0;border-bottom:1px solid var(--rule);cursor:pointer;text-align:left"><span><span class="sw" style="background:${CC[c.k]}"></span>${c.l}</span><span class="num"><b style="font-weight:600">${(100 * L[c.k] / L.tot).toFixed(2)}%</b><span class="${cl(pp(c.k))}" style="display:inline-block;width:72px;text-align:right">${sgn(pp(c.k), 2, ' pp')}</span></span></button>`).join('')}</div>`;
   const ins = `<ul class="ins">${INS.map(x => `<li><button type="button" data-go="${x[4]}" style="display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:0;text-align:left;cursor:pointer;width:100%"><span class="tg ${x[1]}">${x[0]}</span><b>${x[2]}</b><span class="b">${x[3]}</span><span style="font-size:12px;font-weight:600;color:var(--acc);display:inline-flex;gap:6px;align-items:center">View detail ${arrow}</span></button></li>`).join('')}</ul>`;
-  const tiles = [['Market cap', cu(36018, 0, '₹', ' cr'), '+9.7% since 30 Jun', 'Shares 16.60 cr × ₹2,169.20'], ['P/E (TTM)', cu(77.2, 1, '', '×'), 'On TTM reported PAT ₹466.5 cr', 'Market cap ₹36,018 cr ÷ PAT of the last four quarters (₹99.9 + 100.1 + 103.45 + 163.0 cr)'], ['P/B', cu(36.1, 1, '', '×'), 'Book value ₹60.1 per share', 'Mar-26 consolidated equity ≈ ₹999 cr ÷ 166.04 mn shares'], ['Dividend yield', cu(0.30, 2, '', '%'), 'Trailing DPS ₹6.50, bonus-adj.', '₹6 interim (ex 17 Oct 2025) + ₹7 final (ex 15 May 2026), halved for the Jun-26 bonus']];
+  const tiles = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), sgn(100 * (NOW.c / QE.a - 1), 1, '%') + ' since ' + sdate(QE.d), 'Shares ' + (TOT / 1e7).toFixed(2) + ' cr × ₹' + fin(NOW.c, 2)], ['P/E (TTM)', cu(+(MCAP / TTMP).toFixed(1), 1, '', '×'), 'On TTM reported PAT ₹' + fin(TTMP, 1) + ' cr', 'Market cap ₹' + fin(MCAP) + ' cr ÷ PAT of the last four quarters (₹' + TTM.join(' + ') + ' cr)'], ['P/B', cu(+(NOW.c / BVPS).toFixed(1), 1, '', '×'), 'Book value ₹' + BVPS.toFixed(1) + ' per share', 'Mar-26 consolidated equity ≈ ₹999 cr ÷ 166.04 mn shares'], ['Dividend yield', cu(+(100 * DPS / NOW.c).toFixed(2), 2, '', '%'), 'Trailing DPS ₹' + DPS.toFixed(2) + ', bonus-adj.', '₹6 interim (ex 17 Oct 2025) + ₹7 final (ex 15 May 2026), halved for the Jun-26 bonus']];
   return `<div class="g12">
   <section class="card s8" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, six filed quarters', seg('unit', [['pct', '% of shares'], ['val', 'Value ₹ cr'], ['sh', 'Shares mn']], S.unit, 'Ownership unit'))}<div id="ownBody">${ownBody()}</div></section>
   <section class="card s4" style="--i:1">${sh('Latest · 30 Jun 2026', 'Pattern and what changed')}${pat}${ins}</section>
-  <section class="card s5" style="--i:2">${sh('Valuation', 'Valuation', 'Price ₹2,169.20 · 23 Sep 2026')}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div><span class="lbl" style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink2)">Market cap at quarter-end, ₹ crore</span><div class="chart" data-c="mcap" style="height:170px"></div></section>
+  <section class="card s5" style="--i:2">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div><span class="lbl" style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink2)">Market cap at quarter-end, ₹ crore</span><div class="chart" data-c="mcap" style="height:170px"></div></section>
   <section class="card s7" id="earn" style="--i:3">${sh('Earnings', 'Earnings', 'Consolidated, ₹ crore · six reported quarters', seg('em', [['pat', 'PAT &amp; revenue'], ['eps', 'EPS'], ['mgn', 'Margin']], S.eMetric, 'Earnings chart'))}${earnTable()}<div id="earnBody">${earnBody()}</div><p class="note">Figures as reported in the company's results. Q1 FY27 PAT of ₹163.0 cr includes about ₹110 cr of other income, mostly fair-value gains on investments; the company's adjusted PAT is ₹116 cr, up 24% YoY. Reported EPS for Q4 FY25–Q4 FY26 is on 83.02 mn shares (before the Jun-26 1:1 bonus); Q1 FY27 is reported diluted EPS on 166.04 mn. The last row restates every quarter to 166.04 mn shares so they compare. Q1 FY27 matches the reported ₹9.82.</p></section>
-  <section class="card s12" style="--i:4">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to 23 Sep 2026', seg('rh', [['1m', '1M'], ['3m', '3M'], ['ytd', 'YTD'], ['1y', '1Y'], ['3y', '3Y ann.']], S.rH, 'Return horizon'))}<div class="g2"><div style="min-width:0">${retTable()}</div><div id="retBody" style="min-width:0">${retBody()}</div></div></section>
-  </div>${footer('NSE shareholding patterns (XBRL, SEBI LODR Reg. 31), Mar-25 to Jun-26 · NSE bhavcopy daily closes (stockanalysis.com for 10 Aug–22 Sep 2026, checked against 5 NSE closes) · company results press releases and investor presentations · Nifty 50 closes from Business Standard market wraps and Yahoo Finance · Nifty 500 from investing.com and anandrathi.com. Values are shares × NSE close at quarter end (28 Mar 2025 for Mar-25).')}`;
+  <section class="card s12" style="--i:4">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to ' + dfmt(NOW.d), seg('rh', [['1m', '1M'], ['3m', '3M'], ['ytd', 'YTD'], ['1y', '1Y'], ['3y', '3Y ann.']], S.rH, 'Return horizon'))}<div class="g2"><div style="min-width:0">${retTable()}</div><div id="retBody" style="min-width:0">${retBody()}</div></div></section>
+  </div>${footer('NSE shareholding patterns (XBRL, SEBI LODR Reg. 31), Mar-25 to Jun-26 · NSE bhavcopy daily closes (stockanalysis.com for 10 Aug–22 Sep 2026, checked against 5 NSE closes) · company results press releases and investor presentations · ' + (LP ? 'Nifty 50 and Nifty 500 closes from NSE\'s daily index files. Prices refresh every trading day from NSE; last close ' + dfmt(NOW.d) + '.' : 'Nifty 50 closes from Business Standard market wraps and Yahoo Finance · Nifty 500 from investing.com and anandrathi.com.') + ' Values are shares × NSE close at quarter end (28 Mar 2025 for Mar-25).')}`;
 }
 const EQ = ['Q4 FY25', 'Q1 FY26', 'Q2 FY26', 'Q3 FY26', 'Q4 FY26', 'Q1 FY27'], EQd = ['Mar-25', 'Jun-25', 'Sep-25', 'Dec-25', 'Mar-26', 'Jun-26'];
 const REV = D.earn.rev, PAT = D.earn.pat, EPSR = D.earn.eps_rep, EPS = PAT.map(p => p * 1e7 / TOT);
@@ -191,14 +213,16 @@ function earnBody() {
 const RP = [['1m', '1 month', '2026-08-21', null], ['3m', '3 months', '2026-06-23', null], ['6m', '6 months', '2026-03-24', null], ['ytd', 'Year to date', '2025-12-31', null], ['1y', '1 year', '2025-09-23', null], ['3y', '3 years, annualised', '2023-09-22', 3], ['sl', 'Since listing, annualised', '2021-12-14', (Date.UTC(2026, 8, 23) - Date.UTC(2021, 11, 14)) / 864e5 / 365.25]];
 const LAST = '2026-09-23';
 function rcalc(a, b, yrs) { if (a == null || b == null) return null; const r = a / b - 1; return 100 * (yrs ? Math.pow(1 + r, 1 / yrs) - 1 : r); }
-const RET = RP.map(p => {
-  const sa = D.stock_anchor[p[2]], b50 = D.bench.nifty50, b500 = D.bench.nifty500, ov = (D.bench.override.nifty500 || {})[p[0]];
-  const n500 = b500[p[2]] != null ? rcalc(b500[LAST], b500[p[2]], p[3]) : (ov ? ov[0] : null);
-  return { k: p[0], l: p[1], base: sa[0], s: rcalc(2169.2, sa[1], p[3]), sraw: sa[2], ssrc: sa[3], n50: rcalc(b50[LAST], b50[p[2]], p[3]), n50b: b50[p[2]], n500, n500b: b500[p[2]], n500src: b500[p[2]] != null ? 'close ' + fin(b500[p[2]], 2) : ov ? ov[1] : null };
+// Return bases: from prices.js when live (rolling with the latest close), else the snapshot's fixed anchors.
+const RB = LP ? LP.bases : RP.map(p => { const sa = D.stock_anchor[p[2]]; return { k: p[0], l: p[1], d: sa[0], s: sa[1], sraw: sa[2], ssrc: sa[3], n50: D.bench.nifty50[p[2]], n500: D.bench.nifty500[p[2]], yrs: p[3] }; });
+const RET = RB.map(b => {
+  const ov = LP ? null : (D.bench.override.nifty500 || {})[b.k];
+  const n500 = b.n500 != null ? rcalc(NOW.n500, b.n500, b.yrs) : (ov ? ov[0] : null);
+  return { k: b.k, l: b.l, base: b.d, s: rcalc(NOW.c, b.s, b.yrs), sraw: b.sraw, ssrc: b.ssrc, n50: rcalc(NOW.n50, b.n50, b.yrs), n50b: b.n50, n500, n500b: b.n500, n500src: b.n500 != null ? 'close ' + fin(b.n500, 2) + ' → ' + fin(NOW.n500, 2) : ov ? ov[1] : null };
 });
 function retTable() {
   const f = (v, tip) => v == null ? `<span class="mut" data-tip="${esc(tip)}">n/a</span>` : `<span ${tip ? `data-tip="${esc(tip)}"` : ''}>${sgn(v, 2, '%')}</span>`;
-  return `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">Period</th><th class="l" scope="col">From</th><th scope="col">ANANDRATHI</th><th scope="col">Nifty 50</th><th scope="col">Nifty 500</th><th scope="col">vs Nifty 50</th></tr></thead><tbody>${RET.map(r => { const ex = r.n50 == null ? null : r.s - r.n50; return `<tr><td class="l" style="font-weight:500">${r.l}</td><td class="l mut">${dfmt(r.base)}</td><td class="${cl(r.s)}" style="font-weight:600">${f(r.s, 'Close ₹' + fin(r.sraw, 2) + ' on ' + dfmt(r.base) + (r.sraw !== r.s ? ' (bonus-adjusted base)' : '') + ' → ₹2,169.20 · ' + r.ssrc)}</td><td class="${cl(r.n50)}">${f(r.n50, 'Nifty 50 ' + fin(r.n50b, 2) + ' → 23,446.80')}</td><td class="${cl(r.n500)}">${f(r.n500, r.n500 == null ? 'No verified Nifty 500 close for ' + dfmt(r.base) + ' in the sources reachable today. scripts/refresh_dashboard_prices.py fills it from yfinance.' : 'Nifty 500 · ' + r.n500src)}</td><td class="${cl(ex)}" style="font-weight:600">${ex == null ? '<span class="mut">n/a</span>' : sgn(ex, 1, ' pp')}</td></tr>`; }).join('')}</tbody></table></div><p class="cap" style="margin:10px 0 0">Price returns, dividends excluded, to the 23 Sep 2026 close. Stock bases are NSE closes adjusted for the two 1:1 bonuses. Hover or tap a figure for its inputs. Nifty 500 closes before Aug 2026 were not reachable from the sources available today, so those cells show n/a.</p>`;
+  return `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">Period</th><th class="l" scope="col">From</th><th scope="col">ANANDRATHI</th><th scope="col">Nifty 50</th><th scope="col">Nifty 500</th><th scope="col">vs Nifty 50</th></tr></thead><tbody>${RET.map(r => { const ex = r.n50 == null ? null : r.s - r.n50; return `<tr><td class="l" style="font-weight:500">${r.l}</td><td class="l mut">${dfmt(r.base)}</td><td class="${cl(r.s)}" style="font-weight:600">${f(r.s, 'Close ₹' + fin(r.sraw, 2) + ' on ' + dfmt(r.base) + (r.sraw !== r.s ? ' (bonus-adjusted base)' : '') + ' → ₹' + fin(NOW.c, 2) + ' · ' + r.ssrc)}</td><td class="${cl(r.n50)}">${f(r.n50, 'Nifty 50 ' + fin(r.n50b, 2) + ' → ' + fin(NOW.n50, 2))}</td><td class="${cl(r.n500)}">${f(r.n500, r.n500 == null ? 'No Nifty 500 close on file for ' + dfmt(r.base) : 'Nifty 500 · ' + r.n500src)}</td><td class="${cl(ex)}" style="font-weight:600">${ex == null ? '<span class="mut">n/a</span>' : sgn(ex, 1, ' pp')}</td></tr>`; }).join('')}</tbody></table></div><p class="cap" style="margin:10px 0 0">Price returns, dividends excluded, to the ${dfmt(NOW.d)} close. Stock bases are NSE closes adjusted for the two 1:1 bonuses. Hover or tap a figure for its inputs.${RET.some(r => r.n500 == null) ? ' Cells without a verified Nifty 500 close show n/a.' : ''}</p>`;
 }
 function retBody() {
   const r = RET.find(x => x.k === S.rH) || RET[4];
@@ -225,7 +249,7 @@ function holdersBody() {
   const st = new Map(L.map(h => [h, hStats(h, b)]));
   const key = { n: h => h.n.toLowerCase(), cty: h => h.cty, s: h => st.get(h).sh, v: h => st.get(h).v, pt: h => st.get(h).pt, pff: h => st.get(h).pff == null ? -1 : st.get(h).pff, mean: h => st.get(h).mean || 0, mx: h => st.get(h).mx || 0, mn: h => st.get(h).mn || 0, d: h => st.get(h).d }[S.hSort] || (h => st.get(h).sh);
   L.sort((a, c) => { const x = key(a), y = key(c); return (x > y ? 1 : x < y ? -1 : 0) * S.hDir; });
-  const asof = S.hTab === 'ind' ? 'Q2/2026 · filing of 30 Jun 2026 · value at ₹1,976.70' : 'Q3/2026 to date · Bloomberg, 22 Sep 2026 · value at ₹2,169.20';
+  const asof = S.hTab === 'ind' ? 'Q2/2026 · filing of 30 Jun 2026 · value at ₹1,976.70' : 'Q3/2026 to date · Bloomberg, 22 Sep 2026 · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const sortBtn = (k, lab, cls) => `<span class="${cls || ''}"><button type="button" data-sort="h" data-k="${k}" ${S.hSort === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${S.hSort === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
   const qlab = S.hTab === 'ind' ? '5Q' : '6Q';
   let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['pct', '% of total'], ['ff', '% of free float'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
@@ -281,7 +305,7 @@ function viewFlows() {
   ${footer('Buyer or seller = change in shares between two quarter-ends. NEW = no position in the earlier quarter; EXIT = none now. The Anandrathi Housing Finance line is left out: it is the same entity as Twelfth Tier Property, renamed (MCA master data).')}`;
 }
 function flowsBody() {
-  const F = D.flows[S.fP], px = S.fP === 'A' ? '₹1,976.70 (30 Jun 2026)' : '₹2,169.20 (23 Sep 2026)';
+  const F = D.flows[S.fP], px = S.fP === 'A' ? '₹1,976.70 (30 Jun 2026)' : '₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const agg = { prom: 0, fii: 0, dii: 0, ind: 0 }, cnt = { prom: [0, 0], fii: [0, 0], dii: [0, 0], ind: [0, 0] };
   F.all.forEach(o => { const g = GRP(o.c); agg[g] += o.v; cnt[g][o.d > 0 ? 0 : 1]++; });
   const mx = Math.max.apply(null, Object.values(agg).map(Math.abs)) || 1;
@@ -364,7 +388,7 @@ function viewUniverse() {
     <div style="display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end;min-width:200px"><label for="uq" class="vh">Filter companies</label><input id="uq" class="field" type="search" placeholder="Filter by name or symbol" value="${esc(S.uQ)}" style="flex:1;max-width:280px;min-width:0">
     <label for="uSortSel" class="vh">Sort</label><select id="uSortSel" class="field pm2" data-sortsel="u">${[['m', 'Market cap'], ['q', 'QTD'], ['pr', 'Promoter %'], ['fi', 'FII %'], ['di', 'DII %'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.uSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></div></div>
     <div id="uBody">${uBody()}</div>
-  </section>${footer('holdermap database (101 runs, 23–24 Sep 2026) · NSE shareholding XBRL, latest filing per company · NSE bhavcopy close of 23 Sep 2026. Promoter 0.00 = no promoter group, as at HDFC Bank, ICICI Bank, ITC and L&amp;T.')}`;
+  </section>${footer('holdermap database (101 runs, 23–24 Sep 2026) · NSE shareholding XBRL, latest filing per company · NSE bhavcopy close of ' + dfmt(NOW.d) + ', refreshed every trading day. QTD is from the ' + dfmt(LP ? LP.qbase : '2026-06-30') + ' close. Promoter 0.00 = no promoter group, as at HDFC Bank, ICICI Bank, ITC and L&amp;T.')}`;
 }
 function uBody() {
   const L = uList(), shown = L.slice(0, S.uN);
@@ -404,7 +428,7 @@ const NS = 'http://www.w3.org/2000/svg';
 function svgOpen(w, h, label) { return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">`; }
 const CH = {
   price(el, w) {
-    const ser = D.px_series.filter(r => r[0] >= '2025-09-23'), vals = ser.map(r => r[1]);
+    const ser = D.px_series.filter(r => r[0] >= Y1), vals = ser.map(r => r[1]);
     const h = 44, lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     const pts = vals.map((v, i) => [3 + i * (w - 6) / (vals.length - 1), h - 4 - (v - lo) / (hi - lo) * (h - 8)]);
     const p = pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' ');
@@ -430,8 +454,8 @@ const CH = {
     el.innerHTML = s + '</svg>';
   },
   mcap(el, w) {
-    const MC = T.map(t => Math.round(t.tot * t.px / 1e7)).concat([36018]), LB = T.map(t => t.q).concat(['Now']);
-    const H = 170, top = 18, base = H - 22, mx = 40000, sc = (base - top) / mx, cw = w / 7, bw = Math.min(46, cw * .66);
+    const MC = T.map(t => Math.round(t.tot * t.px / 1e7)).concat([Math.round(MCAP)]), LB = T.map(t => t.q).concat(['Now']);
+    const H = 170, top = 18, base = H - 22, mx = Math.ceil(Math.max.apply(null, MC) * 1.12 / 5000) * 5000, sc = (base - top) / mx, cw = w / 7, bw = Math.min(46, cw * .66);
     let s = svgOpen(w, H, 'Market cap at quarter-end');
     s += `<line class="grid" x1="0" x2="${w}" y1="${base}" y2="${base}"></line>`;
     MC.forEach((v, i) => { const x = i * cw + (cw - bw) / 2, hh = v * sc; s += `<g class="bar" style="--i:${i}"><rect x="${x.toFixed(1)}" y="${(base - hh).toFixed(1)}" width="${bw.toFixed(1)}" height="${hh.toFixed(1)}" fill="${i === 6 ? 'var(--ink)' : 'var(--grey)'}" data-tip="<b>${LB[i]}</b><br>₹${fin(v)} cr"></rect></g><text class="${i === 6 ? 'strong' : 'lab'}" x="${(x + bw / 2).toFixed(1)}" y="${(base - hh - 5).toFixed(1)}" text-anchor="middle" style="font-size:10px">${w < 420 ? (v / 1000).toFixed(1) + 'k' : fin(v)}</text><text x="${(x + bw / 2).toFixed(1)}" y="${H - 6}" text-anchor="middle" style="font-size:10px">${LB[i]}</text>`; });

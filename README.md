@@ -25,6 +25,18 @@ A shareholding and ownership dashboard for **Anand Rathi Wealth Ltd** (NSE: ANAN
 
 Hover or tap any return figure to see its inputs.
 
+## Working on the UI
+
+Edit `src/` only (`app.js`, `head.html` for CSS, `body.html`); `dashboard/` is build output and is not committed.
+
+```bash
+python3 pipeline/live.py   # latest NSE closes -> dashboard/site/prices.js (optional)
+python3 build.py           # assemble dashboard/site/ and dashboard/standalone.html
+python3 -m http.server 8765 --directory dashboard/site   # open http://localhost:8765
+```
+
+Push to `main` and the site redeploys automatically (AWS CodeBuild, see `buildspec.yml`). Prices also refresh every trading evening. Use a branch + pull request for anything non-trivial.
+
 ## Build
 
 ```bash
