@@ -304,6 +304,7 @@ def filing_row(vals):
              f2=g("InstitutionsForeignPortfolioInvestorCategoryTwo", "InstitutionsForeignPortfolioInvestorCatergoryTwo"),
              aif=g("AlternativeInvestmentFunds"), iS=iS, iL=iL, bc=g("BodiesCorporate"), nri=g("NonResidentIndians"),
              govt=g("Goverments", "Governments"), fcos=g("ForeignCompanies"),
+             fdi=g("ForeignDirectInvestment"),            # strategic foreign holders filed INSIDE Institutions (Foreign)
              dr=dr, den=den, dr_in_public=dep > 0, c2=c2)
     r["oth"] = den - prom - fii - dii - r["ind"]
     fden = (tot - c1) or 1                           # the filed denominator, A+B+C2
@@ -754,7 +755,8 @@ def build(ctx, sym, verbose=False):
                           oth=r["oth"], mf=r["mf"], ins=r["ins"], px=b["raw"] if b else None,
                           bf=round(bf, 6) if bf % 1 else int(bf),
                           f1=r["f1"], f2=r["f2"], aif=r["aif"], iS=r["iS"], iL=r["iL"], bc=r["bc"], nri=r["nri"],
-                          dr=r["dr"], den=r["den"], dr_in_public=r["dr_in_public"], filed=r["filed"]))
+                          dr=r["dr"], den=r["den"], dr_in_public=r["dr_in_public"], fdi=r["fdi"], fcos=r["fcos"],
+                          filed=r["filed"]))
     tq = {t["q"]: t for t in trend}
     fl = [r for r in fl if r]
     last = fl[-1]
@@ -765,6 +767,7 @@ def build(ctx, sym, verbose=False):
     lsf = lb["sf"] if lb else S[0]["sf"]
     latest = dict(d=lf["fd"], tot=lf["tot"], nh=lf["nh"], prom=lf["prom"], fii=lf["fii"], dii=lf["dii"], ind=lf["ind"],
                   oth=lf["oth"], mf=lf["mf"], dr=lf["dr"], den=lf["den"], dr_in_public=lf["dr_in_public"],
+                  fdi=lf["fdi"], fcos=lf["fcos"],
                   filed=lf["filed"],
                   sf=round(lsf, 6) if lsf % 1 else int(lsf), shares=int(round(lf["tot"] * lsf)))
     if lf["fd"] != last["fd"]:
@@ -835,6 +838,8 @@ def build(ctx, sym, verbose=False):
             return cty[h]
         if "cty_default" in ov:
             return ov["cty_default"]
+        if r["category"] == "Bank" and "public table: banks" in (r.get("evidence") or "").lower():
+            return "IN"
         if r["category"] in FOREIGN:
             return ctx.reg.get(h, "")
         return "IN"
@@ -847,10 +852,18 @@ def build(ctx, sym, verbose=False):
 
     def is_prom(r):   # e.g. PSUs: 'Republic of India' is filed as promoter (Table II), categorised Government
         return r.get("alternative") == "Promoter" or "promoter & promoter group table" in (r.get("evidence") or "").lower()
-    fii = [H(r) for r in sorted([r for r in rows if r["category"] in FOREIGN and sh(r, L) > 0 and not is_prom(r)],
-                                key=lambda r: -sh(r, L))[:20]]
-    dii = [H(r) for r in sorted([r for r in rows if r["category"] in DOM and sh(r, L) > 0 and not is_prom(r)],
-                                key=lambda r: -sh(r, L))[:20]]
+
+    def dom_bank(r):  # filing-mode runs put Indian banks (SEBI public table: Banks) in 'Bank', which data.py
+        # treated as a foreign bank group; Bloomberg runs use 'Bank' for foreign groups only
+        return r["category"] == "Bank" and ("public table: banks" in (r.get("evidence") or "").lower()
+                                            or ctx.reg.get(r["holder"]) == "IN")
+
+    def iepf(r):      # the IEPF authority is a statutory custodian of unclaimed shares, not an investor
+        return "public table: iepf" in (r.get("evidence") or "").lower() or "investor education" in r["holder"].lower()
+    fii = [H(r) for r in sorted([r for r in rows if r["category"] in FOREIGN and sh(r, L) > 0 and not is_prom(r)
+                                 and not dom_bank(r)], key=lambda r: -sh(r, L))[:20]]
+    dii = [H(r) for r in sorted([r for r in rows if (r["category"] in DOM or dom_bank(r)) and sh(r, L) > 0
+                                 and not is_prom(r) and not iepf(r)], key=lambda r: -sh(r, L))[:20]]
     ind_excl = set(ov.get("ind_excl", []))
     creg = re.compile(ov["ind_company_regex"]) if ov.get("ind_company_regex") else ORG
     indr = [r for r in rows if (r["category"] == "Individual" or (r["category"] == "Promoter" and not creg.search(r["holder"])))
@@ -1273,7 +1286,11 @@ def watch(ctx, pxu, rep, hours, every=60):
         logf.write(time.strftime("%H:%M:%S ") + m + "\n")
         logf.flush()
     log(f"watch start ({hours}h)")
+    code_mtime = Path(__file__).stat().st_mtime
     while time.time() < t_end:
+        if Path(__file__).stat().st_mtime != code_mtime:     # never write outputs with stale code
+            log("company.py changed on disk; watcher exits (restart it to pick up the new code)")
+            break
         try:
             mcap = {u["s"]: u["m"] or 0 for u in json.loads(OUT_UNIV.read_text())} if OUT_UNIV.exists() else {}
             cand = [s for s in universe_syms(ctx) if stale(s, rep)]

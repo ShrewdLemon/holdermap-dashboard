@@ -109,7 +109,7 @@ const ticksOf = mx => [0, mx / 4, mx / 2, 3 * mx / 4, mx];
 /* ---------- derived data ---------- */
 const CATS = [
   { k: 'prom', l: 'Promoter & group', sub: [] },
-  { k: 'fii', l: 'FII / FPI', sub: [['f1', 'FPI Category I'], ['f2', 'FPI Category II']] },
+  { k: 'fii', l: 'FII / FPI', sub: [['f1', 'FPI Category I'], ['f2', 'FPI Category II'], ['fdi', 'Foreign direct investment (strategic)']] },
   { k: 'dii', l: 'DII', sub: [['mf', 'Mutual funds'], ['ins', 'Insurance companies'], ['aif', 'AIFs']] },
   { k: 'ind', l: 'Individuals', sub: [['iS', 'Holding up to ₹2 lakh'], ['iL', 'Holding above ₹2 lakh']] },
   { k: 'oth', l: 'Others', sub: [['bc', 'Bodies corporate'], ['nri', 'NRIs'], ['orest', 'Trusts, HUFs, clearing & others']] }
@@ -210,6 +210,7 @@ function ownTable() {
     if (open) {
       h += `<tr class="sub"><td class="l" style="padding-left:28px">Change vs prior quarter</td><td>—</td>${vs.slice(1).map((v, i) => `<td class="${cl(v - vs[i])}">${fmtD(v - vs[i], u)}</td>`).join('')}<td></td><td></td><td></td></tr>`;
       c.sub.forEach(sb => {
+        if (!T.some(t => t[sb[0]] > 0)) return;
         const sv = T.map(t => tv(t, sb[0], u));
         h += `<tr class="sub swap"><td class="l" style="padding-left:28px">${sb[1]}</td>${sv.map(v => `<td>${fmtU(v, u)}</td>`).join('')}<td class="${cl(sv[sv.length - 1] - sv[sv.length - 2])}">${fmtD(sv[sv.length - 1] - sv[sv.length - 2], u)}</td><td class="${cl(sv[sv.length - 1] - sv[0])}">${fmtD(sv[sv.length - 1] - sv[0], u)}</td><td>${spark(sv, 84, 18, 'var(--ink3)')}</td></tr>`;
       });
@@ -256,10 +257,10 @@ function insights() {
       'Mutual funds ' + f2(pct(P.mf, P.den)) + ' → ' + f2(lv('mf')) + ', insurers ' + f2(pct(P.ins, P.den)) + ' → ' + f2(lv('ins')) + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), 'holders|dii']); }
   // foreign
   { const d = pp('fii'), f0 = (D.fii || [])[0], b = mover('fii', 1), sl = mover('fii', -1);
-    const cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[hi] || 0), 0), D.fii_total) : null;  // FPIs only: a foreign parent company is not an FPI
+    const cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[hi] || 0), 0), D.fii_total - (L.fdi || 0)) : null;  // FPIs only: a foreign parent company is not an FPI
     const mv = [b ? esc(b.n) + ' added ' + mn(b.d) : '', sl ? esc(sl.n) + ' cut ' + mn(sl.d) : ''].filter(Boolean).join('; ');
     out.push(['FII · ' + sgn(z(d), 2, ' PP'), tg(d), f0 && f0.s[hi] ? esc(f0.n) + ' is the largest named foreign holder at ' + f2(pct(f0.s[hi], DEN)) : 'Foreign portfolio investors at ' + f2(lv('fii')) + ext('fii'),
-      'FPIs hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing' + (cov != null && cov > 0 ? '; named holders cover ' + cov.toFixed(0) + '% of FPI shares' : '') + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), f0 ? 'holders|fii|' + f0.n : 'holders|fii']); }
+      (L.fdi > 0 ? 'Foreign institutions hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing, of which foreign direct investment ' + f2(lv('fdi')) + ' and FPIs ' + f2(pct(L.f1 + L.f2, L.den)) : 'FPIs hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing') + (cov != null && cov > 0 ? '; named holders cover ' + cov.toFixed(0) + '% of FPI shares' : '') + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), f0 ? 'holders|fii|' + f0.n : 'holders|fii']); }
   // breadth
   { const b = 100 * (L.nh / P.nh - 1), b6 = 100 * (L.nh / T[0].nh - 1);
     out.push(['BREADTH · ' + sgn(b, 1, '%'), 'mut', fin(L.nh) + ' shareholders, ' + (b >= 0 ? 'up' : 'down') + ' from ' + fin(P.nh), 'At ' + T[0].q + ' the count was ' + fin(T[0].nh) + ' (' + sgn(b6, 1, '%') + ' since). Individuals hold ' + f2(lv('ind')) + '.', 'cat|ind']); }
@@ -320,8 +321,8 @@ function retBody() {
 /* ---------- HOLDERS ---------- */
 function viewHolders() {
   const L5 = T[T.length - 1], q = CO.oq === false ? 4 : 5, sh = (h) => h ? (h.s[q] || 0) : 0, nm = h => h ? esc(h.n.replace(/ (Ltd|Limited|Inc|LLC|plc)\.?$/i, '')) : '—';
-  const f2 = D.fii.slice(0, 2), d2 = D.dii.slice(0, 2), cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0), D.fii_total) : null;
-  const k = [['fii', 'FII / FPI · ' + L5.q + ' filing', pct(L5.fii, L5.den).toFixed(2) + '%', AR ? '127 FPI accounts. Named holders cover 63% of FPI shares.' : 'FPI Cat I ' + pct(L5.f1, L5.den).toFixed(2) + '% · Cat II ' + pct(L5.f2, L5.den).toFixed(2) + '%' + (cov != null ? '. Named holders cover ' + cov.toFixed(0) + '% of FPI shares.' : '')], ['dii', 'DII · ' + L5.q + ' filing', pct(L5.dii, L5.den).toFixed(2) + '%', 'Mutual funds ' + pct(L5.mf, L5.den).toFixed(2) + '% · insurers ' + pct(L5.ins, L5.den).toFixed(2) + '% · AIFs ' + pct(L5.aif, L5.den).toFixed(2) + '%'], ['fii', 'Top 2 foreign holders', pct(f2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', f2.map(h => nm(h) + ' ' + pct(sh(h), DEN).toFixed(2) + '%').join(' + ') || 'None named'], ['dii', 'Top 2 domestic holders', pct(d2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', AR ? 'Quant MF + SBI MF, mostly small-cap schemes' : d2.map(nm).join(' + ') || 'None named']];
+  const f2 = D.fii.slice(0, 2), d2 = D.dii.slice(0, 2), cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0), D.fii_total - (L5.fdi || 0)) : null;
+  const k = [['fii', 'FII / FPI · ' + L5.q + ' filing', pct(L5.fii, L5.den).toFixed(2) + '%', AR ? '127 FPI accounts. Named holders cover 63% of FPI shares.' : 'FPI Cat I ' + pct(L5.f1, L5.den).toFixed(2) + '% · Cat II ' + pct(L5.f2, L5.den).toFixed(2) + '%' + (L5.fdi > 0 ? ' · FDI ' + pct(L5.fdi, L5.den).toFixed(2) + '%' : '') + (cov != null ? '. Named holders cover ' + cov.toFixed(0) + '% of FPI shares.' : '')], ['dii', 'DII · ' + L5.q + ' filing', pct(L5.dii, L5.den).toFixed(2) + '%', 'Mutual funds ' + pct(L5.mf, L5.den).toFixed(2) + '% · insurers ' + pct(L5.ins, L5.den).toFixed(2) + '% · AIFs ' + pct(L5.aif, L5.den).toFixed(2) + '%'], ['fii', 'Top 2 foreign holders', pct(f2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', f2.map(h => nm(h) + ' ' + pct(sh(h), DEN).toFixed(2) + '%').join(' + ') || 'None named'], ['dii', 'Top 2 domestic holders', pct(d2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', AR ? 'Quant MF + SBI MF, mostly small-cap schemes' : d2.map(nm).join(' + ') || 'None named']];
   return `<div class="kpis" style="--i:0">${k.map(x => `<button type="button" class="kpi" data-set="hTab" data-val="${x[0]}" style="text-align:left;cursor:pointer"><span class="lbl">${x[1]}</span><span class="v">${x[2]}</span><span class="s">${x[3]}</span></button>`).join('')}</div>
   <section class="card" id="hCard" style="--i:1;margin-top:24px">${holdersHead()}<div id="hBody">${holdersBody()}</div></section>
   ${AR ? footer('holdermap run of 23 Sep 2026 on the Bloomberg Security Ownership export (ANANDRAT IN), reconciled to NSE shareholding filings (7/7 gates). Categories come from SEBI Table II/III, AMFI, IRDAI, SEC registries and GLEIF. Shares are restated for the Jun-26 1:1 bonus. Free float = total shares minus the promoter group in that quarter\'s filing.') : footer('holdermap run of ' + dfmt(D.gen.slice(0, 10)) + (CO.bb ? ' on the Bloomberg Security Ownership export' : ' in filing mode: holders named in SEBI shareholding filings (1% and above), mutual-fund portfolio disclosures (fund-house level) and US fund N-PORT filings') + ', reconciled to NSE shareholding filings (' + D.gates.filter(g => g.ok !== false).length + '/' + D.gates.length + ' gates). Categories come from SEBI Table II/III, AMFI, IRDAI, SEC registries and GLEIF. Free float = total shares minus the promoter group in that quarter\'s filing.')}`;
@@ -360,7 +361,7 @@ function holdersBody() {
   });
   const tS = L.reduce((a, x) => a + st.get(x).sh, 0), tV = L.reduce((a, x) => a + st.get(x).v, 0);
   h += `<div class="ltot gH"><span class="xp"></span><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span><span class="xp">${(tS / 1e6).toFixed(3)}</span><span class="xp">${fin(tV, 1)}</span><span class="xp">${(100 * tS / DEN).toFixed(3)}%</span><span class="xp">${S.hTab === 'ind' ? '' : (100 * tS / FF[q]).toFixed(3) + '%'}</span><span class="xp"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp"></span><span class="pm pm2">${(100 * tS / DEN).toFixed(2)}% · ₹${fin(tV)} cr</span><span class="xp"></span></div></div>`;
-  if (S.hTab === 'fii') h += `<p class="note grey">The FPIs in this list hold ${(100 * D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0) / D.fii_total).toFixed(0)}% of FPI shares at Jun-26. The rest are funds below ${CO.bb ? 'Bloomberg\'s disclosure line' : 'the 1% filing threshold or outside US fund filings'}.</p>`;
+  if (S.hTab === 'fii') h += `<p class="note grey">The FPIs in this list hold ${(100 * D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0) / (D.fii_total - (T[T.length - 1].fdi || 0))).toFixed(0)}% of FPI shares at Jun-26. The rest are funds below ${CO.bb ? 'Bloomberg\'s disclosure line' : 'the 1% filing threshold or outside US fund filings'}.</p>`;
   if (S.hTab === 'ind') h += `<p class="note grey">Individuals appear only in quarterly filings. The open quarter updates once the Sep-26 pattern is filed (due by 21 Oct).</p>`;
   return h;
 }
