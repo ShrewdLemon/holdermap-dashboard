@@ -185,25 +185,46 @@ def xbrl_path(sym, fdate, alts=()):
     return None
 
 
-def xbrl_paths(sym, fdate, alts=()):
-    for s in (sym, *alts):
-        for p in (HM_XBRL / s / f"{fdate}.xml", MSCI_XBRL / s / f"{fdate}.xml", FF / "bse" / "backfill" / f"{s}_{fdate}.xml"):
-            if p.exists() and p.stat().st_size > 1000:
-                yield p
+def _dparse(x):
+    try:
+        return dt.datetime.strptime((x or "").strip()[:11], "%d-%b-%Y")
+    except ValueError:
+        return dt.datetime(2000, 1, 1)
+
+
+def _ff_cands(sym, fdate, alts=()):
+    """NSE-index filings for fdate, newest (submission or revision) first: [(revised, path)]."""
     want = D(fdate).strftime("%d-%b-%Y").upper()
+    out = []
     for s in (sym, *alts):
         f = FF_SHP / f"{s}.json"
         if not f.exists():
             continue
         if s not in _SHP_IDX:
             _SHP_IDX[s] = json.load(open(f))
-        cands = [e for e in _SHP_IDX[s] if (e.get("date") or "").upper() == want and e.get("xbrl")]
-        cands.sort(key=lambda e: dt.datetime.strptime(e.get("submissionDate") or "01-JAN-2000", "%d-%b-%Y"),
-                   reverse=True)
-        for e in cands:
+        for e in _SHP_IDX[s]:
+            if (e.get("date") or "").upper() != want or not e.get("xbrl"):
+                continue
             p = FF_XBRL / e["xbrl"].rsplit("/", 1)[-1]
             if p.exists() and p.stat().st_size > 1000:
+                rev = (e.get("revisedData") or "").lower() == "revised" or bool(e.get("revisionDate"))
+                out.append((max(_dparse(e.get("submissionDate")), _dparse(e.get("revisionDate"))), rev, p))
+    out.sort(key=lambda x: x[0], reverse=True)
+    return [(rev, p) for _, rev, p in out]
+
+
+def xbrl_paths(sym, fdate, alts=()):
+    ff = _ff_cands(sym, fdate, alts)
+    # a revision NSE published after the original wins over our cached copies of the original
+    # (VIJAYA Jun-26: revised 07-Sep-2026, total 102,896,728 not 102,988,473 -> promoter 52.51%, NSE's figure)
+    if ff and ff[0][0]:
+        yield ff[0][1]
+    for s in (sym, *alts):
+        for p in (HM_XBRL / s / f"{fdate}.xml", MSCI_XBRL / s / f"{fdate}.xml", FF / "bse" / "backfill" / f"{s}_{fdate}.xml"):
+            if p.exists() and p.stat().st_size > 1000:
                 yield p
+    for rev, p in ff:
+        yield p
 
 
 def parse_shp(path):
@@ -1004,20 +1025,36 @@ def validate(ctx, sym, out, fl, S, applied, bse_code=None):
         checks["prom_vs_nse"] = None
     else:
         checks["prom_vs_nse"] = abs(pf - nse_pr) <= 0.01 + 1e-9
-        if not checks["prom_vs_nse"]:
-            fail.append(f"Jun-26 promoter {pf:.4f}% as filed (den {'with' if lf['dr_in_public'] else 'less'} DR) vs NSE "
-                        f"published {nse_pr}% ({pf - nse_pr:+.3f}pp)")
-    # 5. FII / DII / MF as filed vs BSE's published category % (same denominator), where BSE has Jun-26
-    bse = bse_pcts(bse_code)
-    checks["bse"] = None
-    if bse:
-        mine = dict(fii=lf["filed"]["fii"], dii=lf["filed"]["dii"], mf=lf["filed"]["mf"], prom=pf)
-        dif = {k: round(mine[k] - v, 3) for k, v in bse.items() if v is not None}
-        checks["bse"] = dif
+    # every quarter: filed promoter % vs NSE's published figure for that filing
+    qbad, qn = [], 0
+    for r in fl:
+        npr = nse_promoter_pct(sym, r["fd"])
+        if npr is None:
+            continue
+        qn += 1
+        if abs(r["filed"]["prom"] - npr) > 0.01 + 1e-9:
+            qbad.append(f"{r['q']} {r['filed']['prom']:.3f} vs {npr}")
+    checks["prom_vs_nse_quarters"] = [qn - len(qbad), qn]
+    if qbad:
+        checks["prom_vs_nse"] = False
+        fail.append("promoter % as filed vs NSE published: " + "; ".join(qbad))
+    # 5. FII / DII / MF / promoter as filed vs BSE's published category % (same A+B+C2 basis):
+    #    Jun-26 (bse_shp_all), Mar-26 and Mar-25 (bse_shp_hist) - across the SEBI format change
+    tq0 = {r["q"]: r for r in fl}
+    checks["bse"] = {}
+    for q, base, qname in (("Jun-26", BSE_SHP_ALL, "June 2026"), ("Mar-26", BSE_SHP_HIST / "129", "Mar-26"),
+                           ("Mar-25", BSE_SHP_HIST / "125", "Mar-25")):
+        r = tq0.get(q)
+        bse = bse_pcts(bse_code, base, qname) if r else None
+        if not bse:
+            continue
+        f = r["filed"]
+        dif = {k: round(f[k] - v, 3) for k, v in bse.items() if v is not None}
+        checks["bse"][q] = dif
         bad = {k: v for k, v in dif.items() if abs(v) > 0.05 + 1e-9}
         if bad:
-            fail.append("vs BSE published Jun-26 %: " + ", ".join(f"{k} {mine[k]:.2f} vs {bse[k]:.2f} ({v:+.2f}pp)"
-                                                                 for k, v in bad.items()))
+            fail.append(f"vs BSE published {q} %: " + ", ".join(f"{k} {f[k]:.2f} vs {bse[k]:.2f} ({v:+.2f}pp)"
+                                                               for k, v in bad.items()))
     # 6. category moves > 5pp Mar-26 -> Jun-26 (on den, DR-netted): listed for explanation
     tq = {r["q"]: r for r in fl}
     a, b2 = tq.get("Mar-26"), tq.get("Jun-26")
@@ -1034,6 +1071,7 @@ def validate(ctx, sym, out, fl, S, applied, bse_code=None):
 
 
 BSE_SHP_ALL = HOME / "msci" / "data_dump" / "bse_shp_all"
+BSE_SHP_HIST = HOME / "msci" / "data_dump" / "bse_shp_hist"
 
 
 def nse_promoter_pct(sym, fdate):
@@ -1052,14 +1090,14 @@ def nse_promoter_pct(sym, fdate):
         return None
 
 
-def bse_pcts(code):
-    """BSE's published Jun-26 category % (of A+B+C2): FII, DII, MF subtotals and promoter."""
-    d = BSE_SHP_ALL / str(code or "")
+def bse_pcts(code, base=None, qname="June 2026"):
+    """BSE's published category % (of A+B+C2) for one quarter: FII, DII, MF subtotals and promoter."""
+    d = (base or BSE_SHP_ALL) / str(code or "")
     if not code or not (d / "public.json").exists() or not (d / "summary.json").exists():
         return None
     try:
         summ = json.load(open(d / "summary.json"))
-        if (summ.get("Table") or [{}])[0].get("Fld_qtrname") != "June 2026":
+        if (summ.get("Table") or [{}])[0].get("Fld_qtrname") != qname:
             return None
         rows = json.load(open(d / "public.json")).get("Table1") or []
     except (ValueError, OSError):

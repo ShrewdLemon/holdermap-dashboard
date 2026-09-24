@@ -10,6 +10,9 @@ pre-bhavcopy values:
   * stock_anchor['2026-08-21'][3]: data.json labelled that close 'stockanalysis.com' (bhavcopy.db then lacked
     10 Aug-22 Sep 2026); the value is identical and now comes from NSE bhavcopy.
   * gates[].ok is new (added for the app).
+  * trend[1..3] ind / iL / oth: NSE revised ANANDRATHI's Jun-25, Sep-25 and Dec-25 filings on 10-Aug-2026 (SEBI
+    circular of 20-Mar-2025: directors & relatives reported separately), moving 1.3-1.7 mn shares from
+    'individuals > Rs 2 lakh' into 'others'. data.json was built from the originals; ind + oth is unchanged.
 """
 import json
 import sys
@@ -58,9 +61,22 @@ class CompanyRegression(unittest.TestCase):
         for key in KEYS:
             with self.subTest(key=key):
                 new = self.new[key]
-                if key == "trend":            # dr/den/drp/c2 are additions (DR-aware denominator)
+                old = OLD[key]
+                if key == "trend":            # dr/den/dr_in_public/filed are additions (DR-aware denominator)
                     new = [{k: v for k, v in t.items() if k in OLD["trend"][0]} for t in new]
-                self.assertEqual(diff(OLD[key], new, key), [])
+                    # NSE's revised Jun-25/Sep-25/Dec-25 filings (revised 10-Aug-2026 under SEBI's circular of
+                    # 20-Mar-2025) move directors & relatives out of 'individuals > Rs 2 lakh' into 'others'.
+                    # data.json predates them. Everything else must match; ind + oth must be unchanged.
+                    for i in (1, 2, 3):
+                        o, n = old[i], new[i]
+                        self.assertEqual(o["ind"] + o["oth"], n["ind"] + n["oth"])
+                        self.assertEqual(o["iL"] - n["iL"], o["ind"] - n["ind"])
+                        self.assertGreater(o["iL"] - n["iL"], 1_000_000)
+                    new = [{k: v for k, v in t.items() if not (i in (1, 2, 3) and k in ("ind", "iL", "oth"))}
+                           for i, t in enumerate(new)]
+                    old = [{k: v for k, v in t.items() if not (i in (1, 2, 3) and k in ("ind", "iL", "oth"))}
+                           for i, t in enumerate(old)]
+                self.assertEqual(diff(old, new, key), [])
 
     def test_den(self):
         for t in self.new["trend"]:           # ANANDRATHI has no depository receipts
