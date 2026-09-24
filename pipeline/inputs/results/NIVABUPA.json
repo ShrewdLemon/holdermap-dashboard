@@ -75,7 +75,7 @@
   "Q1 FY27 filed only under Ind AS 117 (PDF): see `ind_as117`; `quarters` stays on the IGAAP-format series"
  ],
  "flags": [],
- "generated": "2026-09-24T21:16:07+00:00",
+ "generated": "2026-09-24T21:39:24+00:00",
  "ind_as117": {
   "basis": "Ind AS 117 (IRDAI circular IRDAI/F&I/CIR/MISC/92/7/2026, 8-Jul-2026); filed only as a PDF - no XBRL on NSE; transcribed from the table images; NOT comparable with the IGAAP-format quarters in `quarters`",
   "src": "https://nsearchives.nseindia.com/corporate/MAXBUPA_30072026161055_Discl30_Boardmeetingoutcome30072026.pdf",
