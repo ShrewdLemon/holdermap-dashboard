@@ -71,8 +71,75 @@
  "notes": [
   "Q1 FY26: NSE has no iXBRL table for this filing - read from the XBRL instance",
   "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
-  "equity = share capital + reserves & surplus (excl. fair-value change account)"
+  "equity = share capital + reserves & surplus (excl. fair-value change account)",
+  "Q1 FY27 filed only under Ind AS 117 (PDF): see `ind_as117`; `quarters` stays on the IGAAP-format series"
  ],
  "flags": [],
- "generated": "2026-09-24T21:04:38+00:00"
+ "generated": "2026-09-24T21:16:07+00:00",
+ "ind_as117": {
+  "basis": "Ind AS 117 (IRDAI circular IRDAI/F&I/CIR/MISC/92/7/2026, 8-Jul-2026); filed only as a PDF - no XBRL on NSE; transcribed from the table images; NOT comparable with the IGAAP-format quarters in `quarters`",
+  "src": "https://nsearchives.nseindia.com/corporate/MAXBUPA_30072026161055_Discl30_Boardmeetingoutcome30072026.pdf",
+  "pages": "4-6 (Annexure-I, Statement of Unaudited Financial Results for the Quarter ended June 30, 2026)",
+  "announced": "2026-07-30 16:13",
+  "scope": "Standalone",
+  "rev_basis": "insurance revenue (Ind AS 117)",
+  "latest": {
+   "period": "2026-06-30",
+   "insurance_revenue": 2273.72,
+   "pbt": 183.74,
+   "pat": 137.8,
+   "pat_owners": 137.8,
+   "eps": 0.75,
+   "eps_diluted": 0.74,
+   "gwp": 2149.96,
+   "total_equity_cr": 3835.78,
+   "shares": 1849230000,
+   "q": "Q1 FY27",
+   "d": "Jun-26"
+  },
+  "comparatives": [
+   {
+    "period": "2026-03-31",
+    "insurance_revenue": 2116.18,
+    "pbt": 180.74,
+    "pat": 159.36,
+    "pat_owners": 159.36,
+    "eps": 0.86,
+    "eps_diluted": 0.86,
+    "gwp": 2879.68,
+    "total_equity_cr": 3589.27,
+    "shares": 1847460000,
+    "q": "Q4 FY26",
+    "d": "Mar-26"
+   },
+   {
+    "period": "2025-06-30",
+    "insurance_revenue": 1768.61,
+    "pbt": 97.92,
+    "pat": 71.44,
+    "pat_owners": 71.44,
+    "eps": 0.39,
+    "eps_diluted": 0.39,
+    "gwp": 1631.9,
+    "total_equity_cr": 3455.53,
+    "shares": 1845060000,
+    "q": "Q1 FY26",
+    "d": "Jun-25"
+   },
+   {
+    "period": "FY26",
+    "insurance_revenue": 7829.1,
+    "pbt": 462.46,
+    "pat": 365.25,
+    "pat_owners": 365.25,
+    "eps": 1.98,
+    "eps_diluted": 1.97,
+    "gwp": 8585.92,
+    "total_equity_cr": 3589.27,
+    "shares": 1847460000
+   }
+  ],
+  "bvps_2026_06_30": 20.74,
+  "flags": []
+ }
 }
