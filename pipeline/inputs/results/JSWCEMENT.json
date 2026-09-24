@@ -1,0 +1,79 @@
+{
+ "sym": "JSWCEMENT",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 1559.82,
+   "pat": -1366.41,
+   "pat_owners": -1356.17,
+   "eps": -13.75,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_113684_02092025202737_iXBRL_WEB.html",
+   "shares": 986350000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 1436.43,
+   "pat": 75.36,
+   "pat_owners": 86.43,
+   "eps": 0.71,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_125315_07112025215100_iXBRL_WEB.html",
+   "shares": 1334330000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 1621.22,
+   "pat": 130.62,
+   "pat_owners": 142.09,
+   "eps": 1.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_140341_04022026213906_iXBRL_WEB.html",
+   "shares": 1338580000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 1894.99,
+   "pat": 361.65,
+   "pat_owners": 371.33,
+   "eps": 2.77,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_181853_03082026184932_iXBRL_WEB.html",
+   "shares": 1341250000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 1896.41,
+   "pat": 153.43,
+   "pat_owners": 160.64,
+   "eps": 1.2,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187050_13082026213431_iXBRL_WEB.html",
+   "shares": 1350350000
+  }
+ ],
+ "bvps": 48.84,
+ "equity_cr": 6550.41,
+ "bs_date": "2026-03-31",
+ "roe": 12.07,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.5,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "1,341,250,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Crores' implausible; values read with factor 1e-07 to Rs cr",
+  "Q2 FY26: share count x1.35 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.71 x 133.433 cr sh = 94.7 vs pat_owners 86.43 (+9.6%); implied EPS denominator 121.732 cr sh"
+ ],
+ "generated": "2026-09-24T21:04:37+00:00"
+}

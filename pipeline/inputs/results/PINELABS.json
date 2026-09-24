@@ -1,0 +1,70 @@
+{
+ "sym": "PINELABS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 649.9,
+   "pat": 5.97,
+   "pat_owners": 5.97,
+   "eps": 0.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129961_03122025172337_iXBRL_WEB.html",
+   "shares": 447100000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 744.27,
+   "pat": 42.39,
+   "pat_owners": 42.39,
+   "eps": 0.38,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_137912_28012026163209_iXBRL_WEB.html",
+   "shares": 1148300000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 700.51,
+   "pat": 59.36,
+   "pat_owners": 59.36,
+   "eps": 0.52,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161061_25052026215413_iXBRL_WEB.html",
+   "shares": 1148300000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 736.92,
+   "pat": 19.57,
+   "pat_owners": 19.57,
+   "eps": 0.17,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_179104_28072026145727_iXBRL_WEB.html",
+   "shares": 1153900000
+  }
+ ],
+ "bvps": 51.34,
+ "equity_cr": 5895.41,
+ "bs_date": "2026-03-31",
+ "roe": 2.65,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "1,148,300,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 19.57 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 42.39 used (EPS-consistent)",
+  "Q3 FY26: share count x2.57 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY26: owners-of-parent line blank; PAT = 59.36 used (EPS-consistent)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.06 x 44.710 cr sh = 2.7 vs pat_owners 5.97 (-55.1%); implied EPS denominator 99.500 cr sh"
+ ],
+ "generated": "2026-09-24T21:04:39+00:00"
+}

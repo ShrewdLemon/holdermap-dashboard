@@ -1,0 +1,89 @@
+{
+ "sym": "AXISBANK",
+ "scope": "Consolidated",
+ "format": "BANKING",
+ "rev_basis": "interest earned (bank)",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 32452.32,
+   "pat": 7489.71,
+   "pat_owners": 7475.13,
+   "eps": 24.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_86628_24042025195151_iXBRL_WEB.html",
+   "shares": 3097350000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 32348.31,
+   "pat": 6260.17,
+   "pat_owners": 6243.72,
+   "eps": 20.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_103679_17072025183107_iXBRL_WEB.html",
+   "shares": 3101200000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 32309.77,
+   "pat": 5557.51,
+   "pat_owners": 5527.85,
+   "eps": 17.82,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_130008_04122025160806_iXBRL_WEB.html",
+   "shares": 3102900000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 33709.17,
+   "pat": 7044.42,
+   "pat_owners": 7010.65,
+   "eps": 22.59,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_137328_26012026161612_iXBRL_WEB.html",
+   "shares": 3105100000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 34170.99,
+   "pat": 7631.72,
+   "pat_owners": 7602.63,
+   "eps": 24.47,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_153577_28042026155545_iXBRL_WEB.html",
+   "shares": 3108150000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 35541.96,
+   "pat": 7656.51,
+   "pat_owners": 7632.31,
+   "eps": 24.55,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_BANKING_175729_18072026151922_iXBRL_WEB.html",
+   "shares": 3110800000
+  }
+ ],
+ "bvps": 687.16,
+ "equity_cr": 213578.92,
+ "bs_date": "2026-03-31",
+ "roe": 13.49,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 1.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "3,108,150,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Crores' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25 units: declared rounding 'Crores' implausible; values read with factor 1e-07 to Rs cr",
+  "equity = capital + reserves & surplus (bank format; excl. minority interest)"
+ ],
+ "flags": [],
+ "generated": "2026-09-24T21:04:31+00:00"
+}

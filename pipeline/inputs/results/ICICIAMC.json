@@ -1,0 +1,52 @@
+{
+ "sym": "ICICIAMC",
+ "scope": "Standalone",
+ "format": "NBFC_INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 1514.67,
+   "pat": 917.09,
+   "pat_owners": 917.09,
+   "eps": 18.55,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_135020_14012026191531_iXBRL_WEB.html",
+   "shares": 494300000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 1517.01,
+   "pat": 763.42,
+   "pat_owners": 763.42,
+   "eps": 15.45,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_150618_13042026185414_iXBRL_WEB.html",
+   "shares": 494260000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 1564.22,
+   "pat": 964.63,
+   "pat_owners": 964.63,
+   "eps": 19.52,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_174099_13072026165704_iXBRL_WEB.html",
+   "shares": 494260000
+  }
+ ],
+ "bvps": 84.39,
+ "equity_cr": 4171.17,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 27.25,
+ "dps_basis": "2 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "494,260,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-24T21:04:37+00:00"
+}

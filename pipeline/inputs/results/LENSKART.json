@@ -1,0 +1,67 @@
+{
+ "sym": "LENSKART",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 2096.14,
+   "pat": 103.45,
+   "pat_owners": 102.22,
+   "eps": 0.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129783_29112025230116_iXBRL_WEB.html",
+   "shares": 771685000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 2307.73,
+   "pat": 132.71,
+   "pat_owners": 131.03,
+   "eps": 0.77,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141993_11022026174136_iXBRL_WEB.html",
+   "shares": 1734885000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 2515.71,
+   "pat": 203.62,
+   "pat_owners": 200.28,
+   "eps": 1.17,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159311_20052026181503_iXBRL_WEB.html",
+   "shares": 1736415000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 2714.18,
+   "pat": 228.43,
+   "pat_owners": 221.84,
+   "eps": 1.28,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185768_12082026165901_iXBRL_WEB.html",
+   "shares": 1738750000
+  }
+ ],
+ "bvps": 50.33,
+ "equity_cr": 8738.51,
+ "bs_date": "2026-03-31",
+ "roe": 8.68,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "1,736,415,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q3 FY26: share count x2.25 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.61 x 77.169 cr sh = 47.1 vs pat_owners 102.22 (-53.9%); implied EPS denominator 167.574 cr sh"
+ ],
+ "generated": "2026-09-24T21:04:38+00:00"
+}

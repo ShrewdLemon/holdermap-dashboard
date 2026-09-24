@@ -40,8 +40,11 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "src" / "data.json"
+DATA = ROOT / "src" / "data.json"            # ANANDRATHI snapshot (fallback when src/co/ is empty)
+CO_DIR = ROOT / "src" / "co"                  # one holdings snapshot per company (pipeline/company.py)
 UNIV = ROOT / "pipeline" / "inputs" / "univ.json"
+PXU = ROOT / "pipeline" / "inputs" / "px_universe.json"  # shares, 30-Jun close, bonus events per symbol
+IDX_HIST = ROOT / "pipeline" / "inputs" / "index_hist.json"  # Nifty 50 / 500 daily closes since inception
 BHAV_AR = ROOT / "pipeline" / "inputs" / "bhav_ar.json"
 CACHE = ROOT / "cache" / "closes.json"
 OUT = ROOT / "dashboard" / "site" / "prices.js"
@@ -99,11 +102,11 @@ def fetch_equities(day: dt.date, symbols: set[str]) -> dict[str, list[float]] | 
     """{symbol: [close, high, low]} for the EQ rows, or None if no file for that day."""
     if day >= UDIFF_FROM:
         body = _get(UDIFF.format(day))
-        cols = ("TckrSymb", "SctySrs", "ClsPric", "HghPric", "LwPric")
+        cols = ("TckrSymb", "SctySrs", "ClsPric", "HghPric", "LwPric", "PrvsClsgPric")
     else:
         m = day.strftime("%b").upper()
         body = _get(OLD_BHAV.format(y=day.year, m=m, d=day))
-        cols = ("SYMBOL", "SERIES", "CLOSE", "HIGH", "LOW")
+        cols = ("SYMBOL", "SERIES", "CLOSE", "HIGH", "LOW", "PREVCLOSE")
     if body is None:
         return None
     if body[:2] != b"PK":
@@ -115,7 +118,7 @@ def fetch_equities(day: dt.date, symbols: set[str]) -> dict[str, list[float]] | 
         row = {k.strip(): (v or "").strip() for k, v in row.items() if k}
         s = row.get(cols[0])
         if s in symbols and row.get(cols[1]) in ("EQ", "BE", "BZ") and (s not in out or row[cols[1]] == "EQ"):
-            out[s] = [float(row[cols[2]]), float(row[cols[3]]), float(row[cols[4]])]
+            out[s] = [float(row[cols[2]]), float(row[cols[3]]), float(row[cols[4]]), float(row.get(cols[5]) or 0)]
     return out
 
 
@@ -150,8 +153,14 @@ class Closes:
             return None
         key = d.isoformat()
         got = self.days.get(key)
-        if got is not None:
-            return None if got.get("holiday") else got
+        if got is not None and not got.get("holiday"):
+            # A day cached for a smaller universe is refetched while it is recent.
+            missing = len(self.symbols - set(got["eq"]))
+            old = got.get("v", 1) < 2  # cached before NSE's previous close was kept
+            if (missing <= 0.2 * len(self.symbols) and not old) or (self.today - d).days > 10 or self.offline or self.refused:
+                return got
+        elif got is not None:
+            return None
         if self.offline or self.refused:
             return None
         try:
@@ -167,9 +176,7 @@ class Closes:
             if (self.today - d).days >= 4:
                 self.days[key] = {"holiday": True}
             return None
-        if SYM not in eq:
-            print(f"warning: {d}: {SYM} missing from the bhavcopy", file=sys.stderr)
-        self.days[key] = {"eq": eq, "ix": ix or {}}
+        self.days[key] = {"eq": eq, "ix": ix or {}, "v": 2}
         return self.days[key]
 
     def on_or_before(self, d: dt.date, lookback: int = 10) -> tuple[dt.date, dict] | None:
@@ -195,123 +202,214 @@ def quarter_start(d: dt.date) -> dt.date:
     return dt.date(d.year, 3 * ((d.month - 1) // 3) + 1, 1)
 
 
-def build(today: dt.date, offline: bool = False) -> dict:
-    D = json.loads(DATA.read_text())
-    univ = {u["sym"]: u for u in json.loads(UNIV.read_text())}
-    symbols = set(univ) | {SYM}
-    C = Closes(CACHE, symbols, today, offline)
+def load_companies() -> dict[str, dict]:
+    cos = {f.stem: json.loads(f.read_text()) for f in sorted(CO_DIR.glob("*.json"))} if CO_DIR.exists() else {}
+    if not cos:
+        cos = {SYM: json.loads(DATA.read_text())}
+    return cos
 
-    # ---- ANANDRATHI daily series (adjusted): the snapshot's series, extended with every new trading day
-    series = {r[0]: list(r) for r in D["px_series"]}
-    raw = {r[0]: r[4] for r in json.loads(BHAV_AR.read_text())}  # raw closes, listing to Aug 2026
-    first = min(series)  # older cached days are return bases only, not part of the daily series
-    for day, (c, h, l) in ((k, v["eq"][SYM]) for k, v in C.days.items() if not v.get("holiday") and SYM in v.get("eq", {})):
-        f = factor(day)
-        raw[day] = c
-        if day >= first:
-            series[day] = [day, round(c / f, 2), round(h / f, 2), round(l / f, 2)]
-    last = dt.date.fromisoformat(max(series))
-    d = last + dt.timedelta(days=1)
-    while d <= today:
-        got = C.day(d)
-        if got and SYM in got["eq"]:
-            c, h, l = got["eq"][SYM]
-            f = factor(d.isoformat())
-            series[d.isoformat()] = [d.isoformat(), round(c / f, 2), round(h / f, 2), round(l / f, 2)]
-            raw[d.isoformat()] = c
-        d += dt.timedelta(days=1)
+
+def company_prices(sym: str, D: dict, C: "Closes", today: dt.date, events: list, ix_on) -> dict:
+    """Latest close, series extension, 52w range and return bases for one company."""
+    series = {r[0]: list(r[:4]) for r in D["px_series"]}
+    w3y_ratio: list = []  # (ex-date, ratio) for corporate actions found through NSE's previous close
+    rebased = None
+    end = (D.get("co") or {}).get("px_end") or max(series)
+    # bonus/split going ex after the snapshot: earlier prices are divided by the ratio
+    later = [(ex, r) for ex, r in events if ex > end]
+    def fac(day):
+        f = 1.0
+        for ex, r in later:
+            if day < ex:
+                f *= r
+        return f
+    if later:
+        series = {k: [k] + [round(v / fac(k), 2) for v in r[1:]] for k, r in series.items()}
+    add, stale = [], None
+    for k in sorted(C.days):
+        v = C.days[k]
+        if k <= end or v.get("holiday") or sym not in v.get("eq", {}):
+            continue
+        c, h, l = v["eq"][sym][:3]
+        nse_prev = v["eq"][sym][3] if len(v["eq"][sym]) > 3 else 0
+        f = fac(k)
+        prior = max((d for d in series if d < k), default=None)
+        if prior and nse_prev:
+            ours = series[prior][1]  # our previous close, in today's share terms
+            ratio = ours / (nse_prev / f)
+            if abs(ratio - 1) > 0.01:
+                # NSE adjusted its previous close: a split, bonus or demerger went ex today. Re-base history.
+                series = {d: [d] + [round(x / ratio, 2) for x in r[1:]] for d, r in series.items()}
+                w3y_ratio.append((k, ratio))
+        row = [k, round(c / f, 2), round(h / f, 2), round(l / f, 2)]
+        series[k] = row
+        add = [r for r in add if r[0] < k] + [row]
     rows = [series[k] for k in sorted(series)]
+    if w3y_ratio:  # every earlier row changed: ship the whole re-based tail, not just the new days
+        add = [r for r in rows if r[0] > end]
+        rebased = {"from": end, "ratios": w3y_ratio}
     for a, b in zip(rows, rows[1:]):
-        if abs(b[1] / a[1] - 1) > MAX_JUMP:
-            raise SystemExit(f"{SYM} moved {100 * (b[1] / a[1] - 1):.1f}% from {a[0]} to {b[0]}: "
-                             "add the corporate action to BONUSES in pipeline/live.py")
+        if b[0] > end and abs(b[1] / a[1] - 1) > MAX_JUMP:
+            v = C.days.get(b[0], {}).get("eq", {}).get(sym, [])
+            if len(v) > 3 and v[3] and abs(v[3] / fac(b[0]) / a[1] - 1) <= 0.01:
+                continue  # NSE's own previous close agrees: a genuine price move
+            stale = f"{sym} moved {100 * (b[1] / a[1] - 1):.1f}% from {a[0]} to {b[0]} without NSE's previous close explaining it"
+            rows = [r for r in rows if r[0] < b[0]]
+            add = [r for r in add if r[0] < b[0]]
+            break
     now_row, prev_row = rows[-1], rows[-2]
     asof = dt.date.fromisoformat(now_row[0])
+    hist = D.get("px_hist") or {}
+    rb = 1.0
+    for _, r in w3y_ratio:
+        rb *= r
+    w3y = {d: c / fac(d) / rb for d, c in hist.get("w3y", [])}
+    listing = hist.get("listing")
 
-    def adj_close(day: dt.date) -> tuple[str, float, float, str] | None:
-        """(trade date, adjusted, raw, source) on or before day, from local data first."""
+    def close_on(day: dt.date):
         for i in range(10):
             k = (day - dt.timedelta(days=i)).isoformat()
-            if k in raw:
-                return k, round(raw[k] / factor(k), 4), raw[k], "NSE bhavcopy"
             if k in series:
-                return k, series[k][1], round(series[k][1] * factor(k), 2), "NSE bhavcopy"
+                return k, series[k][1], round(series[k][1] * factor_raw(k), 2)
+            if k in w3y:
+                return k, round(w3y[k], 4), None
         return None
 
-    def index_on(day: str) -> dict:
-        b = D["bench"]
-        known = {k: b[n][day] for k, n in (("n50", "nifty50"), ("n500", "nifty500")) if day in b.get(n, {})}
-        if len(known) == 2:
-            return known
-        got = C.day(dt.date.fromisoformat(day))
-        return {**(got or {}).get("ix", {}), **known} if got else known
+    def factor_raw(k):  # adjusted -> raw (only known for ANANDRATHI's own bonus list)
+        return factor(k) if sym == SYM else 1.0
 
-    now_ix = index_on(now_row[0])
-
-    # ---- return bases
     per = [("1m", "1 month", months_back(asof, 1), None), ("3m", "3 months", months_back(asof, 3), None),
            ("6m", "6 months", months_back(asof, 6), None), ("ytd", "Year to date", dt.date(asof.year - 1, 12, 31), None),
-           ("1y", "1 year", months_back(asof, 12), None), ("3y", "3 years, annualised", months_back(asof, 36), 3),
-           ("sl", "Since listing, annualised", dt.date.fromisoformat(LISTED), None)]
+           ("1y", "1 year", months_back(asof, 12), None), ("3y", "3 years, annualised", months_back(asof, 36), 3)]
     bases = []
     for k, label, target, yrs in per:
-        got = adj_close(target)
+        got = close_on(target)
         if got is None:
-            continue
-        bd, s, sraw, src = got
-        if k == "sl":
-            yrs = (asof - dt.date.fromisoformat(bd)).days / 365.25
-        ix = index_on(bd)
-        bases.append(dict(k=k, l=label, d=bd, s=s, sraw=sraw, ssrc=src, n50=ix.get("n50"), n500=ix.get("n500"), yrs=yrs))
-
-    # ---- 52-week range (intraday, adjusted)
+            if sym == SYM and k == "3y":  # ANANDRATHI snapshot keeps raw closes back to listing
+                raw = {r[0]: r[4] for r in json.loads(BHAV_AR.read_text())}
+                for i in range(10):
+                    kk = (target - dt.timedelta(days=i)).isoformat()
+                    if kk in raw:
+                        got = (kk, round(raw[kk] / factor(kk), 4), raw[kk])
+                        break
+            if got is None:
+                continue
+        bd, s, sraw = got
+        bases.append(dict(k=k, l=label, d=bd, s=s, sraw=sraw if sraw is not None else s, ssrc="NSE bhavcopy", yrs=yrs, **ix_on(bd)))
+    if listing or sym == SYM:
+        if listing:
+            ld, ladj, lraw = listing[0], listing[1] / fac(listing[0]) / rb, listing[2]
+        else:
+            raw = json.loads(BHAV_AR.read_text())[0]
+            ld, lraw = raw[0], raw[4]
+            ladj = round(lraw / factor(ld), 4)
+        yrs = (asof - dt.date.fromisoformat(ld)).days / 365.25
+        if yrs > 0.5:
+            bases.append(dict(k="sl", l="Since listing, annualised" if not hist.get("listing_is_first_available") else "Since " + ld[:4] + ", annualised",
+                              d=ld, s=round(ladj, 4), sraw=lraw, ssrc="NSE bhavcopy", yrs=yrs, **ix_on(ld)))
     y1 = months_back(asof, 12).isoformat()
     win = [r for r in rows if r[0] > y1]
     hi = max(win, key=lambda r: r[2])
     lo = min(win, key=lambda r: r[3])
-
-    # ---- open quarter: the snapshot's "Q3/2026 to date" values use the close on or before its quarter end
     oq_row = [r for r in rows if r[0] <= OPEN_Q_END][-1]
-    oq = dict(d=oq_row[0], c=oq_row[1], raw=round(oq_row[1] * factor(oq_row[0]), 2), open=oq_row[0] < OPEN_Q_END and asof.isoformat() < OPEN_Q_END)
+    out = dict(now=dict(d=now_row[0], c=now_row[1], prev=prev_row[1], prevd=prev_row[0]),
+               oq=dict(d=oq_row[0], c=oq_row[1], raw=round(oq_row[1] * factor_raw(oq_row[0]), 2), open=asof.isoformat() < OPEN_Q_END),
+               add=add, w52=dict(hi=hi[2], hid=hi[0], lo=lo[3], lod=lo[0]), bases=bases)
+    if later:
+        out["rescale"] = later
+    if rebased:
+        # share multiplier since the snapshot (e.g. 2.0 after a 1:1 bonus): the app scales share counts with it
+        rebased["m"] = round(rb, 6)
+        out["rebased"] = rebased
+    if stale:
+        out["stale"] = stale
+    return out
 
-    # ---- universe: latest close, quarter-to-date change, market cap
-    latest = C.on_or_before(asof) or (None, {"eq": {}})
-    qbase_day = quarter_start(asof) - dt.timedelta(days=1)
+
+def build(today: dt.date, offline: bool = False) -> dict:
+    cos = load_companies()
+    univ = {u["sym"]: u for u in json.loads(UNIV.read_text())}
+    pxu = json.loads(PXU.read_text()) if PXU.exists() else {}
+    for s, u in univ.items():
+        pxu.setdefault(s, {"shares": u["shares"], "qbase_close": u.get("close_q2"), "bonus_events": []})
+    symbols = set(pxu) | set(cos)
+    C = Closes(CACHE, symbols, today, offline)
+
+    # every trading day since the oldest snapshot end, for all symbols (one bhavcopy per day)
+    start = min(dt.date.fromisoformat((D.get("co") or {}).get("px_end") or D["px_series"][-1][0]) for D in cos.values())
+    d = start + dt.timedelta(days=1)
+    while d <= today:
+        C.day(d)
+        d += dt.timedelta(days=1)
+    latest = C.on_or_before(today) or (None, {"eq": {}, "ix": {}})
+
+    bench = (cos.get(SYM) or next(iter(cos.values())))["bench"]
+    # Full Nifty 50 / Nifty 500 price history (niftyindices.com) for bases older than NSE's daily index files.
+    ih = json.loads(IDX_HIST.read_text()) if IDX_HIST.exists() else {}
+    ix_cache: dict[str, dict] = {}
+    def ix_on(day: str) -> dict:
+        if day not in ix_cache:
+            known = {k: bench[n][day] for k, n in (("n50", "nifty50"), ("n500", "nifty500")) if day in bench.get(n, {})}
+            for k in ("n50", "n500"):
+                if k not in known and day in ih.get(k, {}):
+                    known[k] = ih[k][day]
+            ih_last = max(max(ih.get("n50", {}) or {"": 0}), max(ih.get("n500", {}) or {"": 0})) if ih else ""
+            if len(known) < 2 and not (ih and day <= ih_last):  # the history file already answers every older day
+                got = C.day(dt.date.fromisoformat(day))
+                known = {**((got or {}).get("ix") or {}), **known}
+            out = {"n50": known.get("n50"), "n500": known.get("n500")}
+            for k in ("n50", "n500"):  # the index did not exist yet on that day
+                first = (ih.get("first") or {}).get(k)
+                if out[k] is None and first and day < first:
+                    out[k + "_pre"] = first
+            ix_cache[day] = out
+        return ix_cache[day]
+
+    co_out, stale = {}, []
+    for sym, D in cos.items():
+        ev = [tuple(e) for e in (pxu.get(sym) or {}).get("bonus_events", [])]
+        if sym == SYM:
+            ev = [e for e in ev if e[0] > "2026-09-23"]
+        try:
+            co_out[sym] = company_prices(sym, D, C, today, ev, ix_on)
+        except Exception as e:  # one bad company must not block the others
+            print(f"warning: {sym}: {type(e).__name__}: {e}", file=sys.stderr)
+            continue
+        if "stale" in co_out[sym]:
+            stale.append(co_out[sym]["stale"])
+    for m in stale:
+        print("warning:", m, file=sys.stderr)
+
+    asof = max(v["now"]["d"] for v in co_out.values())
+    now_ix = ix_on(asof)
+
+    qbase_day = quarter_start(dt.date.fromisoformat(asof)) - dt.timedelta(days=1)
     if qbase_day.isoformat() == "2026-06-30":
-        qbase = {s: [u["close_q2"]] for s, u in univ.items() if u.get("close_q2")}
+        qbase = {s: v.get("qbase_close") for s, v in pxu.items()}
     else:
         got = C.on_or_before(qbase_day)
-        qbase = got[1]["eq"] if got else {}
-    out_u, stale = {}, []
-    for s, u in univ.items():
+        qbase = {s: c[0] for s, c in (got[1]["eq"] if got else {}).items()}
+    out_u, missing = {}, []
+    for s, v in pxu.items():
         px = (latest[1]["eq"].get(s) or [None])[0]
         if px is None:
-            stale.append(s)
+            missing.append(s)
             continue
-        base = (qbase.get(s) or [None])[0]
+        base = qbase.get(s)
         q = round(100 * (px / base - 1), 2) if base else None
-        if q is not None and abs(q) > 60:
-            print(f"warning: {s} QTD {q}% looks like a split or bonus; shown as n/a", file=sys.stderr)
+        if q is not None and abs(q) > 60 and any(qbase_day.isoformat() < ex <= latest[0].isoformat() for ex, _ in v.get("bonus_events", [])):
+            print(f"warning: {s} QTD {q}% spans a split/bonus; shown as n/a", file=sys.stderr)
             q = None
-        out_u[s] = [px, q, round(u["shares"] * px / 1e7)]
-    if stale:
-        print(f"note: no {asof} close for {len(stale)} symbols, keeping snapshot prices: {', '.join(stale[:8])}", file=sys.stderr)
+        mult = ((co_out.get(s) or {}).get("rebased") or {}).get("m", 1.0)
+        out_u[s] = [px, q, round(v["shares"] * mult * px / 1e7)]
+    if missing:
+        print(f"note: no {latest[0]} close for {len(missing)} symbols, keeping snapshot prices: {', '.join(sorted(missing)[:8])}", file=sys.stderr)
 
     C.save()
-    return dict(
-        asof=asof.isoformat(),
-        built=dt.datetime.now(IST).isoformat(timespec="minutes"),
-        src="NSE bhavcopy and NSE index closes (nsearchives.nseindia.com)",
-        stale=bool(C.refused),
-        now=dict(d=now_row[0], c=now_row[1], prev=prev_row[1], prevd=prev_row[0], n50=now_ix.get("n50"), n500=now_ix.get("n500")),
-        oq=oq,
-        series=[r for r in rows if r[0] >= months_back(asof, 13).isoformat()],
-        w52=dict(hi=hi[2], hid=hi[0], lo=lo[3], lod=lo[0]),
-        bases=bases,
-        univ=out_u,
-        qbase=qbase_day.isoformat(),
-        fetched=C.fetched,
-    )
+    return dict(asof=asof, built=dt.datetime.now(IST).isoformat(timespec="minutes"),
+                src="NSE bhavcopy and NSE index closes (nsearchives.nseindia.com)",
+                stale=bool(C.refused), ix=dict(now=now_ix), co=co_out, univ=out_u,
+                qbase=qbase_day.isoformat(), fetched=C.fetched)
 
 
 def main(argv=None):
@@ -323,9 +421,9 @@ def main(argv=None):
     px = build(today, a.offline)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("window.__PX__ = " + json.dumps(px, separators=(",", ":")) + ";\n")
-    n = px["now"]
-    print(f"prices.js: {SYM} {n['c']} on {n['d']} (prev {n['prev']}), Nifty 50 {n['n50']}, Nifty 500 {n['n500']}; "
-          f"{len(px['univ'])}/101 universe closes; {px['fetched']} NSE days fetched"
+    ar = px["co"].get(SYM, {}).get("now", {})
+    print(f"prices.js: as of {px['asof']}; {len(px['co'])} companies; {len(px['univ'])} universe closes; "
+          f"{SYM} {ar.get('c')}; Nifty 50 {px['ix']['now']['n50']}; {px['fetched']} NSE days fetched"
           + ("; NSE REFUSED, cache used" if px["stale"] else ""))
     return 0
 

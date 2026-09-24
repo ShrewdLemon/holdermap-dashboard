@@ -1,0 +1,65 @@
+{
+ "sym": "CANHLIFE",
+ "scope": "Standalone",
+ "format": "LI",
+ "rev_basis": "net premium (insurer: net premium income / net premium written)",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 2259.73,
+   "pat": 40.81,
+   "pat_owners": 40.81,
+   "eps": 0.43,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_121959_27102025194016_iXBRL_WEB.html",
+   "shares": 950000000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 2867.16,
+   "pat": 27.65,
+   "pat_owners": 27.65,
+   "eps": 0.29,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_139669_02022026170514_iXBRL_WEB.html",
+   "shares": 950000000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 3060.66,
+   "pat": 34.73,
+   "pat_owners": 34.73,
+   "eps": 0.37,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_180050_29072026184857_iXBRL_WEB.html",
+   "shares": 950000000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 2047.52,
+   "pat": 28.14,
+   "pat_owners": 28.14,
+   "eps": 0.3,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_176028_20072026163410_iXBRL_WEB.html",
+   "shares": 950000000
+  }
+ ],
+ "bvps": 16.9,
+ "equity_cr": 1605.47,
+ "bs_date": "2026-03-31",
+ "roe": 8.34,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.4,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "950,000,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "equity = share capital + reserves & surplus (excl. fair-value change account)"
+ ],
+ "flags": [],
+ "generated": "2026-09-24T21:04:35+00:00"
+}

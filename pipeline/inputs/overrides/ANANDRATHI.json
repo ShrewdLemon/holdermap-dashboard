@@ -1,0 +1,119 @@
+{
+ "_why": "Hand curation carried over from pipeline/data.py + export.py (ANANDRATHI dashboard v1). Names/countries typed by hand; stale Bloomberg rows excluded from the open-quarter flows; individuals list curation.",
+ "generic_names": false,
+ "nice": {
+  "Vanguard Group Inc/The": "The Vanguard Group",
+  "Blackrock Inc": "BlackRock",
+  "Goldman Sachs Group Inc/The": "Goldman Sachs Group",
+  "Teachers Insurance & Annuity Association of America": "TIAA (Nuveen)",
+  "AXIS MAX LIFE INSURANCE LTD": "Axis Max Life Insurance",
+  "SAMCO ASSET MANAGEMENT INDIA": "Samco Asset Management",
+  "CAPITALMIND ASSET MANAGEMENT": "Capitalmind Asset Management",
+  "ALPHAGREP INVESTMENT MGMT INDIA": "AlphaGrep Investment Mgmt",
+  "JAIPUR SECURITIES PVT LTD": "Jaipur Securities Pvt Ltd",
+  "SUHAS GUPTA FAMILY TRUST": "Suhas Gupta Family Trust",
+  "Canara Robeco Asset Management Co Ltd/India": "Canara Robeco AMC",
+  "ICICI Prudential Asset Management Co Ltd/India": "ICICI Prudential AMC",
+  "Kotak Mahindra Asset Management Co Ltd/India": "Kotak Mahindra AMC",
+  "Axis Asset Management Co Ltd/India": "Axis AMC",
+  "Union Mutual Fund/India": "Union Mutual Fund",
+  "Motilal Oswal Asset Management Co Ltd": "Motilal Oswal AMC",
+  "Aditya Birla Sun Life Asset Management Co Ltd": "Aditya Birla Sun Life AMC",
+  "Bank of India Investment Managers Pvt Ltd": "Bank of India Investment Mgrs",
+  "Nippon Life India Asset Management Ltd": "Nippon Life India AMC",
+  "Invesco Asset Management India Pvt Ltd": "Invesco AMC (India)",
+  "Star Union Dai-Ichi Life Insurance Co Ltd": "Star Union Dai-ichi Life",
+  "ICICI Prudential Life Insurance Co Ltd": "ICICI Prudential Life",
+  "Aditya Birla Sun Life Insurance Co Ltd": "Aditya Birla Sun Life Insurance",
+  "Gupta Pradeep Kumar": "Pradeep Kumar Gupta",
+  "Gupta Priti": "Priti Gupta",
+  "Gupta Navratan Mal": "Navratan Mal Gupta",
+  "Maru Pooja": "Pooja Maru",
+  "Mantri Tara": "Tara Mantri",
+  "Gupta Krishnav Pradeep": "Krishnav Pradeep Gupta",
+  "Mundra Phool Kaur": "Phool Kaur Mundra",
+  "Biyani Asha Kailash": "Asha Kailash Biyani",
+  "Gupta Aishwariya P": "Aishwariya P Gupta",
+  "Azeez Feroze": "Feroze Azeez",
+  "Rathi Amit": "Amit Rathi",
+  "Saigal Supriya": "Supriya Saigal",
+  "Ali Fahim Sultan": "Fahim Sultan Ali",
+  "Rawal Rakesh": "Rakesh Rawal",
+  "Rawal Preeti": "Preeti Rawal",
+  "Rathi Suresh": "Suresh Rathi",
+  "Taiwan Securities Co Ltd": "Taiwan Securities (Taishin)",
+  "Anand Rathi": "Anand Rathi"
+ },
+ "cty": {
+  "Vanguard Group Inc/The": "US",
+  "Blackrock Inc": "US",
+  "Norges Bank": "NO",
+  "American Century Cos Inc": "US",
+  "Goldman Sachs Group Inc/The": "US",
+  "WBC Holdings LP": "US",
+  "Victory Capital Management Inc": "US",
+  "Driehaus Capital Management LLC": "US",
+  "WisdomTree Inc": "US",
+  "Teachers Insurance & Annuity Association of America": "US",
+  "State Street Corp": "US",
+  "FMR LLC": "US",
+  "AllianceBernstein Holding LP": "US",
+  "National Bank of Canada": "CA",
+  "Thrivent Financial for Lutherans": "US",
+  "Taiwan Securities Co Ltd": "TW",
+  "Nomura Holdings Inc": "JP",
+  "Nationwide Fund Advisors": "US",
+  "Legal & General Group PLC": "GB",
+  "Franklin Templeton Inc": "US",
+  "FlexShares Trust": "US",
+  "Canadian Imperial Bank of Commerce": "CA",
+  "Credit Agricole Group": "FR",
+  "Deutsche Bank AG": "DE",
+  "Prudential Financial Inc": "US",
+  "FIL Ltd": "BM",
+  "Russell Investments Group Ltd": "US",
+  "JPMorgan Chase & Co": "US",
+  "Sun Life Financial Inc": "CA",
+  "Wilshire Advisors LLC": "US"
+ },
+ "cty_default": "IN",
+ "ind_company_regex": "(Ltd|LTD|Pvt|PVT)",
+ "ind_excl": [
+  "Rathi Supriya",
+  "Rathi Suresh",
+  "Rawal Family Trust",
+  "Rawal Preeti",
+  "Rawal Rakesh"
+ ],
+ "ind_patch": {
+  "Supriya Saigal": {
+   "s0_from": "Rathi Supriya",
+   "note": "formerly Supriya Rathi"
+  },
+  "Anand Rathi": {
+   "note": "incl. HUF"
+  },
+  "Pradeep Kumar Gupta": {
+   "note": "incl. HUF"
+  },
+  "Navratan Mal Gupta": {
+   "note": "incl. HUF"
+  }
+ },
+ "flow_excl": [
+  "ANANDRATHI HOUSING FIN LTD",
+  "Rathi Supriya"
+ ],
+ "flow_excl_B": [
+  "Ali Fahim Sultan",
+  "Munix India Pvt Ltd",
+  "Rathi Amit",
+  "Rathi Supriya",
+  "Rathi Suresh",
+  "Rawal Family Trust",
+  "Rawal Preeti",
+  "Rawal Rakesh",
+  "SUHAS GUPTA FAMILY TRUST",
+  "Saigal Supriya"
+ ]
+}

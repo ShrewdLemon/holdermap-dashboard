@@ -1,0 +1,63 @@
+{
+ "sym": "TATACAP",
+ "scope": "Consolidated",
+ "format": "NBFC_INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 7737.18,
+   "pat": 1118.97,
+   "pat_owners": 1097.32,
+   "eps": 2.73,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_122358_28102025182720_iXBRL_WEB.html",
+   "shares": 4006520000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 7975.44,
+   "pat": 1264.74,
+   "pat_owners": 1256.87,
+   "eps": 2.97,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_135845_19012026180416_iXBRL_WEB.html",
+   "shares": 4216680000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 8160.1,
+   "pat": 1466.27,
+   "pat_owners": 1502.02,
+   "eps": 3.54,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_152406_23042026182014_iXBRL_WEB.html",
+   "shares": 4216690000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 8821.93,
+   "pat": 1628.18,
+   "pat_owners": 1547.38,
+   "eps": 3.65,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_179215_28072026163535_iXBRL_WEB.html",
+   "shares": 4217100000
+  }
+ ],
+ "bvps": 108.76,
+ "equity_cr": 45861.49,
+ "bs_date": "2026-03-31",
+ "roe": 13.16,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.57,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "4,216,690,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-24T21:04:33+00:00"
+}

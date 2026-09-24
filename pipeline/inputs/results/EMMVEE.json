@@ -1,0 +1,69 @@
+{
+ "sym": "EMMVEE",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 1131.0,
+   "pat": 237.86,
+   "pat_owners": 237.86,
+   "eps": 4.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129862_02122025004437_iXBRL_WEB.html",
+   "shares": 593549500
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 1152.25,
+   "pat": 263.64,
+   "pat_owners": 263.64,
+   "eps": 4.11,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_135132_15012026162420_iXBRL_WEB.html",
+   "shares": 692345000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 1738.81,
+   "pat": 392.38,
+   "pat_owners": 392.38,
+   "eps": 5.67,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_153897_28042026232110_iXBRL_WEB.html",
+   "shares": 692345000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 1555.52,
+   "pat": 380.29,
+   "pat_owners": 380.29,
+   "eps": 5.49,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_174864_15072026201857_iXBRL_WEB.html",
+   "shares": 692345000
+  }
+ ],
+ "bvps": 53.37,
+ "equity_cr": 3694.94,
+ "bs_date": "2026-03-31",
+ "roe": 54.78,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "692,345,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 380.29 used (EPS-consistent)",
+  "Q2 FY26: owners-of-parent line blank; PAT = 237.86 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 263.64 used (within 15% of EPS x shares; see EPS gate)"
+ ],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS 4.11 x 69.234 cr sh = 284.6 vs pat_owners 263.64 (+7.9%); implied EPS denominator 64.146 cr sh"
+ ],
+ "generated": "2026-09-24T21:04:36+00:00"
+}

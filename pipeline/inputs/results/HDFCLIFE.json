@@ -1,0 +1,90 @@
+{
+ "sym": "HDFCLIFE",
+ "scope": "Consolidated",
+ "format": "LI",
+ "rev_basis": "net premium (insurer: net premium income / net premium written)",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 23842.99,
+   "pat": 475.36,
+   "pat_owners": 475.36,
+   "eps": 2.21,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_85319_17042025182333_iXBRL_WEB.html",
+   "shares": 2152990000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 14539.42,
+   "pat": 548.35,
+   "pat_owners": 548.35,
+   "eps": 2.55,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_103111_15072025182415_iXBRL_WEB.html",
+   "shares": 2154690000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 18871.23,
+   "pat": 448.29,
+   "pat_owners": 448.29,
+   "eps": 2.08,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_119827_15102025221101_iXBRL_WEB.html",
+   "shares": 2156090000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 18351.42,
+   "pat": 418.19,
+   "pat_owners": 418.19,
+   "eps": 1.94,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_135208_15012026195716_iXBRL_WEB.html",
+   "shares": 2157620000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 25998.42,
+   "pat": 497.49,
+   "pat_owners": 497.49,
+   "eps": 2.31,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_177848_24072026164854_iXBRL_WEB.html",
+   "shares": 2157820000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 16727.63,
+   "pat": 611.19,
+   "pat_owners": 611.19,
+   "eps": 2.83,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_LI_174781_15072026175112_iXBRL_WEB.html",
+   "shares": 2172470000
+  }
+ ],
+ "bvps": 80.91,
+ "equity_cr": 17459.57,
+ "bs_date": "2026-03-31",
+ "roe": 20.13,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 2.1,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "2,157,820,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q3 FY26: filing's quarter column states period 2025-01-10 to 2025-12-31 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "equity = share capital + reserves & surplus (excl. fair-value change account)"
+ ],
+ "flags": [],
+ "generated": "2026-09-24T21:04:32+00:00"
+}
