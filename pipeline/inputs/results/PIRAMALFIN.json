@@ -1,0 +1,52 @@
+{
+ "sym": "PIRAMALFIN",
+ "scope": "Consolidated",
+ "format": "NBFC_INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 2917.68,
+   "pat": 401.01,
+   "pat_owners": 400.17,
+   "eps": 17.69,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_137138_23012026183816_iXBRL_WEB.html",
+   "shares": 226100000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 3424.01,
+   "pat": 501.77,
+   "pat_owners": 500.94,
+   "eps": 22.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_153301_27042026193908_iXBRL_WEB.html",
+   "shares": 226100000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 3368.27,
+   "pat": 460.98,
+   "pat_owners": 459.12,
+   "eps": 20.38,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NBFC_INDAS_175164_16072026184206_iXBRL_WEB.html",
+   "shares": 226250000
+  }
+ ],
+ "bvps": 1244.97,
+ "equity_cr": 28148.66,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 11.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "226,100,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-24T21:04:39+00:00"
+}

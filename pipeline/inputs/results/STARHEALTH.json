@@ -1,0 +1,82 @@
+{
+ "sym": "STARHEALTH",
+ "scope": "Standalone",
+ "format": "GI",
+ "rev_basis": "net premium (insurer: net premium income / net premium written)",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 4819.57,
+   "pat": 0.51,
+   "pat_owners": 0.51,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_GI_1428968_30042025032541_WEB.xml",
+   "shares": 587790000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 3457.4,
+   "pat": 262.52,
+   "pat_owners": 262.52,
+   "eps": 4.47,
+   "src": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_GI_1497036_29072025072056_WEB.xml",
+   "shares": 587810000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 4233.38,
+   "pat": 54.9,
+   "pat_owners": 54.9,
+   "eps": 0.92,
+   "src": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_GI_1559242_28102025083718_WEB.xml",
+   "shares": 587950000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 4360.91,
+   "pat": 128.22,
+   "pat_owners": 128.22,
+   "eps": 2.18,
+   "src": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_GI_1612228_28012026073406_WEB.xml",
+   "shares": 588400000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 5598.57,
+   "pat": 111.33,
+   "pat_owners": 111.33,
+   "eps": 1.89,
+   "src": "https://nsearchives.nseindia.com/corporate/xbrl/INTEGRATED_FILING_GI_1660681_28042026085314_WEB.xml",
+   "shares": 588400000
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [
+  "Q1 FY26: NSE has no iXBRL table for this filing - read from the XBRL instance",
+  "Q2 FY26: NSE has no iXBRL table for this filing - read from the XBRL instance",
+  "Q3 FY26: NSE has no iXBRL table for this filing - read from the XBRL instance",
+  "Q4 FY25: NSE has no iXBRL table for this filing - read from the XBRL instance",
+  "Q4 FY26: NSE has no iXBRL table for this filing - read from the XBRL instance"
+ ],
+ "flags": [
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-24T21:04:40+00:00"
+}

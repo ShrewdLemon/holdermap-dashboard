@@ -21,11 +21,17 @@ class LiveTest(unittest.TestCase):
     def test_offline_build_matches_snapshot(self):
         live.CACHE = Path(tempfile.mkdtemp()) / "closes.json"
         px = live.build(dt.date(2026, 9, 23), offline=True)
-        self.assertEqual(px["now"]["d"], "2026-09-23")
-        self.assertEqual(px["now"]["c"], 2169.2)
-        self.assertEqual({b["k"] for b in px["bases"]}, {"1m", "3m", "6m", "ytd", "1y", "3y", "sl"})
-        sl = next(b for b in px["bases"] if b["k"] == "sl")
+        ar = px["co"]["ANANDRATHI"]
+        self.assertEqual(ar["now"]["d"], "2026-09-23")
+        self.assertEqual(ar["now"]["c"], 2169.2)
+        self.assertEqual({b["k"] for b in ar["bases"]}, {"1m", "3m", "6m", "ytd", "1y", "3y", "sl"})
+        sl = next(b for b in ar["bases"] if b["k"] == "sl")
         self.assertAlmostEqual(sl["s"], 583.55 / 4, places=3)
+        # every company snapshot yields a latest close and a 52-week range
+        for sym, c in px["co"].items():
+            with self.subTest(sym=sym):
+                self.assertGreater(c["now"]["c"], 0)
+                self.assertLessEqual(c["w52"]["lo"], c["w52"]["hi"])
 
 
 if __name__ == "__main__":

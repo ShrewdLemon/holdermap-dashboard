@@ -1,0 +1,35 @@
+{
+ "_about": "Q1 FY27 results that STARHEALTH and NIVABUPA filed ONLY as PDF (NSE has no integrated-filing XBRL row for Jun-26), presented under Ind AS 117 per IRDAI circular IRDAI/F&I/CIR/MISC/92/7/2026 dated 8-Jul-2026. The tables are images; values below were transcribed from the filed PDF pages by reading them, then gate-checked (EPS x shares vs PAT) in pipeline/results.py. Rs lakhs as filed. Columns: Q1 FY27 = three months to 30-Jun-2026; Q4 FY26 and Q1 FY26 = restated Ind AS 117 comparatives; FY26 = year to 31-Mar-2026. NOT comparable with the IGAAP-format quarters in the main series. Transcribed 2026-09-25.",
+ "STARHEALTH": {
+  "src": "https://nsearchives.nseindia.com/corporate/STARHEALTH_29072026180211_Integratedresults_29072026.pdf",
+  "pages": "4-5 (Annexure-I, Statement of Unaudited Results for the Quarter ended 30/06/2026)",
+  "announced": "2026-07-29 18:02",
+  "scope": "Standalone",
+  "face_value": 10,
+  "periods": ["2026-06-30", "2026-03-31", "2025-06-30", "FY26"],
+  "insurance_revenue": [491720, 467110, 433642, 1799856],
+  "pbt": [74170, -5972, 58808, 123400],
+  "pat": [54973, -5540, 43818, 91104],
+  "eps_basic": [9.34, -0.94, 7.45, 15.49],
+  "eps_diluted": [9.33, -0.94, 7.45, 15.48],
+  "share_capital": [58858, 58840, 58781, 58840],
+  "total_equity": [1014423, 957812, 910971, 957812],
+  "gwp": [428713, 596840, 360547, 1862192]
+ },
+ "NIVABUPA": {
+  "src": "https://nsearchives.nseindia.com/corporate/MAXBUPA_30072026161055_Discl30_Boardmeetingoutcome30072026.pdf",
+  "pages": "4-6 (Annexure-I, Statement of Unaudited Financial Results for the Quarter ended June 30, 2026)",
+  "announced": "2026-07-30 16:13",
+  "scope": "Standalone",
+  "face_value": 10,
+  "periods": ["2026-06-30", "2026-03-31", "2025-06-30", "FY26"],
+  "insurance_revenue": [227372, 211618, 176861, 782910],
+  "pbt": [18374, 18074, 9792, 46246],
+  "pat": [13780, 15936, 7144, 36525],
+  "eps_basic": [0.75, 0.86, 0.39, 1.98],
+  "eps_diluted": [0.74, 0.86, 0.39, 1.97],
+  "share_capital": [184923, 184746, 184506, 184746],
+  "total_equity": [383578, 358927, 345553, 358927],
+  "gwp": [214996, 287968, 163190, 858592]
+ }
+}

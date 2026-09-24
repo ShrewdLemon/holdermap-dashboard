@@ -1,0 +1,88 @@
+{
+ "sym": "POLYCAB",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 6985.8,
+   "pat": 734.36,
+   "pat_owners": 726.67,
+   "eps": 48.31,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_89462_06052025191426_iXBRL_WEB.html",
+   "shares": 150426000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 5905.98,
+   "pat": 599.7,
+   "pat_owners": 592.12,
+   "eps": 39.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_103585_17072025155801_iXBRL_WEB.html",
+   "shares": 150506000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 6477.21,
+   "pat": 692.96,
+   "pat_owners": 685.46,
+   "eps": 45.54,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_120644_17102025181553_iXBRL_WEB.html",
+   "shares": 150530000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 7636.13,
+   "pat": 630.17,
+   "pat_owners": 621.69,
+   "eps": 41.3,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_135402_16012026171416_iXBRL_WEB.html",
+   "shares": 150538000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 8864.48,
+   "pat": 785.6,
+   "pat_owners": 772.77,
+   "eps": 52.18,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155793_06052026164750_iXBRL_WEB.html",
+   "shares": 150551000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 8209.73,
+   "pat": 796.65,
+   "pat_owners": 784.34,
+   "eps": 52.09,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_175054_16072026155916_iXBRL_WEB.html",
+   "shares": 150635000
+  }
+ ],
+ "bvps": 797.64,
+ "equity_cr": 12008.58,
+ "bs_date": "2026-03-31",
+ "roe": 25.34,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 47.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "150,551,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Millions' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25 units: declared rounding 'Millions' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [],
+ "generated": "2026-09-24T21:04:39+00:00"
+}

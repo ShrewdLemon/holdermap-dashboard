@@ -1,0 +1,54 @@
+{
+ "sym": "MEESHO",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 3517.6,
+   "pat": -490.68,
+   "pat_owners": -490.68,
+   "eps": -1.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155210_01052026190219_iXBRL_WEB.html",
+   "shares": 4513130000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 3531.21,
+   "pat": -166.34,
+   "pat_owners": -166.34,
+   "eps": -0.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155903_06052026210910_iXBRL_WEB.html",
+   "shares": 4564060000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 3712.81,
+   "pat": -132.84,
+   "pat_owners": -132.84,
+   "eps": -0.28,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_177557_23072026202816_iXBRL_WEB.html",
+   "shares": 4608660000
+  }
+ ],
+ "bvps": 9.61,
+ "equity_cr": 4386.37,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "4,564,060,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = -132.84 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-24T21:04:38+00:00"
+}
