@@ -231,8 +231,8 @@ const INS_AR = [
 function insights() {
   if (AR) return INS_AR;
   const n = T.length, L = T[n - 1], P = T[n - 2], lv = k => pct(L[k], L.den), pp = k => lv(k) - pct(P[k], P.den);
-  const tg = x => x > 0.005 ? 'up' : x < -0.005 ? 'dn' : 'mut', f2 = x => x.toFixed(2) + '%', mn = x => (Math.abs(x) / 1e6).toFixed(2) + ' mn';
-  const ext = k => { const all = T.map(t => pct(t[k], t.den)), v = lv(k); return v >= Math.max.apply(null, all) - 1e-9 && pp(k) > 0.005 ? ', a six-quarter high' : v <= Math.min.apply(null, all) + 1e-9 && pp(k) < -0.005 ? ', the lowest in six quarters' : ''; };
+  const tg = x => x > 0.005 ? 'up' : x < -0.005 ? 'dn' : 'mut', f2 = x => x.toFixed(2) + '%', mn = x => (Math.abs(x) / 1e6).toFixed(2) + ' mn', z = x => Math.abs(x) < 0.005 ? 0 : x, nq = n === 6 ? 'six' : String(n);
+  const ext = k => { const all = T.map(t => pct(t[k], t.den)), v = lv(k); return v >= Math.max.apply(null, all) - 1e-9 && pp(k) > 0.005 ? ', a ' + nq + '-quarter high' : v <= Math.min.apply(null, all) + 1e-9 && pp(k) < -0.005 ? ', the lowest in ' + nq + ' quarters' : ''; };
   const fl = D.flows && D.flows.A ? D.flows.A.all : [];
   const mover = (g, sign) => fl.filter(o => GRP(o.c) === g && (sign ? Math.sign(o.d) === sign : true)).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
   const qn = L.q, out = [], hi = HQ.indexOf(L.q) >= 0 ? HQ.indexOf(L.q) : 4;  // holder column of the latest filed quarter
@@ -241,34 +241,36 @@ function insights() {
     out.push(['NO PROMOTER GROUP', 'mut', 'Professionally run: no promoter group in SEBI filings', 'Foreign portfolio investors hold ' + f2(lv('fii')) + ' and domestic institutions ' + f2(lv('dii')) + ' at ' + qn + '.', 'holders|fii']);
   } else {
     const pm = mover('prom'), d = pp('prom');
-    out.push(['PROMOTER · ' + sgn(d, 2, ' PP'), tg(d), Math.abs(d) < 0.005 ? 'Promoter group steady at ' + f2(lv('prom')) : 'Promoter group ' + (d > 0 ? 'up' : 'down') + ' to ' + f2(lv('prom')) + ext('prom'),
+    out.push(['PROMOTER · ' + sgn(z(d), 2, ' PP'), tg(d), Math.abs(d) < 0.005 ? 'Promoter group steady at ' + f2(lv('prom')) : 'Promoter group ' + (d > 0 ? 'up' : 'down') + ' to ' + f2(lv('prom')) + ext('prom'),
       pm && Math.abs(d) >= 0.005 ? esc(pm.n) + (pm.d > 0 ? ' bought ' : ' sold ') + mn(pm.d) + ' shares in the quarter to ' + qn + (pm.v ? ' (₹' + fin(Math.abs(pm.v)) + ' cr at the ' + qn + ' close).' : '.') : 'No change in promoter holding between the last two filings.', 'cat|prom']);
   }
   // domestic institutions
   { const d = pp('dii'), b = mover('dii', 1), sl = mover('dii', -1);
     const mv = [b ? 'biggest buyer ' + esc(b.n) + ' (+' + mn(b.d) + ')' : '', sl ? 'biggest seller ' + esc(sl.n) + ' (−' + mn(sl.d) + ')' : ''].filter(Boolean).join('; ');
-    out.push(['DII · ' + sgn(d, 2, ' PP'), tg(d), 'Domestic institutions at ' + f2(lv('dii')) + ext('dii'),
+    out.push(['DII · ' + sgn(z(d), 2, ' PP'), tg(d), 'Domestic institutions at ' + f2(lv('dii')) + ext('dii'),
       'Mutual funds ' + f2(pct(P.mf, P.den)) + ' → ' + f2(lv('mf')) + ', insurers ' + f2(pct(P.ins, P.den)) + ' → ' + f2(lv('ins')) + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), 'holders|dii']); }
   // foreign
   { const d = pp('fii'), f0 = (D.fii || [])[0], b = mover('fii', 1), sl = mover('fii', -1);
-    const cov = D.fii_total ? pct(D.fii.reduce((a, x) => a + (x.s[hi] || 0), 0), D.fii_total) : null;
+    const cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[hi] || 0), 0), D.fii_total) : null;  // FPIs only: a foreign parent company is not an FPI
     const mv = [b ? esc(b.n) + ' added ' + mn(b.d) : '', sl ? esc(sl.n) + ' cut ' + mn(sl.d) : ''].filter(Boolean).join('; ');
-    out.push(['FII · ' + sgn(d, 2, ' PP'), tg(d), f0 && f0.s[hi] ? esc(f0.n) + ' is the largest named foreign holder at ' + f2(pct(f0.s[hi], DEN)) : 'Foreign portfolio investors at ' + f2(lv('fii')) + ext('fii'),
+    out.push(['FII · ' + sgn(z(d), 2, ' PP'), tg(d), f0 && f0.s[hi] ? esc(f0.n) + ' is the largest named foreign holder at ' + f2(pct(f0.s[hi], DEN)) : 'Foreign portfolio investors at ' + f2(lv('fii')) + ext('fii'),
       'FPIs hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing' + (cov != null && cov > 0 ? '; named holders cover ' + cov.toFixed(0) + '% of FPI shares' : '') + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), f0 ? 'holders|fii|' + f0.n : 'holders|fii']); }
   // breadth
   { const b = 100 * (L.nh / P.nh - 1), b6 = 100 * (L.nh / T[0].nh - 1);
-    out.push(['BREADTH · ' + sgn(b, 1, '%'), 'mut', fin(L.nh) + ' shareholders, ' + (b >= 0 ? 'up' : 'down') + ' from ' + fin(P.nh), 'Six quarters ago the count was ' + fin(T[0].nh) + ' (' + sgn(b6, 1, '%') + ' since ' + T[0].q + '). Individuals hold ' + f2(lv('ind')) + '.', 'cat|ind']); }
+    out.push(['BREADTH · ' + sgn(b, 1, '%'), 'mut', fin(L.nh) + ' shareholders, ' + (b >= 0 ? 'up' : 'down') + ' from ' + fin(P.nh), 'At ' + T[0].q + ' the count was ' + fin(T[0].nh) + ' (' + sgn(b6, 1, '%') + ' since). Individuals hold ' + f2(lv('ind')) + '.', 'cat|ind']); }
   return out;
 }
 function viewOverview() {
   const L = T[T.length - 1], P = T[T.length - 2], pp = k => 100 * L[k] / L.den - 100 * P[k] / P.den;
   const pat = `<div class="pbar">${CATS.map((c, i) => `<i style="width:${(100 * L[c.k] / L.den).toFixed(2)}%;background:${CC[c.k]};animation-delay:${i * 80}ms" data-tip="<b>${c.l}</b><br>${(100 * L[c.k] / L.den).toFixed(2)}% of shares"></i>`).join('')}</div>
     <div>${CATS.map(c => `<button type="button" class="prow" data-act="catgo" data-k="${c.k}" style="width:100%;background:none;border:0;border-bottom:1px solid var(--rule);cursor:pointer;text-align:left"><span><span class="sw" style="background:${CC[c.k]}"></span>${c.l}</span><span class="num"><b style="font-weight:600">${(100 * L[c.k] / L.den).toFixed(2)}%</b><span class="${cl(pp(c.k))}" style="display:inline-block;width:72px;text-align:right">${sgn(pp(c.k), 2, ' pp')}</span></span></button>`).join('')}</div>`;
+  const qEnd = q => { const m = { Mar: '03-31', Jun: '06-30', Sep: '09-30', Dec: '12-31' }[q.slice(0, 3)]; return '20' + q.slice(4) + '-' + m; };
+  const uu = U.find(x => x.s === CO.s), newer = uu && uu.f && uu.f > qEnd(L.q) ? `<p class="note grey">A later filing dated ${dfmt(uu.f)} (after a merger, allotment or sale) shows promoter ${(uu.pr || 0).toFixed(2)}%, FII ${(uu.fi || 0).toFixed(2)}%, DII ${(uu.di || 0).toFixed(2)}%. The universe table uses it; this page stays on quarter-end filings so quarters compare.</p>` : '';
   const ins = `<ul class="ins">${insights().map(x => `<li><button type="button" data-go="${x[4]}" style="display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:0;text-align:left;cursor:pointer;width:100%"><span class="tg ${x[1]}">${x[0]}</span><b>${x[2]}</b><span class="b">${x[3]}</span><span style="font-size:12px;font-weight:600;color:var(--acc);display:inline-flex;gap:6px;align-items:center">View detail ${arrow}</span></button></li>`).join('')}</ul>`;
   const tiles = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), sgn(100 * (NOW.c / QE.a - 1), 1, '%') + ' since ' + sdate(QE.d), 'Shares ' + (SHN / 1e7).toFixed(2) + ' cr' + (SHN !== TOT ? ' (NSE, current)' : '') + ' × ₹' + fin(NOW.c, 2)], ['P/E (TTM)', TTMP > 0 ? cu(+(MCAP / TTMP).toFixed(1), 1, '', '×') : '—', TTMP ? 'On TTM reported PAT ₹' + fin(TTMP, 1) + ' cr' : 'Results not loaded', TTMP ? 'Market cap ₹' + fin(MCAP) + ' cr ÷ PAT' + (PATO !== PAT ? ' attributable to owners' : '') + ' of the last four quarters (₹' + TTM.join(' + ') + ' cr)' : 'No results on file'], ['P/B', BVPS ? cu(+(NOW.c / BVPS).toFixed(1), 1, '', '×') : '—', BVPS ? 'Book value ₹' + BVPS.toFixed(1) + ' per share' : 'Book value not on file', AR ? 'Mar-26 consolidated equity ≈ ₹999 cr ÷ 166.04 mn shares' : BVPS ? 'Equity attributable to owners ÷ shares, ' + ((D.val || {}).bs_date || 'latest balance sheet') : ''], ['Dividend yield', DPS != null ? cu(+(100 * DPS / NOW.c).toFixed(2), 2, '', '%') : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', AR ? '₹6 interim (ex 17 Oct 2025) + ₹7 final (ex 15 May 2026), halved for the Jun-26 bonus' : 'Dividends with an ex-date in the last 12 months (NSE corporate actions)']];
   return `<div class="g12">
   <section class="card s8" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, six filed quarters', seg('unit', [['pct', '% of shares'], ['val', 'Value ₹ cr'], ['sh', 'Shares mn']], S.unit, 'Ownership unit'))}<div id="ownBody">${ownBody()}</div></section>
-  <section class="card s4" style="--i:1">${sh('Latest · ' + L.q + ' filing', 'Pattern and what changed')}${pat}${ins}</section>
+  <section class="card s4" style="--i:1">${sh('Latest · ' + L.q + ' filing', 'Pattern and what changed')}${pat}${newer}${ins}</section>
   <section class="card s5" style="--i:2">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div><span class="lbl" style="text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink2)">Market cap at quarter-end, ₹ crore</span><div class="chart" data-c="mcap" style="height:170px"></div></section>
   ${earnCard()}
   <section class="card s12" style="--i:4">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to ' + dfmt(NOW.d), seg('rh', [['1m', '1M'], ['3m', '3M'], ['ytd', 'YTD'], ['1y', '1Y'], ['3y', '3Y ann.']], S.rH, 'Return horizon'))}<div class="g2"><div style="min-width:0">${retTable()}</div><div id="retBody" style="min-width:0">${retBody()}</div></div></section>
@@ -313,7 +315,7 @@ function retBody() {
 /* ---------- HOLDERS ---------- */
 function viewHolders() {
   const L5 = T[T.length - 1], q = CO.oq === false ? 4 : 5, sh = (h) => h ? (h.s[q] || 0) : 0, nm = h => h ? esc(h.n.replace(/ (Ltd|Limited|Inc|LLC|plc)\.?$/i, '')) : '—';
-  const f2 = D.fii.slice(0, 2), d2 = D.dii.slice(0, 2), cov = D.fii_total ? pct(D.fii.reduce((a, x) => a + (x.s[4] || 0), 0), D.fii_total) : null;
+  const f2 = D.fii.slice(0, 2), d2 = D.dii.slice(0, 2), cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0), D.fii_total) : null;
   const k = [['fii', 'FII / FPI · ' + L5.q + ' filing', pct(L5.fii, L5.den).toFixed(2) + '%', AR ? '127 FPI accounts. Named holders cover 63% of FPI shares.' : 'FPI Cat I ' + pct(L5.f1, L5.den).toFixed(2) + '% · Cat II ' + pct(L5.f2, L5.den).toFixed(2) + '%' + (cov != null ? '. Named holders cover ' + cov.toFixed(0) + '% of FPI shares.' : '')], ['dii', 'DII · ' + L5.q + ' filing', pct(L5.dii, L5.den).toFixed(2) + '%', 'Mutual funds ' + pct(L5.mf, L5.den).toFixed(2) + '% · insurers ' + pct(L5.ins, L5.den).toFixed(2) + '% · AIFs ' + pct(L5.aif, L5.den).toFixed(2) + '%'], ['fii', 'Top 2 foreign holders', pct(f2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', f2.map(h => nm(h) + ' ' + pct(sh(h), DEN).toFixed(2) + '%').join(' + ') || 'None named'], ['dii', 'Top 2 domestic holders', pct(d2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', AR ? 'Quant MF + SBI MF, mostly small-cap schemes' : d2.map(nm).join(' + ') || 'None named']];
   return `<div class="kpis" style="--i:0">${k.map(x => `<button type="button" class="kpi" data-set="hTab" data-val="${x[0]}" style="text-align:left;cursor:pointer"><span class="lbl">${x[1]}</span><span class="v">${x[2]}</span><span class="s">${x[3]}</span></button>`).join('')}</div>
   <section class="card" id="hCard" style="--i:1;margin-top:24px">${holdersHead()}<div id="hBody">${holdersBody()}</div></section>
@@ -353,7 +355,7 @@ function holdersBody() {
   });
   const tS = L.reduce((a, x) => a + st.get(x).sh, 0), tV = L.reduce((a, x) => a + st.get(x).v, 0);
   h += `<div class="ltot gH"><span class="xp"></span><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span><span class="xp">${(tS / 1e6).toFixed(3)}</span><span class="xp">${fin(tV, 1)}</span><span class="xp">${(100 * tS / DEN).toFixed(3)}%</span><span class="xp">${S.hTab === 'ind' ? '' : (100 * tS / FF[q]).toFixed(3) + '%'}</span><span class="xp"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp"></span><span class="pm pm2">${(100 * tS / DEN).toFixed(2)}% · ₹${fin(tV)} cr</span><span class="xp"></span></div></div>`;
-  if (S.hTab === 'fii') h += `<p class="note grey">These 20 names hold ${(100 * D.fii.reduce((a, x) => a + x.s[4], 0) / D.fii_total).toFixed(0)}% of FPI shares at Jun-26. The rest are funds below Bloomberg's disclosure line.</p>`;
+  if (S.hTab === 'fii') h += `<p class="note grey">The FPIs in this list hold ${(100 * D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0) / D.fii_total).toFixed(0)}% of FPI shares at Jun-26. The rest are funds below ${CO.bb ? 'Bloomberg\'s disclosure line' : 'the 1% filing threshold or outside US fund filings'}.</p>`;
   if (S.hTab === 'ind') h += `<p class="note grey">Individuals appear only in quarterly filings. The open quarter updates once the Sep-26 pattern is filed (due by 21 Oct).</p>`;
   return h;
 }
