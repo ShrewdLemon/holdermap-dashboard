@@ -362,7 +362,7 @@ function holdersBody() {
 function holderDetail(x) {
   const n = x.g === 'ind' ? 5 : 6, qs = HQ.slice(0, n), s = hStats(x, S.basis);
   const rows = qs.map((q, i) => ({ q, sh: x.s[i] || 0, pt: 100 * (x.s[i] || 0) / DEN, pff: x.c === 'Promoter' ? null : 100 * (x.s[i] || 0) / FF[i], v: (x.s[i] || 0) * PX[i] / 1e7 }));
-  const inFlow = ['A', 'B'].some(p => D.flows[p].all.some(f => f.n === x.n));
+  const inFlow = ['A', 'B'].some(p => D.flows[p] && D.flows[p].all.some(f => f.n === x.n));
   const mx = Math.max.apply(null, rows.map(r => r.sh)) || 1;
   const bars = `<div style="display:flex;gap:8px;align-items:flex-end;height:120px">${rows.map((r, i) => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;height:100%" data-tip="<b>${r.q}</b><br>${fin(r.sh)} shares<br>${r.pt.toFixed(3)}% of total${r.pff != null ? ' · ' + r.pff.toFixed(3) + '% FF' : ''}<br>₹${fin(r.v, 1)} cr"><span style="font-size:10px;color:var(--ink2)" class="num">${(r.sh / 1e6).toFixed(2)}</span><div class="bar" style="--i:${i};width:100%;max-width:44px;height:${Math.max(2, r.sh / mx * 80).toFixed(0)}px;background:${i === n - 1 ? 'var(--acc)' : 'var(--ink)'}"></div><span style="font-size:10px;color:var(--ink3)">${r.q}</span></div>`).join('')}</div>`;
   return `<div class="detin">
@@ -374,7 +374,7 @@ function holderDetail(x) {
     <div class="k"><span class="lbl">Country · type</span><b style="font-size:13px">${CTY[x.cty] || x.cty} · ${esc(x.sub)}</b></div>
     <div class="wide"><span class="lbl">Shares by quarter, million</span>${bars}</div>
     ${x.rv ? `<div class="wide note">Category is <b>${esc(x.c)}</b> by default. The alternative on file is <b>${esc(x.alt || 'none')}</b>. <a href="#evidence" style="color:var(--acc);font-weight:600">Open the review queue</a></div>` : ''}
-    ${inFlow ? `<div class="wide"><button type="button" class="btn" data-go="flows|${D.flows.A.all.some(f => f.n === x.n) ? 'A' : 'B'}|${esc(x.n)}">See this holder's trades ${arrow}</button></div>` : ''}
+    ${inFlow ? `<div class="wide"><button type="button" class="btn" data-go="flows|${D.flows.A && D.flows.A.all.some(f => f.n === x.n) ? 'A' : 'B'}|${esc(x.n)}">See this holder's trades ${arrow}</button></div>` : ''}
   </div>`;
 }
 
@@ -382,12 +382,14 @@ function holderDetail(x) {
 const GRP = c => c === 'Promoter' ? 'prom' : ['Foreign AMC', 'Foreign Government', 'Foreign Insurance', 'Foreign corporate', 'Bank'].includes(c) ? 'fii' : ['Domestic AMC', 'Domestic Insurance', 'Domestic Pension Fund', 'Government'].includes(c) ? 'dii' : 'ind';
 const GL = { prom: 'Promoter group', fii: 'Foreign institutions', dii: 'Domestic institutions', ind: 'Individuals & corporates' };
 function viewFlows() {
-  return `<div class="frow" style="--i:0">${D.flows.B && CO.oq !== false ? seg('fP', [['A', 'Q2/26 vs Q1/26 · filed'], ['B', 'Q3/26 to date · live']], S.fP, 'Comparison period') : ''}<span class="cap">Holder level, from the Bloomberg export reconciled to filings · shares restated for the Jun-26 bonus</span></div>
+  return `<div class="frow" style="--i:0">${D.flows.A && D.flows.B && CO.oq !== false ? seg('fP', [['A', 'Q2/26 vs Q1/26 · filed'], ['B', 'Q3/26 to date · live']], S.fP, 'Comparison period') : ''}<span class="cap">Holder level, from the Bloomberg export reconciled to filings · shares restated for the Jun-26 bonus</span></div>
   <div id="fBody" style="--i:1;margin-top:20px">${flowsBody()}</div>
   ${footer('Buyer or seller = change in shares between two quarter-ends. NEW = no position in the earlier quarter; EXIT = none now.' + (AR ? ' The Anandrathi Housing Finance line is left out: it is the same entity as Twelfth Tier Property, renamed (MCA master data).' : ''))}`;
 }
 function flowsBody() {
   if (!D.flows.B || CO.oq === false) S.fP = 'A';
+  if (!D.flows[S.fP]) S.fP = D.flows.A ? 'A' : 'B';
+  if (!D.flows[S.fP]) return `<p class="cap" style="padding:16px 0">No two consecutive filings to compare yet for ${esc(CO.s)}.</p>`;
   const F = D.flows[S.fP], px = S.fP === 'A' ? '₹1,976.70 (30 Jun 2026)' : '₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const agg = { prom: 0, fii: 0, dii: 0, ind: 0 }, cnt = { prom: [0, 0], fii: [0, 0], dii: [0, 0], ind: [0, 0] };
   F.all.forEach(o => { const g = GRP(o.c); agg[g] += o.v; cnt[g][o.d > 0 ? 0 : 1]++; });
@@ -411,7 +413,7 @@ function flowList(L, buy) {
   return h + '</div>';
 }
 function flowDetail(name) {
-  const x = D.flows[S.fP].all.find(o => o.n === name); if (!x) return '';
+  const x = D.flows[S.fP] && D.flows[S.fP].all.find(o => o.n === name); if (!x) return '';
   const h = findHolder(x.n);
   const pc = x.b ? 100 * x.d / x.b : null;
   return `<div class="detin"><div class="k"><span class="lbl">Before</span><b>${fin(x.b)}</b></div><div class="k"><span class="lbl">After</span><b>${fin(x.a)}</b></div><div class="k"><span class="lbl">Change</span><b class="${cl(x.d)}">${pc == null ? 'New position' : sgn(pc, 1, '%')}</b></div><div class="k"><span class="lbl">Δ % of total</span><b>${sgn(100 * x.d / DEN, 3, ' pp')}</b></div><div class="k"><span class="lbl">Category</span><b style="font-size:13px">${esc(x.c)}</b></div>
@@ -645,7 +647,7 @@ function toggleRow(row, force) {
   const btn = $('.rb', row), det = $('.det>div', row), open = force != null ? force : !row.classList.contains('open');
   if (open && !det.innerHTML) {
     const id = row.dataset.row;
-    if (row.dataset.flow) { const f = D.flows[S.fP].all.find(o => slug(o.n) === id); det.innerHTML = f ? flowDetail(f.n) : ''; }
+    if (row.dataset.flow) { const f = D.flows[S.fP] && D.flows[S.fP].all.find(o => slug(o.n) === id); det.innerHTML = f ? flowDetail(f.n) : ''; }
     else { const h = GROUPS[S.hTab].find(x => x.id === id); det.innerHTML = h ? holderDetail(h) : ''; }
     void row.offsetWidth;
   }
