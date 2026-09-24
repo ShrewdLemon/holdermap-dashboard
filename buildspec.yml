@@ -1,0 +1,13 @@
+version: 0.2
+# AWS CodeBuild (project holdermap-dashboard-deploy, infra/pipeline.yaml):
+# runs on every push to main and on the evening schedule.
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+      nodejs: 20
+  build:
+    commands:
+      - node --check src/app.js
+      - python3 -m unittest discover -s tests -v
+      - scripts/deploy.sh

@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  holdermap dashboard CI/CD: a CodeBuild project that runs buildspec.yml (fresh NSE prices,
+  build, upload) on every push to main and on trading-day evenings. Source is GitHub via an
+  AWS CodeConnections connection (GitHub Actions is not used).
+
+Parameters:
+  ConnectionArn:
+    Type: String
+    Description: CodeConnections GitHub connection (must be AVAILABLE for the webhook)
+  Repo:
+    Type: String
+    Default: https://github.com/ShrewdLemon/holdermap-dashboard.git
+  SiteStack:
+    Type: String
+    Default: holdermap-dashboard
+  SiteBucket:
+    Type: String
+  DistributionId:
+    Type: String
+  EnableWebhook:
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: "true"
+
+Conditions:
+  Webhook: !Equals [!Ref EnableWebhook, "true"]
+
+Resources:
+  BuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: { Service: codebuild.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: deploy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: [logs:CreateLogGroup, logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*"
+              - Effect: Allow
+                Action: [codeconnections:GetConnection, codeconnections:GetConnectionToken, codeconnections:UseConnection,
+                         codestar-connections:GetConnection, codestar-connections:GetConnectionToken, codestar-connections:UseConnection]
+                Resource: !Ref ConnectionArn
+              - Effect: Allow
+                Action: cloudformation:DescribeStacks
+                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${SiteStack}/*"
+              - Effect: Allow
+                Action: s3:ListBucket
+                Resource: !Sub "arn:aws:s3:::${SiteBucket}"
+              - Effect: Allow
+                Action: [s3:GetObject, s3:PutObject, s3:DeleteObject]
+                Resource: !Sub "arn:aws:s3:::${SiteBucket}/*"
+              - Effect: Allow
+                Action: cloudfront:CreateInvalidation
+                Resource: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${DistributionId}"
+
+  Project:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: holdermap-dashboard-deploy
+      Description: Build and publish the holdermap dashboard (push to main + trading-day evenings)
+      ServiceRole: !GetAtt BuildRole.Arn
+      ConcurrentBuildLimit: 1
+      TimeoutInMinutes: 20
+      Source:
+        Type: GITHUB
+        Location: !Ref Repo
+        BuildSpec: buildspec.yml
+        Auth: { Type: CODECONNECTIONS, Resource: !Ref ConnectionArn }
+      SourceVersion: main
+      Artifacts: { Type: NO_ARTIFACTS }
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux-x86_64-standard:5.0
+      LogsConfig:
+        CloudWatchLogs: { Status: ENABLED }
+      Triggers: !If
+        - Webhook
+        - Webhook: true
+          FilterGroups:
+            - - { Type: EVENT, Pattern: PUSH }
+              - { Type: HEAD_REF, Pattern: "^refs/heads/main$" }
+        - !Ref AWS::NoValue
+
+  ScheduleRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: { Service: events.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: start
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: codebuild:StartBuild
+                Resource: !GetAtt Project.Arn
+
+  # NSE publishes the bhavcopy in the evening; 18:45 IST catches it, 21:30 IST is the retry.
+  EveningRefresh:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: holdermap dashboard price refresh, 18:45 IST Mon-Fri
+      ScheduleExpression: cron(15 13 ? * MON-FRI *)
+      Targets: [{ Id: build, Arn: !GetAtt Project.Arn, RoleArn: !GetAtt ScheduleRole.Arn }]
+  LateRefresh:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: holdermap dashboard price refresh, 21:30 IST Mon-Fri
+      ScheduleExpression: cron(0 16 ? * MON-FRI *)
+      Targets: [{ Id: build, Arn: !GetAtt Project.Arn, RoleArn: !GetAtt ScheduleRole.Arn }]
+
+Outputs:
+  Project: { Value: !Ref Project }
