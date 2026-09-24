@@ -194,9 +194,14 @@ function companyHeader() {
 }
 
 /* ---------- OVERVIEW ---------- */
+function qoqLabel() {
+  const qi = q => { const m = { Mar: 0, Jun: 1, Sep: 2, Dec: 3 }[q.slice(0, 3)]; return (+q.slice(4)) * 4 + m; };
+  const a = T[T.length - 2], b = T[T.length - 1];
+  return a && b && qi(b.q) - qi(a.q) === 1 ? 'QoQ' : 'vs ' + (a ? a.q : '—');
+}
 function ownTable() {
   const u = S.unit;
-  let h = `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">Category</th>${T.map(t => `<th scope="col">${t.q}</th>`).join('')}<th scope="col">QoQ</th><th scope="col">6Q Δ</th><th scope="col">Trend</th></tr></thead><tbody>`;
+  let h = `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">Category</th>${T.map(t => `<th scope="col">${t.q}</th>`).join('')}<th scope="col">${qoqLabel()}</th><th scope="col">${T.length}Q Δ</th><th scope="col">Trend</th></tr></thead><tbody>`;
   cats().forEach(c => {
     const vs = T.map(t => tv(t, c.k, u)), nq = vs.length - 1, na = vs.some(v => v == null), q = na ? null : vs[nq] - vs[nq - 1], s6 = na ? null : vs[nq] - vs[0], open = !!S.openCat[c.k];
     h += `<tr><td class="l"><button type="button" data-act="cat" data-k="${c.k}" aria-expanded="${open}" style="display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:4px 0;cursor:pointer;font-weight:500;min-height:32px"><span class="sw" style="background:${CC[c.k]}"></span>${c.l}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="transition:transform .3s var(--ease);transform:rotate(${open ? 180 : 0}deg);color:var(--ink3)"><path d="M6 9l6 6 6-6"></path></svg></button></td>` +
@@ -484,7 +489,7 @@ function uBody() {
   if (!shown.length) h += `<p class="cap" style="padding:20px 8px">No companies match. Clear the filter or pick another market-cap band.</p>`;
   shown.forEach((u, i) => {
     const rank = U.indexOf(u) + 1, ar = DASH.has(u.s);
-    h += `<div class="lrow" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gU" data-act="sheet" data-sym="${u.s}"><span class="rk">${rank}</span><span class="l" style="min-width:0"><span class="nm">${esc(u.n)}${ar ? ' <span class="pill" style="color:var(--acc);margin-left:6px;font-size:10px">DASHBOARD</span>' : ''}</span><span class="sb mono">${u.s}${S.watch.includes(u.s) ? ' ★' : ''}</span></span>
+    h += `<div class="lrow" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gU" data-act="sheet" data-sym="${u.s}"><span class="rk">${rank}</span><span class="l" style="min-width:0"><span class="nm">${esc(u.n)}</span><span class="sb mono">${u.s}${S.watch.includes(u.s) ? ' ★' : ''}</span></span>
     <span class="xp" style="font-weight:600">${fin(u.m)}</span><span class="xp xm">${fin(u.p, 2)}</span><span class="xp ${cl(u.q)}">${sgn(u.q, 1, '%')}</span><span class="xp">${(u.pr || 0).toFixed(2)}<span class="minibar" style="width:${((u.pr || 0) * .6).toFixed(0)}px"></span></span><span class="xp">${u.fi == null ? '—' : u.fi.toFixed(2)}</span><span class="xp">${u.di == null ? '—' : u.di.toFixed(2)}</span><span class="xp xm mut">${u.h}</span><span class="xp"><span class="pill ${u.ok ? 'ok' : 'warn'}">${u.ok ? '7/7' : 'REVIEW'}</span></span>
     <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">₹${fin(u.m)} cr</b><span class="${cl(u.q)}" style="font-size:11px">${sgn(u.q, 1, '%')} QTD</span></span>
     <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="transform:rotate(-90deg)"><path d="M6 9l6 6 6-6"></path></svg></button></div>`;
