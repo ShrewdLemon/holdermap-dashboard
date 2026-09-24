@@ -60,15 +60,12 @@ LIST_URL_FULL = LIST_URL + "&size=50"   # default page is 20 rows; revisions can
 LIST_HDR = ["Accept: */*",
             "Referer: https://www.nseindia.com/companies-listing/corporate-filings-financial-results"]
 N_QUARTERS = 6
-# NSE carries no results for these: they are BSE-listed and only "permitted to
-# trade" on NSE. api.bseindia.com answered Akamai 403 "Access Denied" to every
-# request on 2026-09-25 (suggest, AnnSubCategoryGetData), so they stay open.
 KNOWN_GAPS = {
-    "ABBOTINDIA": "files results with BSE only (scrip 500488); api.bseindia.com refused (403) 2026-09-25",
-    "BAYERCROP": "files results with BSE only (scrip 506285); api.bseindia.com refused (403) 2026-09-25",
-    "MCX": "files results with BSE only (scrip 534091); api.bseindia.com refused (403) 2026-09-25",
     "DUMMYHEG": "Nifty 500 placeholder symbol (HEG demerger) - no filings exist",
 }
+# ABBOTINDIA, BAYERCROP and MCX file results with BSE only ("permitted to trade" on
+# NSE); api.bseindia.com refused (403) on 2026-09-25, so their quarters are
+# transcribed from the companies' own statements: nseresults/manual_company_pdf.json.
 TODAY = date.today()
 
 
@@ -383,6 +380,28 @@ def _pdate(s):
     return None
 
 
+def dps_block(ca):
+    """TTM dividends per share from NSE corporate actions, bonus/split-adjusted."""
+    if ca is None:
+        return None, "no corporate-actions file"
+    start = TODAY - timedelta(days=365)
+    rows = [(ex, amt, subj) for ex, amt, subj, _ in ca["divs"] if start < ex <= TODAY]
+    dps = 0.0
+    adj = []
+    for ex, amt, subj in rows:
+        fac = adj_factor(ca["events"], ex)
+        dps += amt / fac
+        if fac != 1.0:
+            adj.append(f"{subj} ({ex}) / {fac:g}")
+    note = (f"{len(rows)} dividend(s) with ex-date {start} to {TODAY} (NSE corporate "
+            f"actions, file of 2026-09-20)" +
+            (f"; bonus/split-adjusted to current shares: {'; '.join(adj)}" if adj
+             else "; no bonus/split after these ex-dates"))
+    if ca.get("empty"):
+        note = "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)"
+    return round(dps, 4), note
+
+
 # ------------------------------------------------------ phase 3: build
 
 def qlabel(qe: date):
@@ -677,26 +696,7 @@ def build(sym, lj, alpha_rows, log):
         flags.append("no statement of assets & liabilities parsed - BVPS/ROE null")
 
     # ---- DPS (TTM, bonus/split-adjusted to current basis) ----------------
-    dps, dps_note = None, None
-    if ca is None:
-        dps_note = "no corporate-actions file"
-    else:
-        start = TODAY - timedelta(days=365)
-        rows = [(ex, amt, subj) for ex, amt, subj, _ in ca["divs"] if start < ex <= TODAY]
-        dps = 0.0
-        adj = []
-        for ex, amt, subj in rows:
-            fac = adj_factor(ca["events"], ex)
-            dps += amt / fac
-            if fac != 1.0:
-                adj.append(f"{subj} ({ex}) / {fac:g}")
-        dps = round(dps, 4)
-        dps_note = (f"{len(rows)} dividend(s) with ex-date {start} to {TODAY} (NSE corporate "
-                    f"actions, file of 2026-09-20)" +
-                    (f"; bonus/split-adjusted to current shares: {'; '.join(adj)}" if adj
-                     else "; no bonus/split after these ex-dates"))
-        if ca.get("empty"):
-            dps_note = "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)"
+    dps, dps_note = dps_block(ca)
 
     last = quarters[-1]
     out = {"sym": sym, "scope": scope, "format": fmt, "rev_basis": rev_basis,
@@ -731,6 +731,130 @@ def build(sym, lj, alpha_rows, log):
                         continue
                     cmp_.append(f"{q['q']} {k}: alpha {av} vs ours {mv}")
     return out, {"flags": flags, "alpha_diff": cmp_, "gate_eps": gate_eps}
+
+
+# ------------------------------------------ company results PDF (BSE-only)
+
+MANUAL_CO = HERE / "nseresults" / "manual_company_pdf.json"
+_UNIT_CR = {"crore": 1.0, "lakh": 0.01, "million": 0.1}
+
+
+def manual_company(sym):
+    """Results transcribed from the company's own Reg. 33 statements (PDF).
+
+    For BSE-only listings (ABBOTINDIA, BAYERCROP, MCX) NSE has no results at
+    all. The transcription (nseresults/manual_company_pdf.json) keeps every
+    value exactly as printed with its unit; this turns it into the standard
+    schema and re-runs the gates: EPS x shares ~ pat_owners, and every
+    'confirm' document (later statement's comparative column, extract, press
+    release) must show the same numbers.
+    """
+    if not MANUAL_CO.exists():
+        return None
+    m = json.loads(MANUAL_CO.read_text()).get(sym)
+    if not m:
+        return None
+    docs, notes, flags, confirms, gate_eps = m["docs"], [], [], [], []
+    ca = corp_actions(sym)
+    events = ca["events"] if ca else []
+
+    def cr(v, unit):
+        return None if v is None else round(v * _UNIT_CR[unit], 2)
+
+    def src(doc, page):
+        return f"{docs[doc]['url']}#page={page}"
+
+    quarters = []
+    for q in m["quarters"]:
+        unit = q.get("unit") or docs[q["doc"]].get("unit") or m["doc_unit"]
+        end = date.fromisoformat(q["end"])
+        ql, dl = qlabel(end)
+        shares = m.get("exact_shares") or (q["paidup"] * _UNIT_CR[unit] * 1e7 / q["fv"])
+        rec = {"q": ql, "d": dl, "end": q["end"], "rev": cr(q["rev"], unit), "pat": cr(q["pat"], unit),
+               "pat_owners": cr(q["pat_owners"], unit), "eps": q["eps"],
+               "src": src(q["doc"], q["page"]), "page": q["page"], "doc": docs[q["doc"]]["title"],
+               "unit_filed": unit, "shares": round(shares), "face_value": q["fv"]}
+        if q.get("derived"):
+            rec["derived"] = q["derived"]
+            notes.append(f"{ql}: derived - {q['derived']}")
+        if q.get("basis"):
+            rec["basis"] = q["basis"]
+            notes.append(f"{ql}: {q['basis']}")
+        # EPS gate
+        implied = rec["eps"] * shares / 1e7
+        tol = max(0.05 * abs(rec["pat_owners"]), 0.0051 * shares / 1e7)
+        dev = implied / rec["pat_owners"] - 1 if rec["pat_owners"] else None
+        gate_eps.append((ql, dev))
+        if abs(implied - rec["pat_owners"]) > tol:
+            flags.append(f"{ql} EPS gate: EPS {rec['eps']} x {shares / 1e7:.4f} cr sh = {implied:.2f} "
+                         f"vs pat_owners {rec['pat_owners']} ({dev:+.2%})")
+        # confirmation documents
+        for c in q.get("confirm", []):
+            cu = c.get("unit") or docs[c["doc"]].get("unit") or unit
+            for k in ("rev", "pat", "pbt", "eps"):
+                if k not in c or (k != "eps" and q.get(k) is None) or (k == "eps" and c.get("eps") is None):
+                    continue
+                if k == "eps":
+                    mine, theirs = rec["eps"], c["eps"] * c.get("eps_basis", 1)
+                    ok = abs(mine - theirs) <= 0.011 * c.get("eps_basis", 1)
+                else:
+                    mine, theirs = cr(q[k], unit), cr(c[k], cu)
+                    ok = abs(mine - theirs) <= (0.5 if c.get("rounded") else 0.011)
+                confirms.append({"q": ql, "field": k, "primary": mine, "confirm": theirs, "ok": ok,
+                                 "doc": docs[c["doc"]]["title"], "src": src(c["doc"], c["page"])})
+                if not ok:
+                    flags.append(f"{ql} {k}: primary {mine} vs {docs[c['doc']]['title']} p{c['page']} {theirs}")
+        quarters.append(rec)
+
+    for a, b in zip(quarters, quarters[1:]):
+        if a["rev"] and b["rev"]:
+            r = b["rev"] / a["rev"]
+            if r > 3 or r < 1 / 3:
+                flags.append(f"{b['q']} revenue jump x{r:.2f} QoQ ({a['rev']} -> {b['rev']})")
+        if a["face_value"] != b["face_value"]:
+            fac = a["face_value"] / b["face_value"]
+            notes.append(f"{b['q']}: face value Rs {a['face_value']:g} -> Rs {b['face_value']:g} (split x{fac:g}); "
+                         "EPS is as reported in each quarter's own statement, so earlier quarters are on "
+                         "the pre-split share count")
+
+    # balance sheet, BVPS, ROE
+    bss = sorted(m.get("bs", []), key=lambda b: b["date"])
+    bvps = equity = bs_date = roe = roe_basis = shares_basis = None
+    if bss:
+        b = bss[-1]
+        bu = docs[b["doc"]].get("unit") or m["doc_unit"]
+        equity, bs_date = cr(b["equity"], bu), b["date"]
+        qb = next((r for r in quarters if r["end"] == bs_date), quarters[-1])
+        post = adj_factor(events, date.fromisoformat(bs_date))
+        sh = qb["shares"] * post
+        bvps = equity * 1e7 / sh
+        shares_basis = (f"{sh:,.0f} shares: " + (m.get("exact_shares_src") if m.get("exact_shares")
+                        else f"paid-up equity capital / face value Rs {qb['face_value']:g} at {bs_date} (filing)")
+                        + (f", x{post:g} for bonus/split after {bs_date}" if post != 1.0 else ""))
+        notes.append(f"equity at {bs_date}: {b['label']} ({docs[b['doc']]['title']}, p{b['page']})")
+        ttm = quarters[-4:]
+        if len(ttm) == 4 and len(bss) >= 2:
+            e0 = cr(bss[-2]["equity"], docs[bss[-2]["doc"]].get("unit") or m["doc_unit"])
+            roe = sum(r["pat_owners"] for r in ttm) / ((e0 + equity) / 2) * 100
+            roe_basis = (f"TTM PAT to owners {ttm[0]['q']}-{ttm[-1]['q']} / avg equity "
+                         f"({date.fromisoformat(bss[-2]['date']):%b-%y}, {date.fromisoformat(bs_date):%b-%y})")
+    dps, dps_note = dps_block(ca)
+
+    if m.get("missing"):
+        notes.append(f"{qlabel(date.fromisoformat(m['missing']['end']))[0]} missing: {m['missing']['why']}")
+    notes.insert(0, "transcribed from company results PDF (SEBI Reg. 33 statement, "
+                    f"{m['scope'].lower()}): {m['scope_note']}")
+    ss = dict(m["second_source"])
+    ss["checked"] = True
+    out = {"sym": sym, "scope": m["scope"], "format": "COMPANY_PDF",
+           "rev_basis": f"{m['rev_label'].lower()} (as labelled in the statement)",
+           "quarters": quarters[-N_QUARTERS:],
+           "bvps": _r(bvps), "equity_cr": _r(equity), "bs_date": bs_date,
+           "roe": _r(roe), "roe_basis": roe_basis, "dps_ttm": dps, "dps_basis": dps_note,
+           "shares_basis": shares_basis, "second_source": ss,
+           "notes": notes, "flags": flags, "generated": utcnow()}
+    info = {"flags": flags, "alpha_diff": [], "gate_eps": gate_eps, "confirms": confirms}
+    return out, info
 
 
 # ------------------------------------------------- Ind AS 117 supplement
@@ -871,8 +995,18 @@ def main():
         t2 = time.time()
         done, failed = [], {}
         for s in syms:
-            if s not in lists:
+            if s not in lists and not (MANUAL_CO.exists() and s in json.loads(MANUAL_CO.read_text())):
                 failed[s] = "no NSE list (blocked or not JSON)"
+                continue
+            man = manual_company(s)
+            if man:
+                res, info = man
+                (OUT / f"{s}.json").write_text(json.dumps(res, indent=1, ensure_ascii=False))
+                done.append(s)
+                report.setdefault("companies", {})[s] = {"group": gname, **info,
+                                                         "n_quarters": len(res["quarters"]),
+                                                         "latest": res["quarters"][-1]["q"],
+                                                         "source": "company results PDF"}
                 continue
             ap_ = ALPHA_ACT / f"{s}.json"
             arows = json.loads(ap_.read_text()) if ap_.exists() else None

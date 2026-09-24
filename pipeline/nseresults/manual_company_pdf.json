@@ -1,0 +1,106 @@
+{
+ "_about": "Quarterly results transcribed BY READING the companies' own SEBI Reg. 33 results statements (PDF page images) for three Nifty 500 names that file only with BSE and are merely 'permitted to trade' on NSE, so NSE carries no results for them. Transcribed 2026-09-25. Values are exactly as printed, in the statement's own unit (field 'unit'); pipeline/results.py converts to Rs crore and runs the gates (EPS x shares vs PAT to owners; every 'confirm' document must show the same figures). PDFs are cached in cache/results_raw/company_pdf/. Sources: Abbott = the company's own investor-relations PDFs. Bayer and MCX = the same filed statements as hosted on BSE's attachment server, because bayer.in and mcxindia.com refuse automated requests (bot blocks, not bypassed).",
+ "ABBOTINDIA": {
+  "scope": "Standalone",
+  "scope_note": "Abbott India has no subsidiaries; it publishes a single (standalone) statement",
+  "doc_unit": "crore",
+  "rev_label": "Revenue from operations",
+  "docs": {
+   "IR_Q4FY25": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-March-31-2025.pdf", "file": "ABBOTINDIA_March-31-2025.pdf", "title": "Statement of audited financial results for the quarter and year ended March 31, 2025", "unit": "crore"},
+   "IR_Q1FY26": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-June-30-2025.pdf", "file": "ABBOTINDIA_June-30-2025.pdf", "title": "Statement of unaudited financial results for the quarter ended June 30, 2025", "unit": "crore"},
+   "IR_Q2FY26": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-September-30-2025.pdf", "file": "ABBOTINDIA_September-30-2025.pdf", "title": "Statement of unaudited financial results for the quarter and six months ended September 30, 2025", "unit": "crore"},
+   "IR_Q3FY26": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-December-31-2025.pdf", "file": "ABBOTINDIA_December-31-2025.pdf", "title": "Statement of unaudited financial results for the quarter and nine months ended December 31, 2025", "unit": "crore"},
+   "IR_Q4FY26": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-March-31-2026.pdf", "file": "ABBOTINDIA_March-31-2026.pdf", "title": "Statement of audited financial results for the quarter and year ended March 31, 2026", "unit": "crore"},
+   "IR_Q1FY27": {"url": "https://www.abbott.co.in/content/dam/corp/abbott/en-ind/pdf/financials/Quarter-ended-June-30-2026.pdf", "file": "ABBOTINDIA_June-30-2026.pdf", "title": "Statement of unaudited financial results for the quarter ended June 30, 2026", "unit": "crore"},
+   "BSE_Q1FY27": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/998149c4-3720-41f2-bd67-55fe03bf59c6.pdf", "file": "bse_998149c4-3720-41f2-bd67-55fe03bf59c6.pdf", "title": "Reg. 33 filing to BSE, 12-Aug-2026 (same statement as the IR copy)", "unit": "crore"}
+  },
+  "quarters": [
+   {"end": "2025-03-31", "doc": "IR_Q4FY25", "page": 1, "rev": 1604.59, "pat": 367.04, "pat_owners": 367.04, "eps": 172.72, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "IR_Q1FY26", "page": 1, "rev": 1604.59, "pat": 367.04, "eps": 172.72}, {"doc": "IR_Q4FY26", "page": 1, "rev": 1604.59, "pat": 367.04, "eps": 172.72}]},
+   {"end": "2025-06-30", "doc": "IR_Q1FY26", "page": 1, "rev": 1738.35, "pat": 365.86, "pat_owners": 365.86, "eps": 172.17, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "IR_Q2FY26", "page": 1, "rev": 1738.35, "pat": 365.86, "eps": 172.17}, {"doc": "IR_Q1FY27", "page": 1, "rev": 1738.35, "pat": 365.86, "eps": 172.17}]},
+   {"end": "2025-09-30", "doc": "IR_Q2FY26", "page": 1, "rev": 1757.15, "pat": 415.27, "pat_owners": 415.27, "eps": 195.42, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "IR_Q3FY26", "page": 1, "rev": 1757.15, "pat": 415.27, "eps": 195.42}]},
+   {"end": "2025-12-31", "doc": "IR_Q3FY26", "page": 1, "rev": 1724.04, "pat": 375.96, "pat_owners": 375.96, "eps": 176.92, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "IR_Q4FY26", "page": 1, "rev": 1724.04, "pat": 375.96, "eps": 176.92}]},
+   {"end": "2026-03-31", "doc": "IR_Q4FY26", "page": 1, "rev": 1709.51, "pat": 394.93, "pat_owners": 394.93, "eps": 185.85, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "IR_Q1FY27", "page": 1, "rev": 1709.51, "pat": 394.93, "eps": 185.85}]},
+   {"end": "2026-06-30", "doc": "IR_Q1FY27", "page": 1, "rev": 1813.68, "pat": 428.52, "pat_owners": 428.52, "eps": 201.66, "paidup": 21.25, "fv": 10,
+    "confirm": [{"doc": "BSE_Q1FY27", "page": 2, "rev": 1813.68, "pat": 428.52, "eps": 201.66}]}
+  ],
+  "bs": [
+   {"date": "2025-09-30", "doc": "IR_Q2FY26", "page": 2, "equity": 4010.91, "capital": 21.25, "label": "Total Equity (equity share capital 21.25 + other equity 3,989.66)"},
+   {"date": "2026-03-31", "doc": "IR_Q4FY26", "page": 2, "equity": 4774.19, "capital": 21.25, "label": "Total Equity (equity share capital 21.25 + other equity 4,752.94)"}
+  ],
+  "second_source": {"quarter": "2026-06-30", "what": "InvestyWise press coverage of the Q1 FY27 results", "url": "https://www.investywise.com/abbott-india-limited-unaudited-financial-results-for-q1-2026/", "rev": 1813.68, "pat": 428.52, "eps": 201.66, "unit": "crore"}
+ },
+ "BAYERCROP": {
+  "scope": "Standalone",
+  "scope_note": "Note 2 of every statement: the Company has no subsidiary, joint venture or associate, so it is not required to prepare consolidated results",
+  "doc_unit": "million",
+  "rev_label": "Revenue from Operations",
+  "exact_shares": 44942092,
+  "exact_shares_src": "Q4 FY26 statement note 8, page 9: final dividend of Rs 60 'for 44,942,092 Equity Shares of Rs 10/-'",
+  "docs": {
+   "BSE_Q3FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/c431d8ed-bd09-4ec7-aece-c631ac125a74.pdf", "file": "bse_c431d8ed-bd09-4ec7-aece-c631ac125a74.pdf", "title": "Statement of financial results for the quarter and nine months ended December 31, 2025 (filed with BSE 11-Feb-2026)", "unit": "million"},
+   "BSE_Q4FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/e554e8c7-833c-4f25-b4aa-66dc38087fa5.pdf", "file": "bse_e554e8c7-833c-4f25-b4aa-66dc38087fa5.pdf", "title": "Statement of financial results for the quarter and year ended March 31, 2026 (filed with BSE 26-May-2026)", "unit": "million"},
+   "NEWS_Q3FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/d35a49bd-3dfb-4e4f-be91-a64dd8cc6390.pdf", "file": "bse_d35a49bd-3dfb-4e4f-be91-a64dd8cc6390.pdf", "title": "News Release 'Bayer CropScience Limited reports Q3 results for FY 2025-26' (filed with BSE 11-Feb-2026)", "unit": "million"}
+  },
+  "quarters": [
+   {"end": "2025-03-31", "doc": "BSE_Q4FY26", "page": 6, "rev": 10464, "pat": 1433, "pat_owners": 1433, "eps": 31.88, "paidup": 449, "fv": 10,
+    "basis": "comparative column (quarter ended 31.03.2025) of the Q4 FY26 statement; Bayer's own May-2025 filing could not be located",
+    "confirm": [{"doc": "BSE_Q3FY26", "page": 3, "derived": "FY25 (54,734 / 5,680) minus 9M FY25 (44,270 / 4,247)", "rev": 10464, "pat": 1433}]},
+   {"end": "2025-06-30", "doc": "BSE_Q3FY26", "page": 3, "rev": 19146, "pat": 2787, "pat_owners": 2787, "eps": 62.01, "paidup": 449, "fv": 10,
+    "derived": "9M FY26 (45,742 / 5,271 / EPS 117.28) minus Q3 FY26 (11,062 / 957 / 21.29) minus Q2 FY26 (15,534 / 1,527 / 33.98), all as filed in this statement; the Q1 FY26 statement itself could not be located",
+    "confirm": [{"doc": "BSE_Q4FY26", "page": 6, "derived": "FY26 (56,750 / 6,892 / 153.35) minus Q2, Q3, Q4 FY26", "rev": 19146, "pat": 2787, "eps": 62.01}]},
+   {"end": "2025-09-30", "doc": "BSE_Q3FY26", "page": 3, "rev": 15534, "pat": 1527, "pat_owners": 1527, "eps": 33.98, "paidup": 449, "fv": 10,
+    "basis": "comparative column (quarter ended 30.09.2025) of the Q3 FY26 statement; the Q2 FY26 statement itself could not be located",
+    "confirm": []},
+   {"end": "2025-12-31", "doc": "BSE_Q3FY26", "page": 3, "rev": 11062, "pbt": 1130, "pat": 957, "pat_owners": 957, "eps": 21.29, "paidup": 449, "fv": 10,
+    "confirm": [{"doc": "BSE_Q4FY26", "page": 6, "rev": 11062, "pat": 957, "eps": 21.29}, {"doc": "NEWS_Q3FY26", "page": 2, "rev": 11062, "pbt": 1130}]},
+   {"end": "2026-03-31", "doc": "BSE_Q4FY26", "page": 6, "rev": 11008, "pat": 1621, "pat_owners": 1621, "eps": 36.07, "paidup": 449, "fv": 10,
+    "confirm": []}
+  ],
+  "bs": [
+   {"date": "2025-03-31", "doc": "BSE_Q4FY26", "page": 7, "equity": 28504, "capital": 449, "label": "Total Equity (equity share capital 449 + other equity 28,055)"},
+   {"date": "2026-03-31", "doc": "BSE_Q4FY26", "page": 7, "equity": 29657, "capital": 449, "label": "Total Equity (equity share capital 449 + other equity 29,208)"}
+  ],
+  "missing": {"end": "2026-06-30", "why": "Q1 FY27 statement (board meeting 5-Aug-2026) not reachable: bayer.in answers automated requests with a bot block and no BSE-hosted copy is indexed. Press coverage (Business Standard, 5-Aug-2026) reports net profit Rs 321.6 cr (Rs 3,216 million), EPS Rs 71.56, revenue from operations Rs 18,350 million - NOT verified against the filing, so not used."},
+  "second_source": {"quarter": "2025-12-31", "what": "the company's News Release filed with BSE on 11-Feb-2026", "doc": "NEWS_Q3FY26", "page": 2, "rev": 11062, "pbt": 1130, "nine_month_rev": 45742, "nine_month_pbt": 6485, "unit": "million"}
+ },
+ "MCX": {
+  "scope": "Consolidated",
+  "scope_note": "MCX publishes standalone and consolidated statements; consolidated used (the Group per the statement's notes: subsidiaries incl. MCX Clearing Corporation (MCXCCL) and MCX Coal Exchange of India, incorporated 11-Jun-2026, plus associates)",
+  "doc_unit": "crore",
+  "rev_label": "Income from operations",
+  "docs": {
+   "BSE_Q4FY25": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/aad5d0b4-d7ba-419d-909e-be9a6712fe2a.pdf", "file": "bse_aad5d0b4-d7ba-419d-909e-be9a6712fe2a.pdf", "title": "MCX/SEC/2494 Outcome of Board Meeting 8-May-2025: audited consolidated results for the quarter and year ended March 31, 2025 (Rs in lakhs)", "unit": "lakh"},
+   "NEWS_Q1FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7f453bc1-9dff-420b-a388-18cbbb37a1ce.pdf", "file": "bse_7f453bc1-9dff-420b-a388-18cbbb37a1ce.pdf", "title": "MCX/SEC/2540: newspaper extract of unaudited results for the quarter ended June 30, 2025 (Business Standard, 2-Aug-2025)", "unit": "crore"},
+   "BSE_Q2FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/06796811-2d25-46bf-8c07-5811bf0aabb7.pdf", "file": "bse_06796811-2d25-46bf-8c07-5811bf0aabb7.pdf", "title": "MCX/SEC/2583 Outcome of Board Meeting 6-Nov-2025: unaudited consolidated results for the quarter and half year ended September 30, 2025", "unit": "crore"},
+   "BSE_Q3FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/a57e1950-8cd2-4d62-8bb2-fb80199d51bf.pdf", "file": "bse_a57e1950-8cd2-4d62-8bb2-fb80199d51bf.pdf", "title": "MCX/SEC/2624 Outcome of Board Meeting 23-Jan-2026: unaudited consolidated results for the quarter and nine months ended December 31, 2025", "unit": "crore"},
+   "BSE_Q4FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/f82b98aa-28a3-45c0-a40c-6dfce754beae.pdf", "file": "bse_f82b98aa-28a3-45c0-a40c-6dfce754beae.pdf", "title": "MCX/SEC/2677 Outcome of Board Meeting 8-May-2026: audited consolidated results for the quarter and year ended March 31, 2026", "unit": "crore"},
+   "PR_Q4FY26": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/e4b755ca-829c-4abe-a9af-31a827d6635e.pdf", "file": "bse_e4b755ca-829c-4abe-a9af-31a827d6635e.pdf", "title": "MCX/SEC/2678 Press Release 8-May-2026 (summarised consolidated P&L, Rs crores rounded)", "unit": "crore"},
+   "BSE_Q1FY27": {"url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/222eedd0-37ba-4c57-9bc1-0e56357e4cec.pdf", "file": "bse_222eedd0-37ba-4c57-9bc1-0e56357e4cec.pdf", "title": "MCX/SEC/2723 Outcome of Board Meeting 4-Aug-2026: unaudited consolidated results for the quarter ended June 30, 2026", "unit": "crore"}
+  },
+  "quarters": [
+   {"end": "2025-03-31", "doc": "BSE_Q4FY25", "page": 3, "unit": "lakh", "rev": 29133, "pat": 13546, "pat_owners": 13546, "eps": 26.56, "paidup": 5099.84, "fv": 10,
+    "confirm": [{"doc": "NEWS_Q1FY26", "page": 2, "unit": "crore", "rev": 291.33, "pat": 135.46, "eps": 26.56}, {"doc": "BSE_Q4FY26", "page": 3, "unit": "crore", "rev": 291.33, "pat": 135.46, "eps": 5.31, "eps_basis": 5}]},
+   {"end": "2025-06-30", "doc": "BSE_Q2FY26", "page": 2, "rev": 373.21, "pat": 203.19, "pat_owners": 203.19, "eps": 39.84, "paidup": 51.00, "fv": 10,
+    "basis": "comparative column (quarter ended 30-06-2025) of the Q2 FY26 statement; MCX's own published extract of the Q1 FY26 statement (2-Aug-2025) shows the same figures; the full-format Q1 FY26 filing itself could not be located",
+    "confirm": [{"doc": "NEWS_Q1FY26", "page": 2, "rev": 373.21, "pat": 203.19, "eps": 39.84}, {"doc": "BSE_Q1FY27", "page": 3, "rev": 373.21, "pat": 203.19, "eps": 7.97, "eps_basis": 5}]},
+   {"end": "2025-09-30", "doc": "BSE_Q2FY26", "page": 2, "rev": 374.23, "pat": 197.47, "pat_owners": 197.47, "eps": 38.72, "paidup": 51.00, "fv": 10,
+    "confirm": [{"doc": "BSE_Q2FY26", "page": 15, "rev": 374.23, "pat": 197.47, "eps": 38.72}, {"doc": "BSE_Q3FY26", "page": 2, "rev": 374.23, "pat": 197.47, "eps": 7.74, "eps_basis": 5}]},
+   {"end": "2025-12-31", "doc": "BSE_Q3FY26", "page": 2, "rev": 665.62, "pat": 401.12, "pat_owners": 401.12, "eps": 15.73, "paidup": 51.00, "fv": 2,
+    "confirm": [{"doc": "BSE_Q4FY26", "page": 3, "rev": 665.62, "pat": 401.12, "eps": 15.73}, {"doc": "PR_Q4FY26", "page": 3, "rev": 666, "pat": 401, "rounded": true}]},
+   {"end": "2026-03-31", "doc": "BSE_Q4FY26", "page": 3, "rev": 888.94, "pat": 529.77, "pat_owners": 529.77, "eps": 20.78, "paidup": 51.00, "fv": 2,
+    "confirm": [{"doc": "BSE_Q1FY27", "page": 3, "rev": 888.94, "pat": 529.77, "eps": 20.78}, {"doc": "PR_Q4FY26", "page": 3, "rev": 889, "pat": 530, "rounded": true}]},
+   {"end": "2026-06-30", "doc": "BSE_Q1FY27", "page": 3, "rev": 702.00, "pat": 413.44, "pat_owners": 413.44, "eps": 16.21, "paidup": 51.00, "fv": 2,
+    "confirm": []}
+  ],
+  "bs": [
+   {"date": "2025-09-30", "doc": "BSE_Q2FY26", "page": 3, "equity": 2087.22, "capital": 51.00, "label": "Total equity (equity share capital 51.00 + other equity 2,036.22); Core SGF shown separately"},
+   {"date": "2026-03-31", "doc": "BSE_Q4FY26", "page": 4, "equity": 2847.94, "capital": 51.00, "label": "Total equity (equity share capital 51.00 + other equity 2,796.94); Core SGF shown separately"}
+  ],
+  "second_source": {"quarter": "2026-03-31", "what": "MCX press release 8-May-2026 (summarised consolidated P&L, rounded to Rs crore)", "doc": "PR_Q4FY26", "page": 3, "rev": 889, "pat": 530, "unit": "crore"}
+ }
+}

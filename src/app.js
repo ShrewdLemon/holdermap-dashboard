@@ -52,7 +52,7 @@ if (LP && LP.univ) U.forEach(u => { const x = LP.univ[u.s]; if (x) { u.p = x[0];
 U.sort((a, b) => b.m - a.m);
 const sdate = s => { const p = s.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; };
 const AR_META = { s: 'ANANDRATHI', n: 'Anand Rathi Wealth Ltd', isin: 'INE463V01026', bse: '543415', sector: 'Financial Services', bb: true, oq: true };
-let CO, NOW, OQ, OQP, QE, BVPS, DPS, ROE, TTM, TTMP, MCAP, SHN, Y1, T, TOT, DEN, FF, PX, HQ, GROUPS, EQ, EQd, REV, PAT, PATO, EPSR, EPS, RET, AR;
+let CO, NOW, OQ, OQP, QE, BVPS, DPS, ROE, TTM, TTMP, MCAP, SHN, Y1, T, TOT, DEN, FF, PX, HQ, GROUPS, EQ, EQd, REV, PAT, PATO, EPSR, EPSA, EPSADJ, EPS, RET, AR;
 function setCompany(sym) {
   D = window.__CO__[sym]; S.sym = sym; store.set('sym', sym);
   AR = sym === 'ANANDRATHI';
@@ -91,6 +91,22 @@ function setCompany(sym) {
   if (E && E.pat && E.pat.length) {
     EQ = E.q; EQd = E.d; REV = E.rev; PAT = E.pat; PATO = E.pat_own || PAT; EPSR = E.eps_rep || E.eps || PAT.map(() => null);
     EPS = PAT.map(p => p * 1e7 / TOT);
+    // EPS restated for splits and bonuses: a quarter reported before an action went ex carries EPS on the
+    // old share count. Which factor applies is read from the quarter itself: reported EPS x today's shares
+    // divided by PAT to owners lands near 1 (already restated) or near the action's ratio (not yet).
+    const acts = ((CO.ca || []).filter(a => a[2] === 'split' || a[2] === 'bonus' || (a.length === 2 && a[1] > 1))).sort((a, b) => a[0] < b[0] ? 1 : -1);
+    const qe = d => { const m = { Mar: '03-31', Jun: '06-30', Sep: '09-30', Dec: '12-31' }[d.slice(0, 3)]; return '20' + d.slice(4) + '-' + m; };
+    EPSADJ = false;
+    EPSA = EPSR.map((e, i) => {
+      if (e == null || !PATO[i] || !EQd || !EQd[i]) return e;
+      const later = acts.filter(a => a[0] > qe(EQd[i]));
+      if (!later.length) return e;
+      const r = e * SHN / 1e7 / PATO[i];
+      let best = 1, f = 1;
+      for (const a of later) { f *= a[1]; if (Math.abs(Math.log(r / f)) < Math.abs(Math.log(r / best))) best = f; }
+      if (best !== 1 && Math.abs(Math.log(r / best)) < Math.log(1.25)) { EPSADJ = true; return Math.round(e / best * 100) / 100; }
+      return e;
+    });
     TTM = PATO.slice(-4); TTMP = TTM.length === 4 ? Math.round(TTM.reduce((a, b) => a + b, 0) * 100) / 100 + 1e-9 : null;
   } else { EQ = EQd = REV = PAT = PATO = EPSR = EPS = TTM = null; TTMP = null; }
   const RB = L ? L.bases : RP.filter(p => D.stock_anchor && D.stock_anchor[p[2]]).map(p => { const sa = D.stock_anchor[p[2]]; return { k: p[0], l: p[1], d: sa[0], s: sa[1], sraw: sa[2], ssrc: sa[3], n50: D.bench.nifty50[p[2]], n500: D.bench.nifty500[p[2]], yrs: p[3] }; });
@@ -296,7 +312,7 @@ function earnTable() {
   const row = (lab, vs, f, bold, yoy, suf) => `<tr><td class="l" style="font-weight:${bold ? 600 : 500}">${lab}</td>${vs.map((v, i) => `<td style="font-weight:${bold && i === vs.length - 1 ? 600 : 400}">${v == null ? '—' : f(v)}</td>`).join('')}<td class="${cl(yoy)}" style="font-weight:600">${yoy == null ? '<span class="mut" title="Share basis changed">n.m.</span>' : sgn(yoy, 1, suf || '%')}</td></tr>`;
   const h = `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">₹ crore</th>${EQ.map((q, i) => `<th scope="col"><span style="display:block">${q}</span><span style="display:block;font-weight:400;letter-spacing:0;text-transform:none">${EQd[i]}</span></th>`).join('')}<th scope="col">YoY</th></tr></thead><tbody>`;
   const n = PAT.length - 1, y = n - 4, yoy = (a, b) => y >= 0 && a != null && b ? 100 * (a / b - 1) : null;
-  return h + `${row(revLabel(), REV, v => fin(v, 2), false, yoy(REV[n], REV[y]))}${row('PAT (reported)', PAT, v => fin(v, 2), true, yoy(PAT[n], PAT[y]))}${PATO !== PAT ? row('PAT to owners', PATO, v => fin(v, 2), false, yoy(PATO[n], PATO[y])) : ''}${row(revLabel() === 'Revenue from ops' ? 'PAT margin' : 'PAT / ' + revLabel().toLowerCase(), PAT.map((p, i) => REV[i] ? 100 * p / REV[i] : null), v => v.toFixed(1) + '%', false, y >= 0 && REV[n] && REV[y] ? 100 * PAT[n] / REV[n] - 100 * PAT[y] / REV[y] : null, ' pp')}${row(AR ? 'EPS as reported (₹)' : 'EPS, basic (₹)', EPSR, v => v.toFixed(2), !AR, AR ? null : yoy(EPSR[n], EPSR[y]))}${AR ? row('EPS on 166.04 mn shares (₹)', EPS, v => v.toFixed(2), true, yoy(EPS[n], EPS[y])) : ''}</tbody></table></div>`;
+  return h + `${row(revLabel(), REV, v => fin(v, 2), false, yoy(REV[n], REV[y]))}${row('PAT (reported)', PAT, v => fin(v, 2), true, yoy(PAT[n], PAT[y]))}${PATO !== PAT ? row('PAT to owners', PATO, v => fin(v, 2), false, yoy(PATO[n], PATO[y])) : ''}${row(revLabel() === 'Revenue from ops' ? 'PAT margin' : 'PAT / ' + revLabel().toLowerCase(), PAT.map((p, i) => REV[i] ? 100 * p / REV[i] : null), v => v.toFixed(1) + '%', false, y >= 0 && REV[n] && REV[y] ? 100 * PAT[n] / REV[n] - 100 * PAT[y] / REV[y] : null, ' pp')}${row(AR ? 'EPS as reported (₹)' : 'EPS, basic, as reported (₹)', EPSR, v => v.toFixed(2), !AR && !EPSADJ, AR || EPSADJ ? null : yoy(EPSR[n], EPSR[y]))}${!AR && EPSADJ ? row('EPS, adjusted for splits/bonuses (₹)', EPSA, v => v.toFixed(2), true, yoy(EPSA[n], EPSA[y])) : ''}${AR ? row('EPS on 166.04 mn shares (₹)', EPS, v => v.toFixed(2), true, yoy(EPS[n], EPS[y])) : ''}</tbody></table></div>`;
 }
 function earnBody() {
   const leg = S.eMetric === 'pat' ? `<span><span class="sw" style="background:var(--rev)"></span>${PAT ? revLabel().replace(' from ops', '') : 'Revenue'}</span><span><span class="sw" style="background:var(--ink)"></span>PAT</span>` : S.eMetric === 'eps' ? `<span><span class="sw" style="background:var(--ink)"></span>${AR ? 'EPS, ₹ on 166.04 mn shares' : 'EPS, basic, ₹'}</span>` : `<span><span class="sw" style="background:var(--ink)"></span>PAT margin, %</span>`;
@@ -557,7 +573,7 @@ const CH = {
   earn(el, w) {
     const H = 210, top = 20, base = H - 26, left = 44, m = S.eMetric, NQ = PAT.length, cw = (w - left) / NQ;
     let s = svgOpen(w, H, 'Earnings by quarter');
-    const series = m === 'pat' ? null : m === 'eps' ? (AR ? EPS : EPSR) : PAT.map((p, i) => REV[i] ? 100 * p / REV[i] : 0);
+    const series = m === 'pat' ? null : m === 'eps' ? (AR ? EPS : EPSA) : PAT.map((p, i) => REV[i] ? 100 * p / REV[i] : 0);
     const vals = (m === 'pat' ? REV.concat(PAT) : series).filter(v => v != null), mx = niceMax(Math.max.apply(null, vals.concat([m === 'pat' ? 1 : 0.1]))), lo = Math.min.apply(null, vals.concat([0]));
     const mn = lo < 0 ? -niceMax(-lo) : 0, sc = (base - top) / (mx - mn), y0 = base + mn * sc, ticks = (mn < 0 ? [mn] : []).concat(ticksOf(mx));  // loss quarters hang below zero
     const ybar = v => (v >= 0 ? y0 - v * sc : y0).toFixed(1), hbar = v => (Math.abs(v || 0) * sc).toFixed(1), ylab = v => (v >= 0 ? y0 - v * sc - 6 : y0 + Math.abs(v) * sc + 12).toFixed(1);
@@ -565,7 +581,7 @@ const CH = {
     for (let i = 0; i < NQ; i++) {
       const cx = left + i * cw + cw / 2, bw = Math.min(32, cw * .32);
       if (m === 'pat') {
-        s += `<g class="bar" style="--i:${i}"><rect x="${(cx - bw - 2).toFixed(1)}" y="${ybar(REV[i])}" width="${bw.toFixed(1)}" height="${hbar(REV[i])}" fill="var(--rev)" data-tip="<b>${EQ[i]} · ${EQd[i]}</b><br>${revLabel()} ₹${fin(REV[i], 2)} cr"></rect></g><g class="bar" style="--i:${i + .5}"><rect x="${(cx + 2).toFixed(1)}" y="${ybar(PAT[i])}" width="${bw.toFixed(1)}" height="${hbar(PAT[i])}" fill="${i === NQ - 1 ? 'var(--acc)' : 'var(--ink)'}" data-tip="<b>${EQ[i]} · ${EQd[i]}</b><br>PAT ₹${fin(PAT[i], 2)} cr · margin ${(100 * PAT[i] / REV[i]).toFixed(1)}%<br>EPS ₹${(AR ? EPS[i] : EPSR[i] || 0).toFixed(2)}${AR ? ' (166.04 mn sh)' : ''}"></rect></g><text class="strong" x="${(cx + 2 + bw / 2).toFixed(1)}" y="${ylab(PAT[i])}" text-anchor="middle">${Math.round(PAT[i])}</text>`;
+        s += `<g class="bar" style="--i:${i}"><rect x="${(cx - bw - 2).toFixed(1)}" y="${ybar(REV[i])}" width="${bw.toFixed(1)}" height="${hbar(REV[i])}" fill="var(--rev)" data-tip="<b>${EQ[i]} · ${EQd[i]}</b><br>${revLabel()} ₹${fin(REV[i], 2)} cr"></rect></g><g class="bar" style="--i:${i + .5}"><rect x="${(cx + 2).toFixed(1)}" y="${ybar(PAT[i])}" width="${bw.toFixed(1)}" height="${hbar(PAT[i])}" fill="${i === NQ - 1 ? 'var(--acc)' : 'var(--ink)'}" data-tip="<b>${EQ[i]} · ${EQd[i]}</b><br>PAT ₹${fin(PAT[i], 2)} cr · margin ${(100 * PAT[i] / REV[i]).toFixed(1)}%<br>EPS ₹${(AR ? EPS[i] : EPSA[i] || 0).toFixed(2)}${AR ? ' (166.04 mn sh)' : EPSADJ ? ' (adjusted)' : ''}"></rect></g><text class="strong" x="${(cx + 2 + bw / 2).toFixed(1)}" y="${ylab(PAT[i])}" text-anchor="middle">${Math.round(PAT[i])}</text>`;
       } else {
         const v = series[i] || 0, bw2 = Math.min(44, cw * .5);
         s += `<g class="bar" style="--i:${i}"><rect x="${(cx - bw2 / 2).toFixed(1)}" y="${ybar(v)}" width="${bw2.toFixed(1)}" height="${hbar(v)}" fill="${i === NQ - 1 ? 'var(--acc)' : 'var(--ink)'}" data-tip="<b>${EQ[i]} · ${EQd[i]}</b><br>${m === 'eps' ? 'EPS ₹' + (v || 0).toFixed(2) + (AR ? ' on 166.04 mn shares<br>Reported ₹' + EPSR[i].toFixed(2) : ', basic') : 'PAT margin ' + (v || 0).toFixed(1) + '%'}"></rect></g><text class="strong" x="${cx.toFixed(1)}" y="${ylab(v)}" text-anchor="middle">${m === 'eps' ? v.toFixed(2) : v.toFixed(1) + '%'}</text>`;
