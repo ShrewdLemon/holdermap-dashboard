@@ -1,0 +1,3471 @@
+{
+  "symbol": "ANANDRATHI",
+  "company": "Anand Rathi Wealth Ltd",
+  "out_path": "/Users/shrewdlemon/Projects/holdermap/data/out/ANANDRATHI_book1.xlsx",
+  "bloomberg_path": "/Users/shrewdlemon/Projects/holdermap/data/raw/uploads/ANANDRATHI_20260923-155548.xlsx",
+  "holder_source": "Bloomberg export",
+  "config": {
+    "symbol": "ANANDRATHI",
+    "company": "Anand Rathi Wealth Ltd",
+    "bloomberg_path": "/Users/shrewdlemon/Projects/holdermap/data/raw/uploads/ANANDRATHI_20260923-155548.xlsx",
+    "bloomberg_sheet": "",
+    "today": "2026-09-22"
+  },
+  "generated_at": "2026-09-23T15:57:44",
+  "all_passed": true,
+  "gates": [
+    {
+      "name": "counts reconcile to filings",
+      "passed": true,
+      "detail": "106 holder-quarters compared, 0 mismatches",
+      "rows": [
+        {
+          "holder": "Gupta Pradeep Kumar",
+          "period": "Q2/2025",
+          "filing": "2025-06-30",
+          "filing_name": "Pradeep Kumar Gupta",
+          "filing_shares": 3675684,
+          "factor": 2.0,
+          "expected": 7351368,
+          "bloomberg": 10328416,
+          "merged_with_huf": 10328416,
+          "merged_with_trusts": null,
+          "status": "ok (individual + HUF merged)"
+        },
+        {
+          "holder": "Gupta Pradeep Kumar",
+          "period": "Q3/2025",
+          "filing": "2025-09-30",
+          "filing_name": "Pradeep Kumar Gupta",
+          "filing_shares": 3675684,
+          "factor": 2.0,
+          "expected": 7351368,
+          "bloomberg": 10328416,
+          "merged_with_huf": 10328416,
+          "merged_with_trusts": null,
+          "status": "ok (individual + HUF merged)"
+        },
+        {
+          "holder": "Gupta Pradeep Kumar",
+          "period": "Q4/2025",
+          "filing": "2025-12-31",
+          "filing_name": "Pradeep Kumar Gupta",
+          "filing_shares": 3675684,
+          "factor": 2.0,
+          "expected": 7351368,
+          "bloomberg": 10328416,
+          "merged_with_huf": 10328416,
+          "merged_with_trusts": null,
+          "status": "ok (individual + HUF merged)"
+        },
+        {
+          "holder": "Gupta Pradeep Kumar",
+          "period": "Q1/2026",
+          "filing": "2026-03-31",
+          "filing_name": "Pradeep Kumar Gupta",
+          "filing_shares": 3675684,
+          "factor": 2.0,
+          "expected": 7351368,
+          "bloomberg": 10328416,
+          "merged_with_huf": 10328416,
+          "merged_with_trusts": null,
+          "status": "ok (individual + HUF merged)"
+        },
+        {
+          "holder": "Gupta Pradeep Kumar",
+          "period": "Q2/2026",
+          "filing": "2026-06-30",
+          "filing_name": "Pradeep Kumar Gupta",
+          "filing_shares": 7351368,
+          "factor": 1.0,
+          "expected": 7351368,
+          "bloomberg": 10328416,
+          "merged_with_huf": 10328416,
+          "merged_with_trusts": null,
+          "status": "ok (individual + HUF merged)"
+        },
+        {
+          "holder": "SBI Funds Management Ltd",
+          "period": "Q2/2026",
+          "filing": "2026-06-30",
+          "filing_name": "Sbi Small Cap Fund",
+          "filing_shares": 4273985,
+          "factor": 1.0,
+          "expected": 4273985,
+          "bloomberg": 4274164,
+          "merged_with_huf": null,
+          "merged_with_trusts": null,
+          "status": "ok (within 0.1%)"
+        }
+      ]
+    },
+    {
+      "name": "promoter status and filing coverage",
+      "passed": true,
+      "detail": "0 category/Table II conflicts; 0 nonzero filing holders absent from Bloomberg (listed, added as extra rows)",
+      "rows": []
+    },
+    {
+      "name": "category sums vs filing totals",
+      "passed": true,
+      "detail": "quarter Q2/2026 vs filing 2026-06-30 (factor 1.0)",
+      "rows": [
+        {
+          "category": "Promoter",
+          "quarter": "Q2/2026",
+          "filing": "2026-06-30",
+          "bloomberg_sum": 65718110,
+          "filing_total_x_factor": 68695158,
+          "ratio": 0.9567,
+          "band": "0.9-1.5",
+          "status": "ok",
+          "note": "Bloomberg omits a few small promoter-group holders and attributes trust shares to trustees as well as listing the trusts"
+        },
+        {
+          "category": "Domestic AMC",
+          "quarter": "Q2/2026",
+          "filing": "2026-06-30",
+          "bloomberg_sum": 15341316,
+          "filing_total_x_factor": 15324567,
+          "ratio": 1.0011,
+          "band": "0.5-1.5",
+          "status": "ok",
+          "note": "AIF/PMS rows sit outside the MF block; Bloomberg lists an AMC and some of its schemes; fund data is monthly"
+        },
+        {
+          "category": "Domestic Insurance",
+          "quarter": "Q2/2026",
+          "filing": "2026-06-30",
+          "bloomberg_sum": 1144983,
+          "filing_total_x_factor": 1541095,
+          "ratio": 0.743,
+          "band": "0.0-1.5",
+          "status": "ok",
+          "note": "Bloomberg's insurer positions come from disclosed portfolios; an insurer and its funds can both be listed"
+        },
+        {
+          "category": "foreign portfolio (AMC, insurance, government)",
+          "quarter": "Q2/2026",
+          "filing": "2026-06-30",
+          "bloomberg_sum": 6201595,
+          "filing_total_x_factor": 10572389,
+          "ratio": 0.5866,
+          "band": "0.0-1.5",
+          "status": "ok",
+          "note": "Bloomberg covers disclosed funds only, so under-coverage is expected; strategic foreign corporates are not FPIs and are left out"
+        }
+      ]
+    },
+    {
+      "name": "only Book1's twelve categories",
+      "passed": true,
+      "detail": "102 rows, 0 invalid",
+      "rows": []
+    },
+    {
+      "name": "blank/zero pattern preserved",
+      "passed": true,
+      "detail": "102 holders x 6 quarters, 0 deviations",
+      "rows": []
+    },
+    {
+      "name": "every row evidenced and resolved",
+      "passed": true,
+      "detail": "102 decisions, 0 unresolved, 24 flagged for review",
+      "rows": []
+    },
+    {
+      "name": "price provenance",
+      "passed": true,
+      "detail": "6 quarters priced, 0 without provenance",
+      "rows": []
+    }
+  ],
+  "tiers": {
+    "T1-filing": 29,
+    "T2-registry": 69,
+    "T3-rule": 3,
+    "override": 1
+  },
+  "review_count": 24,
+  "periods": [
+    "Q2/2025",
+    "Q3/2025",
+    "Q4/2025",
+    "Q1/2026",
+    "Q2/2026",
+    "Q3/2026"
+  ],
+  "prices": [
+    {
+      "column": "Q1",
+      "label": "Q2/2025",
+      "end": "2025-06-30",
+      "trade_date": "2025-06-30",
+      "close": 2159.7,
+      "factor": 2.0,
+      "adjusted_close": 1079.85,
+      "source": "bhavcopy.db",
+      "note": ""
+    },
+    {
+      "column": "Q2",
+      "label": "Q3/2025",
+      "end": "2025-09-30",
+      "trade_date": "2025-09-30",
+      "close": 2826.8,
+      "factor": 2.0,
+      "adjusted_close": 1413.4,
+      "source": "bhavcopy.db",
+      "note": ""
+    },
+    {
+      "column": "Q3",
+      "label": "Q4/2025",
+      "end": "2025-12-31",
+      "trade_date": "2025-12-31",
+      "close": 3112.4,
+      "factor": 2.0,
+      "adjusted_close": 1556.2,
+      "source": "bhavcopy.db",
+      "note": ""
+    },
+    {
+      "column": "Q4",
+      "label": "Q1/2026",
+      "end": "2026-03-31",
+      "trade_date": "2026-03-30",
+      "close": 3035.4,
+      "factor": 2.0,
+      "adjusted_close": 1517.7,
+      "source": "bhavcopy.db",
+      "note": ""
+    },
+    {
+      "column": "Q5",
+      "label": "Q2/2026",
+      "end": "2026-06-30",
+      "trade_date": "2026-06-30",
+      "close": 1976.7,
+      "factor": 1.0,
+      "adjusted_close": 1976.7,
+      "source": "bhavcopy.db",
+      "note": ""
+    },
+    {
+      "column": "Q6",
+      "label": "Q3/2026",
+      "end": "2026-09-30",
+      "trade_date": "2026-09-22",
+      "close": 2179.0,
+      "factor": 1.0,
+      "adjusted_close": 2179.0,
+      "source": "https://nsearchives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_20260922_F_0000.csv.zip",
+      "note": "quarter still open on 2026-09-22; latest close used"
+    }
+  ],
+  "rows": [
+    {
+      "holder": "Anand Rathi Financial Services Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        33069516,
+        33069516,
+        33069516,
+        33069516,
+        30177516,
+        30177516
+      ],
+      "values": [
+        35710116852.6,
+        46740453914.4,
+        51462780799.2,
+        50189604433.2,
+        59651895877.2,
+        65756807364.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Anand Rathi",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        16553780,
+        16553780,
+        16553780,
+        16553780,
+        16553780,
+        16256780
+      ],
+      "values": [
+        17875599333.0,
+        23397112652.0,
+        25760992436.0,
+        25123671906.0,
+        32721856926.0,
+        35423523620.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Gupta Pradeep Kumar",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing",
+        "Filing also lists a separate HUF under this name; Bloomberg's count combines both (see the counts gate)"
+      ],
+      "shares": [
+        10328416,
+        10328416,
+        10328416,
+        10328416,
+        10328416,
+        10328416
+      ],
+      "values": [
+        11153140017.6,
+        14598183174.4,
+        16073080979.2,
+        15675436963.2,
+        20416179907.2,
+        22505618464.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Quant Money Managers Ltd",
+      "category": "Domestic AMC",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: Mutual Funds/UTI in filings 2026-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "'Quant Money Managers Ltd' taken as the filing's 'Quant Mutual Fund - Quant Small Cap Fund': the same share count (4,746,834) and the shared word(s) ['quant']",
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        5507698,
+        5507698,
+        5507698,
+        4746834,
+        4746834,
+        4746834
+      ],
+      "values": [
+        5947487685.3,
+        7784580353.2,
+        8571079627.6,
+        7204269961.8,
+        9383066767.8,
+        10343351286.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Gupta Priti",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        4415952,
+        4415952,
+        4415952,
+        4415952,
+        4415952,
+        4415952
+      ],
+      "values": [
+        4768565767.2,
+        6241506556.8,
+        6872104502.4,
+        6702090350.4,
+        8729012318.4,
+        9622359408.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Vanguard Group Inc/The",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: The Vanguard Group, Inc. (US, class asset_manager) — US SEC (investment adviser; 13F/13G filer) - CIK 0000102909. SEC EDGAR lists conformed name 'VANGUARD GROUP INC', state of incorporation PA, filing SCHEDULE 13G/13G-A and 13F-NT. GLEIF records the legal name as 'THE VANGUARD GROUP, INC.', legal form Corporation, legal address Malvern, Pennsylvania, US (jurisdiction US-PA).",
+      "source_url": "https://data.sec.gov/submissions/CIK0000102909.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        2751420,
+        2813570,
+        3120270,
+        3189156,
+        3425166,
+        4361760
+      ],
+      "values": [
+        2971120887.0,
+        3976699838.0,
+        4855764174.0,
+        4840182061.2,
+        6770525632.2,
+        9504275040.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "SBI Funds Management Ltd",
+      "category": "Domestic AMC",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: Mutual Funds/UTI in filings 2026-06-30..2026-06-30; status used: 2026-06-30 filing for Q2/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "'SBI Funds Management Ltd' taken as the filing's 'Sbi Small Cap Fund': the same share count (4,274,164) and the shared word(s) []"
+      ],
+      "shares": [
+        3053798,
+        3055710,
+        4267532,
+        4268936,
+        4274164,
+        4276127
+      ],
+      "values": [
+        3297643770.3,
+        4318940514.0,
+        6641133298.4,
+        6478964167.2,
+        8448739978.8,
+        9317680733.0
+      ],
+      "extra": false,
+      "owner": "Govt-owned fund manager · Government of India, via State Bank of India",
+      "owner_detail": "state owned parent; 55.56% as of 2026-07-20; SBI Funds Management SHP as of 20-Jul-2026 (listing pattern, filed 21-Jul-2026): promoter 'STATE BANK OF INDIA' 1,131,665,603 of 2,036,827,612 shares = 55.56%; Amundi India Holding 32.63%. Before the July-2026 IPO SBI held 61.86% (SBI MF SAI dated 30-Jun-2026; SBI annual report 2025-26). AMFI names State Bank of India the sponsor of SBI Mutual Fund (https://www.amfiindia.com/member/22). State Bank of India: President of India 55.47% (SBI SHP 30-Jun-2026, https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693592_15072026065623_WEB.xml).",
+      "owner_source": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1698554_21072026055222_WEB.xml"
+    },
+    {
+      "holder": "Azeez Family Trust",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: other non-institutions (trusts, HUFs) -> Individual per decision 4 in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        4207494,
+        3867494,
+        3609494,
+        3609494,
+        3365054,
+        3365054
+      ],
+      "values": [
+        4543462395.9,
+        5466316019.6,
+        5617094562.8,
+        5478129043.8,
+        6651702241.8,
+        7332452666.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Azeez Feroze",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: Key Managerial Personnel in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        3408972,
+        2798972,
+        2538872,
+        2538872,
+        2538872,
+        2538872
+      ],
+      "values": [
+        3681178414.2,
+        3956067024.8,
+        3950992606.4,
+        3853246034.4,
+        5018588282.4,
+        5532202088.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Gupta Navratan Mal",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing",
+        "Filing lists the HUF (Navratan Mal Gupta HUF); Bloomberg folds it into the karta's name"
+      ],
+      "shares": [
+        2333968,
+        2333968,
+        2333968,
+        2333968,
+        2333968,
+        2333968
+      ],
+      "values": [
+        2520335344.8,
+        3298830371.2,
+        3632121001.6,
+        3542263233.6,
+        4613554545.6,
+        5085716272.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "JAIPUR SECURITIES PVT LTD",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        2460720,
+        2460720,
+        2460720,
+        2460720,
+        2460720,
+        2315720
+      ],
+      "values": [
+        2657208492.0,
+        3477981648.0,
+        3829372464.0,
+        3734634744.0,
+        4864105224.0,
+        5045953880.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Echjay Industries Pvt Ltd",
+      "category": "Domestic corporate",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: Bodies Corporate in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        1683740,
+        1683740,
+        1683740,
+        1675800,
+        1675800,
+        1675800
+      ],
+      "values": [
+        1818186639.0,
+        2379798116.0,
+        2620236188.0,
+        2543361660.0,
+        3312553860.0,
+        3651568200.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Blackrock Inc",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: BlackRock, Inc. (US, class asset_manager, holds via BlackRock Fund Advisors; BlackRock Institutional Trust Company, N.A.; BlackRock Advisors, LLC; BlackRock (Singapore) Limited) — US SEC (listed issuer / investment adviser group) - CIK 0002012383. SEC EDGAR shows the current registrant 'BlackRock, Inc.' (CIK 0002012383), incorporated in Delaware, SIC 'Security Brokers, Dealers & Flotation Companies', former name 'BlackRock Funding, Inc. /DE'. GLEIF records 'BlackRock, Inc.', US, jurisdiction US-DE. The named entity is a listed holding company; Indian equities are held through its registered adviser subsidiaries.",
+      "source_url": "https://data.sec.gov/submissions/CIK0002012383.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        1154273,
+        1337308,
+        1377973,
+        1470722,
+        1533235,
+        1624259
+      ],
+      "values": [
+        1246441699.05,
+        1890151127.2,
+        2144401582.6,
+        2232114779.4,
+        3030745624.5,
+        3539260361.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Canara Robeco Asset Management Co Ltd/India",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Canara Robeco Asset Management Company Limited (IN, class mutual_fund_amc) — SEBI reg MF/004/93/4. AMFI member list gives fund house 'Canara Robeco Mutual Fund' with AMC legal name 'Canara Robeco Asset Management Company Limited'. The fund itself is on SEBI's register of mutual funds as 'CANARA ROBECO MF', registration MF/004/93/4 (Oct 19, 1993 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 1 Canara Robeco Mutual Fund scheme(s) disclose the stock, ₹264.85 cr ≈ 1,277,186 shares vs Bloomberg 1,277,164 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Canara Robeco Mutual Fund scheme(s) disclose the stock, ₹264.85 cr ≈ 1,277,186 shares vs Bloomberg 1,277,164 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        1277164,
+        1277164,
+        1277164,
+        1277164,
+        1277164,
+        1277164
+      ],
+      "values": [
+        1379145545.4,
+        1805143597.6,
+        1987522616.8,
+        1938351802.8,
+        2524570078.8,
+        2782940356.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Invesco Asset Management India Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Invesco Asset Management (India) Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/052/06/01. AMFI member list gives fund house 'Invesco Mutual Fund' with AMC legal name 'Invesco Asset Management (India) Private Limited'. The fund itself is on SEBI's register of mutual funds as 'INVESCO MUTUAL FUND', registration MF/052/06/01 (Jul 24, 2006 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 2 Invesco Mutual Fund scheme(s) disclose the stock, ₹217.23 cr ≈ 1,047,548 shares vs Bloomberg 1,047,542 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 2 Invesco Mutual Fund scheme(s) disclose the stock, ₹217.23 cr ≈ 1,047,548 shares vs Bloomberg 1,047,542 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        1033254,
+        904482,
+        1047542,
+        1047542,
+        1047542,
+        1047542
+      ],
+      "values": [
+        1115759331.9,
+        1278394858.8,
+        1630184860.4,
+        1589854493.4,
+        2070676271.4,
+        2282594018.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "ICICI Prudential Asset Management Co Ltd/India",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: ICICI Prudential Asset Management Company Limited (IN, class mutual_fund_amc) — SEBI reg MF/003/93/6. AMFI member list gives fund house 'ICICI Prudential Mutual Fund' with AMC legal name 'ICICI Prudential Asset Management Company Limited'. The fund itself is on SEBI's register of mutual funds as 'ICICI PRUDENTIAL MF', registration MF/003/93/6 (Oct 13, 1993 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 4 ICICI Prudential Mutual Fund scheme(s) disclose the stock, ₹193.62 cr ≈ 933,693 shares vs Bloomberg 932,975 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 4 ICICI Prudential Mutual Fund scheme(s) disclose the stock, ₹193.62 cr ≈ 933,693 shares vs Bloomberg 932,975 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        921606,
+        923170,
+        925902,
+        929938,
+        932975,
+        934782
+      ],
+      "values": [
+        995196239.1,
+        1304808478.0,
+        1440888692.4,
+        1411366902.6,
+        1844211682.5,
+        2036889978.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "DSP Asset Managers Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: DSP Asset Managers Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/036/97/7. AMFI member list gives fund house 'DSP Mutual Fund' with AMC legal name 'DSP Asset Managers Private Limited'. The fund itself is on SEBI's register of mutual funds as 'DSP MF', registration MF/036/97/7 (Jan 30, 1997 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 7 DSP Mutual Fund scheme(s) disclose the stock, ₹190.76 cr ≈ 919,902 shares vs Bloomberg 929,022 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 7 DSP Mutual Fund scheme(s) disclose the stock, ₹190.76 cr ≈ 919,902 shares vs Bloomberg 929,022 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        910796,
+        918134,
+        811022,
+        811040,
+        929022,
+        920178
+      ],
+      "values": [
+        983523060.6,
+        1297690595.6,
+        1262112436.4,
+        1230915408.0,
+        1836397787.4,
+        2005067862.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Twelfth Tier Property Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        714492,
+        714492,
+        714492,
+        714492,
+        714492,
+        714492
+      ],
+      "values": [
+        771544186.2,
+        1009862992.8,
+        1111892450.4,
+        1084384508.4,
+        1412336336.4,
+        1556878068.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Anand Rathi IT Pvt Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        595412,
+        595412,
+        595412,
+        595412,
+        595406,
+        595406
+      ],
+      "values": [
+        642955648.2,
+        841555320.8,
+        926580154.4,
+        903656792.4,
+        1176939040.2,
+        1297389674.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Norges Bank",
+      "category": "Foreign Government",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Norges Bank (NO, class central_bank, holds via Norges Bank Investment Management (Government Pension Fund Global)) — Norway Ministry of Finance / NBIM (central bank; GPFG manager). Also a US SEC 13F filer - CIK 0001374170. GLEIF records 'NORGES BANK', Oslo, Norway, entity category RESIDENT_GOVERNMENT_ENTITY, legal form 'Annen juridisk person', registration ISSUED. SEC EDGAR shows NORGES BANK as a 13F-HR and SC 13G filer. Norges Bank is Norway's central bank; its investment-management arm NBIM manages the Government Pension Fund Global, which is the vehicle holding listed foreign equities. | Merged here 23-Sep-2026: the separate entry 'GOVERNMENT PENSION FUND - GLOBAL' (research wave 1, batch 10) is the same money: GLEIF records NORGES BANK, Oslo, NO, entity category RESIDENT_GOVERNMENT_ENTITY, legal form 'Annen juridisk person', Brønnøysund org. no. 937 884 117, status ISSUED. GLEIF carries Norges Bank portfolio LEIs as separate FUND entities (e.g. NORGES BANK - UK MID CAP EQUITY PORTFOLIO, 213800SJJ8FSFTF97863) but no LEI for the Government Pension Fund Global itself — the fund is a krone deposit account i",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/549300O6E2WAK3IAXE34",
+      "alternative": "Bank",
+      "review": false,
+      "notes": [
+        "Team decision: Team decision, 23-Sep-2026, final: Foreign Government, as first written ('technically right'). Earlier the same day the team had said 'lets stick to bank for now'. Norges Bank is Norway's central bank, a separate legal entity owned by the central government; the Ownership column says 'Govt-owned central bank · Government of Norway'."
+      ],
+      "shares": [
+        897125,
+        897125,
+        585288,
+        585288,
+        585288,
+        585288
+      ],
+      "values": [
+        968760431.25,
+        1267996475.0,
+        910825185.6,
+        888291597.6,
+        1156938789.6,
+        1275342552.0
+      ],
+      "extra": false,
+      "owner": "Govt-owned central bank · Government of Norway",
+      "owner_detail": "central bank; 100%; Norges Bank's own page: \"Norges Bank is a separate legal entity ... and is owned by the central government.\" The Government Pension Fund Global is the fund Norges Bank manages; its assets are held in Norges Bank's name.",
+      "owner_source": "https://www.norges-bank.no/en/topics/about/"
+    },
+    {
+      "holder": "Motilal Oswal Asset Management Co Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Motilal Oswal Asset Management Company Limited (IN, class mutual_fund_amc) — SEBI reg MF/063/09/04. AMFI member list gives fund house 'Motilal Oswal Mutual Fund' with AMC legal name 'Motilal Oswal Asset Management Company Limited'. The fund itself is on SEBI's register of mutual funds as 'MOTILAL OSWAL MF', registration MF/063/09/04 (Dec 29, 2009 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 11 Motilal Oswal Mutual Fund scheme(s) disclose the stock, ₹96.71 cr ≈ 466,364 shares vs Bloomberg 461,781 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 11 Motilal Oswal Mutual Fund scheme(s) disclose the stock, ₹96.71 cr ≈ 466,364 shares vs Bloomberg 461,781 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        131528,
+        144578,
+        204424,
+        305906,
+        461781,
+        547925
+      ],
+      "values": [
+        142030510.8,
+        204346545.2,
+        318124628.8,
+        464273536.2,
+        912802502.7,
+        1193928575.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Anand Rathi Insurance Brokers Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-12-31..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        null,
+        null,
+        420000,
+        420000,
+        420000,
+        420000
+      ],
+      "values": [
+        null,
+        null,
+        653604000.0,
+        637434000.0,
+        830214000.0,
+        915180000.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "AXIS MAX LIFE INSURANCE LTD",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Axis Max Life Insurance Limited (IN, class insurer) — IRDAI reg no. 104. IRDAI's List of Life Insurers carries 'Axis Max Life Insurance Limited' at registration no. 104. RENAMED: formerly 'Max Life Insurance Company Limited'. The insurer's own site states: \"Axis Max Life Insurance Limited (formerly known as Max Life Insurance Co. Ltd.) is a Joint Venture between Max Financial Services Limited (“MFSL”) and Axis Bank Limited\", and in its disclaimers \"(earlier known as Max Life Insurance Company Limited)\". IRDAI registration 104 is unchanged across the rename.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Formerly Max Life Insurance Company Limited"
+      ],
+      "shares": [
+        431912,
+        487768,
+        14746,
+        16746,
+        345573,
+        334749
+      ],
+      "values": [
+        466400173.2,
+        689411291.2,
+        22947725.2,
+        25415404.2,
+        683094149.1,
+        729418071.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Aqua Proof Wall Plast Pvt Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        109404,
+        109404,
+        249404,
+        249404,
+        249404,
+        249404
+      ],
+      "values": [
+        118139909.4,
+        154631613.6,
+        388122504.8,
+        378520450.8,
+        492996886.8,
+        543451316.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Maru Pooja",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group NonResidentIndividualsOrForeignIndividuals) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        240000,
+        240000,
+        240000,
+        240000,
+        240000,
+        240000
+      ],
+      "values": [
+        259164000.0,
+        339216000.0,
+        373488000.0,
+        364248000.0,
+        474408000.0,
+        522960000.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "ICICI Prudential Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: ICICI Prudential Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 105. IRDAI's List of Life Insurers carries 'ICICI Prudential Life Insurance Company Limited' at registration no. 105; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        41038,
+        46386,
+        112090,
+        142096,
+        221564,
+        222086
+      ],
+      "values": [
+        44314884.3,
+        65561972.4,
+        174434458.0,
+        215659099.2,
+        437965558.8,
+        483925394.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Nippon Life India Asset Management Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Nippon Life India Asset Management Limited (IN, class mutual_fund_amc) — SEBI reg MF/022/95/1. AMFI member list gives fund house 'Nippon India Mutual Fund' with AMC legal name 'Nippon Life India Asset Management Limited'. The fund itself is on SEBI's register of mutual funds as 'NIPPON INDIA MUTUAL FUND', registration MF/022/95/1 (Jun 30, 1995 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 4 Nippon India Mutual Fund scheme(s) disclose the stock, ₹45.47 cr ≈ 219,270 shares vs Bloomberg 216,778 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 4 Nippon India Mutual Fund scheme(s) disclose the stock, ₹45.47 cr ≈ 219,270 shares vs Bloomberg 216,778 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        104650,
+        110716,
+        165280,
+        180298,
+        216778,
+        221895
+      ],
+      "values": [
+        113006302.5,
+        156485994.4,
+        257208736.0,
+        273638274.6,
+        428505072.6,
+        483509205.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Bajaj Life Insurance Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Bajaj Life Insurance Limited (IN, class insurer) — IRDAI reg no. 116. IRDAI's List of Life Insurers carries 'Bajaj Life Insurance Limited' at registration no. 116. RENAMED: formerly 'Bajaj Allianz Life Insurance Company Limited'. The insurer's own site states: \"Our company name is changing from Bajaj Allianz Life Insurance Company Ltd. to Bajaj Life Insurance Ltd.\" and carries the standing footer \"Bajaj Life Insurance Limited (Formerly known as Bajaj Allianz Life Insurance Company Limited) | IRDAI Reg. No- 116\". IRDAI registration 116 is unchanged.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Formerly Bajaj Allianz Life Insurance Company Limited"
+      ],
+      "shares": [
+        241438,
+        265118,
+        0,
+        0,
+        227018,
+        220746
+      ],
+      "values": [
+        260716824.3,
+        374717781.2,
+        0.0,
+        0.0,
+        448746480.6,
+        481005534.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Bank of India Investment Managers Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Bank of India Investment Managers Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/056/08/01. AMFI member list gives fund house 'Bank of India Mutual Fund' with AMC legal name 'Bank of India Investment Managers Private Limited'. The fund itself is on SEBI's register of mutual funds as 'BANK OF INDIA MUTUAL FUND', registration MF/056/08/01 (Mar 31, 2008 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 1 Bank of India Mutual Fund scheme(s) disclose the stock, ₹43.55 cr ≈ 210,011 shares vs Bloomberg 210,000 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Bank of India Mutual Fund scheme(s) disclose the stock, ₹43.55 cr ≈ 210,011 shares vs Bloomberg 210,000 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        null,
+        210000,
+        210000,
+        210000,
+        210000
+      ],
+      "values": [
+        null,
+        null,
+        326802000.0,
+        318717000.0,
+        415107000.0,
+        457590000.0
+      ],
+      "extra": false,
+      "owner": "Govt-owned fund manager · Government of India, via Bank of India",
+      "owner_detail": "state owned parent; 100% as of 2026-05-31; Bank of India MF SAI dated 30-Jun-2026: shareholding of Bank of India Investment Managers Pvt Ltd as on 31-May-2026 - Bank of India 100% (four individuals hold nominee shares). Bank of India's annual report 2025-26 (https://www.bseindia.com/xml-data/corpfiling/AttachHis/68b91cae-d3e5-4c79-9414-09dec50e6f77.pdf) also shows 100% at 31-Mar-2026. AMFI names Bank of India the sponsor. Bank of India: President of India 73.38% (SHP 30-Jun-2026).",
+      "owner_source": "https://portal.amfiindia.com/spages/sai46.pdf"
+    },
+    {
+      "holder": "Tata Asset Management Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Tata Asset Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/023/95/9. AMFI member list gives fund house 'Tata Mutual Fund'. NOTE a name-vintage discrepancy: AMFI's member record still prints the pre-conversion 'Tata Asset Management Limited', but MCA master data (via ZaubaCorp, 1 record found for 'TATA ASSET MANAGEMENT') shows the current legal name is 'TATA ASSET MANAGEMENT PRIVATE LIMITED', CIN U65990MH1994PTC077090, at 1903 B Wing Parinee Crescenzo, BKC, Mumbai 400051 - the same address SEBI's register carries for Tata Mutual Fund. Bloomberg's 'Pvt Ltd' spelling is the current one. SEBI register: 'TATA MUTUAL FUND', MF/023/95/9 (Jun 30, 1995 - Perpetual). | Indian MF disclosures (July-2026 portfolios): 1 Tata Mutual Fund scheme(s) disclose the stock, ₹39.69 cr ≈ 191,397 shares vs Bloomberg 169,572 for Q2/2026 — agrees",
+      "source_url": "https://www.zaubacorp.com/companysearchresults/TATA-ASSET-MANAGEMENT",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Tata Mutual Fund scheme(s) disclose the stock, ₹39.69 cr ≈ 191,397 shares vs Bloomberg 169,572 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        63386,
+        77266,
+        107956,
+        121162,
+        169572,
+        198884
+      ],
+      "values": [
+        68447372.1,
+        109207764.4,
+        168001127.2,
+        183887567.4,
+        335192972.4,
+        433368236.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Tata AIA Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: TATA AIA Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 110. IRDAI's List of Life Insurers carries 'TATA AIA Life Insurance Company Limited' at registration no. 110; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        183505,
+        198191
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        362734333.5,
+        431858189.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Mirae Asset Financial Group",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Mirae Asset Investment Managers (India) Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/055/07/03. Bloomberg names the Korean PARENT GROUP, not an Indian registered entity. The Indian AMC is 'Mirae Asset Investment Managers (India) Private Limited' per AMFI's member list, running Mirae Asset Mutual Fund, which is on SEBI's register as 'MIRAE ASSET MF', MF/055/07/03, valid from Feb 20, 2008. Mapping is on the group-to-Indian-subsidiary relationship, so the entity name itself does not match a register. | Indian MF disclosures (July-2026 portfolios): 5 Mirae Asset Mutual Fund scheme(s) disclose the stock, ₹36.34 cr ≈ 175,242 shares vs Bloomberg 183,817 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "Foreign corporate",
+      "review": true,
+      "notes": [
+        "Registry match confidence medium",
+        "Also in foreign.yaml as Mirae Asset Global Investments Co., Ltd. (미래에셋자산운용 (주)) - asset-management arm of the Mirae Asset group; the group itself is a brand, not a single legal entity (KR, class financial_holding) -> Foreign corporate",
+        "Indian MF disclosures (July-2026 portfolios): 5 Mirae Asset Mutual Fund scheme(s) disclose the stock, ₹36.34 cr ≈ 175,242 shares vs Bloomberg 183,817 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        58012,
+        64422,
+        177656,
+        221642,
+        183817,
+        175463
+      ],
+      "values": [
+        62644258.2,
+        91054054.8,
+        276468267.2,
+        336386063.4,
+        363351063.9,
+        382333877.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "American Century Cos Inc",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: American Century Companies, Inc. (US, class asset_manager, holds via American Century Investment Management, Inc.) — US SEC (13F filer 028-11918) - CIK 0000748054; adviser subsidiary registered on Form ADV. SEC EDGAR lists 'AMERICAN CENTURY COMPANIES INC', business address 4500 Main Street, Kansas City, MO, former name 'TWENTIETH CENTURY COMPANIES INC', filing 13F-HR (file 028-11918) and SC 13G. No LEI was found in GLEIF for the holding company itself; its operating adviser AMERICAN CENTURY INVESTMENT MANAGEMENT, INC. holds LEI EM2U0UPRO83F878KCP52 (US, jurisdiction US-DE, status ISSUED).",
+      "source_url": "https://data.sec.gov/submissions/CIK0000748054.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        41278,
+        16564,
+        17000,
+        123466,
+        134348,
+        173687
+      ],
+      "values": [
+        44574048.3,
+        23411557.6,
+        26455400.0,
+        187384348.2,
+        265565691.6,
+        378463973.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Goldman Sachs Group Inc/The",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: The Goldman Sachs Group, Inc. (US, class bank, holds via Goldman Sachs Asset Management, L.P. (incl. Goldman Sachs Asset Management International and Goldman Sachs Asset Management (India) Pvt. Ltd.)) — US Federal Reserve (bank holding company) / US SEC - CIK 0000886982. SEC EDGAR lists 'GOLDMAN SACHS GROUP INC', incorporated in Delaware, SIC 'Security Brokers, Dealers & Flotation Companies'. GLEIF records 'THE GOLDMAN SACHS GROUP, INC.', US, jurisdiction US-DE, legal form Corporation. It is a US financial holding company supervised by the Federal Reserve; asset management is conducted by GSAM subsidiaries.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000886982.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        0,
+        32962,
+        21500,
+        0,
+        169570,
+        169570
+      ],
+      "values": [
+        0.0,
+        46588490.8,
+        33458300.0,
+        0.0,
+        335189019.0,
+        369493030.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Trust Investment Advisors Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Trust Asset Management Private Limited (IN, class pms_or_aif) — SEBI reg INP000001843 (portfolio manager); fund MF/075/19/01. CONFIRMED AS FLAGGED: the Bloomberg entity is NOT the AMC. AMFI's member page for Trust Mutual Fund (amfiindia.com/member/72, 'Updated as on July 24, 2026') lists 'Name(s) of Sponsor: Trust Investment Advisors Private Limited' and separately 'Name of Assest Management Co.: Trust Asset Management Private Limited' (AMC incorporated 12-Dec-2017), with trustee company TRUST AMC TRUSTEE PRIVATE LIMITED. So Trust Investment Advisors is the SPONSOR of the fund, and the AMC is a different company. In its own right Trust Investment Advisors is a SEBI-registered PORTFOLIO MANAGER: 'TRUST INVESTMENT ADVISORS PVT. LTD.', INP000001843, valid Oct 01, 2015 - Perpetual. A holding booked under the Bloomberg name is therefore sponsor/PMS money, not mutual fund scheme assets, unless it is a mislabel of the AMC. Trust Mutual Fund itself: SEBI MF/075/19/01 (Oct 07, 2019 - Perpetual), set up 07-Oct-2019. | Indian MF disclosures (July-2026 portfolios): 1 Trust Mutual Fund scheme(s) disclose the stock, ₹24.02 cr ≈ 115,832 shares vs Bloomberg 121,516 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/member/72",
+      "alternative": "Domestic corporate",
+      "review": true,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Trust Mutual Fund scheme(s) disclose the stock, ₹24.02 cr ≈ 115,832 shares vs Bloomberg 121,516 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        121516,
+        152977
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        240200677.2,
+        333336883.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "HDFC Asset Management Co Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: HDFC Asset Management Company Limited (IN, class mutual_fund_amc) — SEBI reg MF/044/00/6. AMFI member list gives fund house 'HDFC Mutual Fund' with AMC legal name 'HDFC Asset Management Company Limited'. The fund itself is on SEBI's register of mutual funds as 'HDFC MF', registration MF/044/00/6 (Jun 30, 2000 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 5 HDFC Mutual Fund scheme(s) disclose the stock, ₹30.04 cr ≈ 144,862 shares vs Bloomberg 141,377 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 5 HDFC Mutual Fund scheme(s) disclose the stock, ₹30.04 cr ≈ 144,862 shares vs Bloomberg 141,377 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        73418,
+        81670,
+        97178,
+        134384,
+        141377,
+        146848
+      ],
+      "values": [
+        79280427.3,
+        115432378.0,
+        151228403.6,
+        203954596.8,
+        279459915.9,
+        319981792.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Kotak Mahindra Asset Management Co Ltd/India",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Kotak Mahindra Asset Management Company Limited. (IN, class mutual_fund_amc) — SEBI reg MF/038/98/1. AMFI member list gives fund house 'Kotak Mahindra Mutual Fund' with AMC legal name 'Kotak Mahindra Asset Management Company Limited.'. The fund itself is on SEBI's register of mutual funds as 'KOTAK MUTUAL FUND', registration MF/038/98/1 (Jun 23, 1998 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 5 Kotak Mahindra Mutual Fund scheme(s) disclose the stock, ₹29.13 cr ≈ 140,474 shares vs Bloomberg 138,926 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 5 Kotak Mahindra Mutual Fund scheme(s) disclose the stock, ₹29.13 cr ≈ 140,474 shares vs Bloomberg 138,926 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        1054,
+        1304,
+        2258,
+        26378,
+        138926,
+        144363
+      ],
+      "values": [
+        1138161.9,
+        1843073.6,
+        3513899.6,
+        40033890.6,
+        274615024.2,
+        314566977.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "SAMCO ASSET MANAGEMENT INDIA",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Samco Asset Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/077/21/03. AMFI member list gives fund house 'Samco Mutual Fund' with AMC legal name 'Samco Asset Management Private Limited'. The fund itself is on SEBI's register of mutual funds as 'SAMCO MUTUAL FUND', registration MF/077/21/03 (Jul 30, 2021 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1.",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 2 Samco Mutual Fund scheme(s) disclose the stock, ₹4.20 cr ≈ 20,254 shares vs Bloomberg 42,355 for Q2/2026 — does not agree"
+      ],
+      "shares": [
+        null,
+        193106,
+        236960,
+        24400,
+        42355,
+        140683
+      ],
+      "values": [
+        null,
+        272936020.4,
+        368757152.0,
+        37031880.0,
+        83723128.5,
+        306548257.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "WBC Holdings LP",
+      "category": "Foreign corporate",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: WBC Holdings, L.P. (US, class financial_holding, holds via William Blair Investment Management, LLC (SEC 13F filer, CIK 0001644956, file 028-17022)) — US SEC - named as holding company / control person in Form MA filings of William Blair & Company, L.L.C. (CIK 0000012518; IA file 801-00688, BD file 008-02698, CRD 1252). Delaware Division of Corporations reg. no. 4612981.. IDENTIFIED: WBC Holdings, L.P. is the Delaware holding partnership of William Blair. William Blair & Company, L.L.C.'s SEC Form MA/A Schedule A lists '<name>WBC Holdings, L.P.</name> ... <titleStatus>Holding Company</titleStatus> <statusAcquired>11-01-2008</statusAcquired> <ownershipCode>E</ownershipCode> <isControPerson>Y</isControPerson>' (IRS no. 32-0268461), and Schedule B lists 'WBC GP L.L.C.' as its General Partner. GLEIF independently records 'WBC HOLDINGS, L.P.', legal form Limited Partnership, legal address c/o The Corporation Trust Company, Wilmington DE, headquarters 150 North Riverside Plaza, Chicago IL 60606 - William Blair's head office.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/12518/000001251816000038/primary_doc.xml",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        139600,
+        139600
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        275947320.0,
+        304188400.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Axis Asset Management Co Ltd/India",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Axis Asset Management Co. Ltd. (IN, class mutual_fund_amc) — SEBI reg MF/061/09/02. AMFI member list gives fund house 'Axis Mutual Fund' with AMC legal name 'Axis Asset Management Co. Ltd.'. The fund itself is on SEBI's register of mutual funds as 'AXIS MF', registration MF/061/09/02 (Dec 04, 2009 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 5 Axis Mutual Fund scheme(s) disclose the stock, ₹25.54 cr ≈ 123,161 shares vs Bloomberg 118,716 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 5 Axis Mutual Fund scheme(s) disclose the stock, ₹25.54 cr ≈ 123,161 shares vs Bloomberg 118,716 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        1114,
+        13362,
+        15036,
+        87204,
+        118716,
+        129817
+      ],
+      "values": [
+        1202952.9,
+        18885850.8,
+        23399023.2,
+        132349510.8,
+        234665917.2,
+        282871243.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Victory Capital Management Inc",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Victory Capital Management Inc. (US, class asset_manager) — US SEC (investment adviser; 13F/13G filer) - CIK 0001040188. SEC EDGAR lists 'VICTORY CAPITAL MANAGEMENT INC', state of incorporation NY, business address in Texas (San Antonio), filing 13F-HR and SC 13G. GLEIF records 'VICTORY CAPITAL MANAGEMENT INC.', US, jurisdiction US-NY, status ISSUED. This is the operating registered investment adviser itself, not a parent.",
+      "source_url": "https://data.sec.gov/submissions/CIK0001040188.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        86464,
+        0,
+        117990,
+        126480
+      ],
+      "values": [
+        null,
+        null,
+        134555276.8,
+        0.0,
+        233230833.0,
+        275599920.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Driehaus Capital Management LLC",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Driehaus Capital Management LLC (US, class asset_manager) — US SEC (investment adviser; 13F filer) - CIK 0000938206. SEC EDGAR lists 'DRIEHAUS CAPITAL MANAGEMENT LLC', state of incorporation DE, business address Chicago IL, former name 'DRIEHAUS CAPITAL MANAGEMENT INC', filing 13F-HR and SC 13G. GLEIF records 'DRIEHAUS CAPITAL MANAGEMENT LLC', US, jurisdiction US-DE, legal form LLC, status ISSUED.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000938206.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        40686,
+        102320,
+        102320,
+        121650,
+        121650
+      ],
+      "values": [
+        null,
+        57505592.4,
+        159230384.0,
+        155291064.0,
+        240465555.0,
+        265075350.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "HDFC Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: HDFC Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 101. IRDAI's List of Life Insurers carries 'HDFC Life Insurance Company Limited' at registration no. 101; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        101419,
+        111582
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        200474937.3,
+        243137178.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Amit Capital And Securities Pvt Ltd",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group OthersIndianShareholders) in filings 2025-12-31..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        null,
+        null,
+        100000,
+        100000,
+        100000,
+        100000
+      ],
+      "values": [
+        null,
+        null,
+        155620000.0,
+        151770000.0,
+        197670000.0,
+        217900000.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "WisdomTree Inc",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: WisdomTree, Inc. (US, class asset_manager, holds via WisdomTree Asset Management, Inc. (CIK 0001360025)) — US SEC (listed issuer; adviser subsidiaries registered) - CIK 0000880631. SEC EDGAR lists 'WisdomTree, Inc.', incorporated in Delaware, SIC 'Security Brokers, Dealers & Flotation Companies'. GLEIF records 'WISDOMTREE, INC.', US, jurisdiction US-DE, legal form Corporation, status ISSUED. The ETFs are advised by its subsidiary WisdomTree Asset Management, Inc.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000880631.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        111362,
+        102784,
+        101812,
+        96142,
+        94778,
+        90460
+      ],
+      "values": [
+        120254255.7,
+        145274905.6,
+        158439834.4,
+        145914713.4,
+        187347672.6,
+        197112340.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Edelweiss Asset Management Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Edelweiss Asset Management Limited (IN, class mutual_fund_amc) — SEBI reg MF/057/08/02. AMFI member list gives fund house 'Edelweiss Mutual Fund' with AMC legal name 'Edelweiss Asset Management Limited'. The fund itself is on SEBI's register of mutual funds as 'EDELWEISS MF', registration MF/057/08/02 (Apr 30, 2008 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 4 Edelweiss Mutual Fund scheme(s) disclose the stock, ₹16.49 cr ≈ 79,520 shares vs Bloomberg 75,264 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 4 Edelweiss Mutual Fund scheme(s) disclose the stock, ₹16.49 cr ≈ 79,520 shares vs Bloomberg 75,264 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        7798,
+        9984,
+        56746,
+        65476,
+        75264,
+        80554
+      ],
+      "values": [
+        8420670.3,
+        14111385.6,
+        88308125.2,
+        99372925.2,
+        148774348.8,
+        175527166.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Bandhan Mutual Fund",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Bandhan AMC Limited (IN, class mutual_fund_amc) — SEBI reg MF/042/00/3. AMFI member list gives fund house 'Bandhan Mutual Fund' with AMC legal name 'Bandhan AMC Limited'. The fund itself is on SEBI's register of mutual funds as 'BANDHAN MUTUAL FUND', registration MF/042/00/3 (Mar 13, 2000 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios, fund house inferred from scheme names): 4 Bandhan Mutual Fund scheme(s) disclose the stock, ₹15.23 cr ≈ 73,444 shares vs Bloomberg 77,083 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios, fund house inferred from scheme names): 4 Bandhan Mutual Fund scheme(s) disclose the stock, ₹15.23 cr ≈ 73,444 shares vs Bloomberg 77,083 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        2370,
+        2514,
+        3872,
+        4750,
+        77083,
+        78208
+      ],
+      "values": [
+        2559244.5,
+        3553287.6,
+        6025606.4,
+        7209075.0,
+        152369966.1,
+        170415232.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Union Mutual Fund/India",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Union Asset Management Company Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/066/11/01. AMFI member list gives fund house 'Union Mutual Fund' with AMC legal name 'Union Asset Management Company Private Limited'. The fund itself is on SEBI's register of mutual funds as 'UNION MUTUAL FUND', registration MF/066/11/01 (Nov 08, 2016 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1.",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Union Mutual Fund scheme(s) disclose the stock, ₹0.00 cr ≈ 0 shares vs Bloomberg 0 for Q2/2026 — does not agree"
+      ],
+      "shares": [
+        null,
+        60178,
+        0,
+        0,
+        0,
+        67571
+      ],
+      "values": [
+        null,
+        85055585.2,
+        0.0,
+        0.0,
+        0.0,
+        147237209.0
+      ],
+      "extra": false,
+      "owner": "Govt-owned fund manager · Government of India, via Union Bank of India",
+      "owner_detail": "state owned parent; 60.38% as of 2026-06-30; Union Mutual Fund SAI dated 30-Jun-2026, shareholding pattern of Union Asset Management Company Pvt Ltd: Union Bank of India 60.38% (equity shares), Daiichi Life Group 39.62% (compulsorily convertible preference shares). Union Bank's annual report 2025-26 (https://www.unionbankofindia.bank.in/pdf/Union-Bank-of-India-Integrated-Annual-Report-2025-26.pdf) lists the AMC as a 100% subsidiary (equity) at 31-Mar-2026. AMFI names Union Bank of India and Dai-ichi Life as sponsors. Union Bank of India: President of India 74.76% (SHP 30-Jun-2026).",
+      "owner_source": "https://portal.amfiindia.com/spages/sai61.pdf"
+    },
+    {
+      "holder": "Teachers Insurance & Annuity Association of America",
+      "category": "Foreign Insurance",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Teachers Insurance and Annuity Association of America (US, class insurer, holds via Nuveen, LLC / Nuveen Asset Management, LLC (TIAA's asset-management arm); TIAA also invests through its General Account) — New York State Department of Financial Services (life insurer); US SEC 13F filer - CIK 0000315038. SEC EDGAR lists 'TEACHERS INSURANCE & ANNUITY ASSOCIATION OF AMERICA', state of incorporation NY, business address New York NY, filing 13F-HR. GLEIF records the (abbreviated) legal name 'TEACHERS INS & ANNUITY ASSN OF AMERICA', US, legal form 'INSURANCE COMPANY', status ISSUED.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000315038.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        40484,
+        40484,
+        58860,
+        58860,
+        58860,
+        58860
+      ],
+      "values": [
+        43716647.4,
+        57220085.6,
+        91597932.0,
+        89331822.0,
+        116348562.0,
+        128255940.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "CAPITALMIND ASSET MANAGEMENT",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Capitalmind Asset Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/084/25/10. AMFI member list gives fund house 'Capitalmind Mutual Fund' with AMC legal name 'Capitalmind Asset Management Private Limited'. The fund itself is on SEBI's register of mutual funds as 'CAPITALMIND MUTUAL FUND', registration MF/084/25/10 (Apr 11, 2025 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 1 Capitalmind Mutual Fund scheme(s) disclose the stock, ₹12.04 cr ≈ 58,060 shares vs Bloomberg 66,658 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Capitalmind Mutual Fund scheme(s) disclose the stock, ₹12.04 cr ≈ 58,060 shares vs Bloomberg 66,658 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        66658,
+        58039
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        131762868.6,
+        126466981.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "State Street Corp",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: State Street Corporation (US, class bank, holds via State Street Global Advisors (SSGA) - principally SSGA Funds Management, Inc. and State Street Global Advisors Limited) — US Federal Reserve (bank holding company) / US SEC - CIK 0000093751. SEC EDGAR lists 'STATE STREET CORP', state of incorporation MA, SIC 'State Commercial Banks'. GLEIF records 'STATE STREET CORPORATION', US, jurisdiction US-MA, status ISSUED. It is a US bank holding company; index and ETF assets are managed by its SSGA subsidiaries.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000093751.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        88014,
+        39770,
+        42136,
+        44596,
+        49843,
+        51736
+      ],
+      "values": [
+        95041917.9,
+        56210918.0,
+        65572043.2,
+        67683349.2,
+        98524658.1,
+        112732744.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Star Union Dai-Ichi Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Star Union Dai-Ichi Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 142. IRDAI's List of Life Insurers carries 'Star Union Dai-Ichi Life Insurance Company Limited' at registration no. 142; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        51342
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        111874218.0
+      ],
+      "extra": false,
+      "owner": "Govt-owned insurer · Government of India, via Bank of India and Union Bank of India",
+      "owner_detail": "state owned parent; 52.58% as of 2026-03-31; Bank of India annual report 2025-26 (BSE copy): 'BOI holds 27.48% ..., with UBI holding 25.10% and Dai-Ichi Life International Holdings holding 47.42% stake in the Company'; proportion of ownership 27.48% at 31-Mar-2026. Union Bank of India's annual report 2025-26 (https://www.unionbankofindia.bank.in/pdf/Union-Bank-of-India-Integrated-Annual-Report-2025-26.pdf) lists the company as a joint venture at 25.10% on 31-Mar-2026. The two public sector banks together hold 52.58%. Bank of India: President of India 73.38%; Union Bank of India: 74.76% (SHPs 30-Jun-2026).",
+      "owner_source": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/68b91cae-d3e5-4c79-9414-09dec50e6f77.pdf"
+    },
+    {
+      "holder": "FMR LLC",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: FMR LLC (US, class asset_manager, holds via Fidelity Management & Research Company LLC (and FIAM LLC / Fidelity Institutional Asset Management)) — US SEC (13G/13F filer; adviser subsidiaries on Form ADV) - CIK 0000315066. SEC EDGAR lists 'FMR LLC', state of incorporation DE, business address Boston MA, filing SCHEDULE 13G/A. GLEIF records 'FMR LLC', US, jurisdiction US-DE, legal form LLC, status ISSUED. FMR LLC is the privately held parent of the Fidelity Investments (US) group.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000315066.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        36092,
+        39300,
+        43814,
+        43814,
+        45320,
+        49939
+      ],
+      "values": [
+        38973946.2,
+        55546620.0,
+        68183346.8,
+        66496507.8,
+        89584044.0,
+        108817081.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Aditya Birla Sun Life Asset Management Co Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Aditya Birla Sun Life AMC Limited (IN, class mutual_fund_amc) — SEBI reg MF/020/94/8. AMFI member list gives fund house 'Aditya Birla Sun Life Mutual Fund' with AMC legal name 'Aditya Birla Sun Life AMC Limited'. The fund itself is on SEBI's register of mutual funds as 'ADITYA BIRLA SUN LIFE MF', registration MF/020/94/8 (Dec 23, 1994 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 3 Aditya Birla Sun Life Mutual Fund scheme(s) disclose the stock, ₹10.06 cr ≈ 48,512 shares vs Bloomberg 48,826 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 3 Aditya Birla Sun Life Mutual Fund scheme(s) disclose the stock, ₹10.06 cr ≈ 48,512 shares vs Bloomberg 48,826 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        9470,
+        7766,
+        37754,
+        48826,
+        48900
+      ],
+      "values": [
+        null,
+        13384898.0,
+        12085449.2,
+        57299245.8,
+        96514354.2,
+        106553100.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "AllianceBernstein Holding LP",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: AllianceBernstein Holding L.P. (US, class asset_manager, holds via AllianceBernstein L.P. (the operating partnership and registered investment adviser; LEI 0JK55UGWSWNF3X7KLQ85)) — US SEC (NYSE-listed limited partnership, file 001-09818; SIC 6282 Investment Advice) - CIK 0000825313. SEC EDGAR lists 'ALLIANCEBERNSTEIN HOLDING L.P.', state of incorporation DE, SIC 6282 'Investment Advice', business address 501 Commerce Street, Nashville TN, former names 'ALLIANCE CAPITAL MANAGEMENT HOLDING LP' / 'ALLIANCE CAPITAL MANAGEMENT LP'. AB Holding is the publicly traded partnership; the assets are managed by the operating partnership AllianceBernstein L.P., which GLEIF records as 'ALLIANCEBERNSTEIN L.P.', US, jurisdiction US-DE, legal form Limited Partnership, status ISSUED.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000825313.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        46870,
+        46870
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        92647929.0,
+        102129730.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Aditya Birla Sun Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Aditya Birla SunLife Insurance Company Limited (IN, class insurer) — IRDAI reg no. 109. IRDAI's List of Life Insurers carries 'Aditya Birla SunLife Insurance Company Limited' at registration no. 109; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        43180,
+        46250
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        85353906.0,
+        100778750.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Mantri Tara",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group NonResidentIndividualsOrForeignIndividuals) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        43400,
+        43400,
+        43400,
+        43400,
+        43400,
+        43400
+      ],
+      "values": [
+        46865490.0,
+        61341560.0,
+        67539080.0,
+        65868180.0,
+        85788780.0,
+        94568600.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "National Bank of Canada",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: National Bank of Canada / Banque Nationale du Canada (CA, class bank, holds via National Bank Investments Inc. (NBI) and National Bank Trust Inc.; institutional mandates via NBI's sub-advisers) — OSFI Canada (Schedule I bank under the Bank Act); also a US SEC 13F filer. GLEIF records 'NATIONAL BANK OF CANADA', legal address Montreal, Quebec, country CA, jurisdiction CA-QC, legal form code UG3Z, status ISSUED. A separate GLEIF record (254900F2ES7T4LUTQL51) is its London BRANCH, registered in GB - not the parent.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/BSGEFEIOM18Y80CKCV46",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        25812,
+        38250
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        51022580.4,
+        83346750.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Thrivent Financial for Lutherans",
+      "category": "Foreign Insurance",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Thrivent Financial for Lutherans (US, class insurer, holds via Thrivent Asset Management, LLC (adviser: Thrivent Financial for Lutherans / Thrivent Asset Management for the Thrivent Mutual Funds)) — Wisconsin Office of the Commissioner of Insurance (fraternal benefit society); US SEC 13F filer - CIK 0000314984. SEC EDGAR lists 'THRIVENT FINANCIAL FOR LUTHERANS', state of incorporation WI, business address Minneapolis MN, filing 13F-HR. GLEIF records 'THRIVENT FINANCIAL FOR LUTHERANS', US, legal form 'Insurance Company', status ISSUED. Thrivent is a fraternal benefit society (membership-owned), not a stock insurer.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000314984.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        19902,
+        22604,
+        36551
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        30205265.4,
+        44681326.8,
+        79644629.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Groww Asset Management Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Groww Asset Management Limited (IN, class mutual_fund_amc) — SEBI reg MF/068/11/03. AMFI member list gives fund house 'Groww Mutual Fund' with AMC legal name 'Groww Asset Management Limited'. The fund itself is on SEBI's register of mutual funds as 'GROWW MUTUAL FUND', registration MF/068/11/03 (Mar 24, 2011 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 5 Groww Mutual Fund scheme(s) disclose the stock, ₹3.90 cr ≈ 18,807 shares vs Bloomberg 18,899 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 5 Groww Mutual Fund scheme(s) disclose the stock, ₹3.90 cr ≈ 18,807 shares vs Bloomberg 18,899 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        5548,
+        12672,
+        12150,
+        13634,
+        18899,
+        31369
+      ],
+      "values": [
+        5991007.8,
+        17910604.8,
+        18907830.0,
+        20692321.8,
+        37357653.3,
+        68353051.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Gupta Krishnav Pradeep",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        29796,
+        29796,
+        29796,
+        29796,
+        29796,
+        29796
+      ],
+      "values": [
+        32175210.6,
+        42113666.4,
+        46368535.2,
+        45221389.2,
+        58897753.2,
+        64925484.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Taiwan Securities Co Ltd",
+      "category": "Foreign corporate",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Taiwan Securities Co., Ltd. (台証綜合證券股份有限公司), TWSE code 6010 - dissolved 2009 (TW, class securities_firm, holds via Taishin Securities Investment Trust Co., Ltd. (台新證券投資信託股份有限公司 / 台新投信), LEI 2549009G71CEPP44P173 - this is the entity that actually manages funds, including the Taiwan-domiciled Taishin India Fund (LEI 254900LISRITRD5S1L54)) — Taiwan FSC (Financial Supervisory Commission). The surviving fund manager, Taishin Securities Investment Trust Co., Ltd., is FSC-licensed as a Securities Investment Trust Enterprise (SITE).. Bloomberg maps the label to TWSE code 6010. Chinese-language sources identify 6010 as 台証綜合證券股份有限公司 (Taiwan Securities Co., Ltd.), formerly a subsidiary of Taishin Financial Holding Co., Ltd., dissolved on 2009-12-19; Taiwan's MOEA business register (GCIS open data API) returned no active record for it. The Taishin group's fund manager is Taishin Securities Investment Trust Co., Ltd., which GLEIF records as 台新證券投資信託股份有限公司 / 'Taishin Securities Investment Trust Company Limited', Taipei, TW, status ISSUED; it runs the India-dedicated 'Taishin India Fund' (TW, FUND, ISSUED) registered at 11F, No. 167, Sec. 2, Nanjing E. Rd., Taipei - the manager's own address.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/2549009G71CEPP44P173",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [
+        "Registry match confidence low"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        17988,
+        17993,
+        17993
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        27300387.6,
+        35566763.1,
+        39206747.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Mundra Phool Kaur",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        17308,
+        17308,
+        17308,
+        17308,
+        17308,
+        17308
+      ],
+      "values": [
+        18690043.8,
+        24463127.2,
+        26934709.6,
+        26268351.6,
+        34212723.6,
+        37714132.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Jio BlackRock Asset Management Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Jio BlackRock Asset Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/085/25/11. AMFI member list gives fund house 'Jio BlackRock Mutual Fund' with AMC legal name 'Jio BlackRock Asset Management Private Limited'. The fund itself is on SEBI's register of mutual funds as 'JIO BLACKROCK MUTUAL FUND', registration MF/085/25/11 (May 26, 2025 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1.",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        4956,
+        9480,
+        14750,
+        16094,
+        17114
+      ],
+      "values": [
+        null,
+        7004810.4,
+        14752776.0,
+        22386075.0,
+        31813009.8,
+        37291406.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "PNB MetLife India Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: PNB MetLife India Insurance Company Limited (IN, class insurer) — IRDAI reg no. 117. IRDAI's List of Life Insurers carries 'PNB MetLife India Insurance Company Limited' at registration no. 117; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        2529,
+        11433
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        4999074.3,
+        24912507.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Nomura Holdings Inc",
+      "category": "Foreign corporate",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Nomura Holdings, Inc. (野村ホールディングス株式会社) (JP, class financial_holding, holds via Nomura Asset Management Co., Ltd.; Nomura Singapore Ltd / Nomura International plc for principal books) — Japan FSA (financial instruments firm holding company); US SEC registrant - CIK 0001163653. GLEIF records the legal name 野村ホールディングス株式会社 with transliterated other name 'Nomura Holdings, Inc.', country JP, legal form code T417 (kabushiki kaisha), status ISSUED. SEC EDGAR lists 'NOMURA HOLDINGS INC', SIC 'Security Brokers, Dealers & Flotation Companies', filing 6-K and 424B2 as a foreign private issuer.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/549300B3CEAHYG7K8164",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        9800,
+        9800,
+        9800,
+        9800
+      ],
+      "values": [
+        null,
+        null,
+        15250760.0,
+        14873460.0,
+        19371660.0,
+        21354200.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Nationwide Fund Advisors",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Nationwide Fund Advisors (US, class asset_manager) — US SEC (registered investment adviser; 13F filer) - CIK 0001097218. SEC EDGAR lists 'Nationwide Fund Advisors', state of incorporation DE, business address Columbus OH, filing 13F-HR and 13F-NT; former names 'GARTMORE MUTUAL FUND CAPITAL TRUST' and 'VILLANOVA MUTUAL FUND CAPITAL TRUST /DE/'. GLEIF records 'NATIONWIDE FUND ADVISORS', US, jurisdiction US-DE, status ISSUED. It is itself the registered adviser to the Nationwide Funds, so no separate holding arm applies.",
+      "source_url": "https://data.sec.gov/submissions/CIK0001097218.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        9682,
+        9682
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        19138409.4,
+        21097078.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "UTI Asset Management Co Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: UTI Asset Mgmt. Co. Ltd. (IN, class mutual_fund_amc) — SEBI reg MF/048/03/01. AMFI member list gives fund house 'UTI Mutual Fund' with AMC legal name 'UTI Asset Mgmt. Co. Ltd.'. The fund itself is on SEBI's register of mutual funds as 'UTI MF', registration MF/048/03/01 (Jan 14, 2003 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 1 UTI Mutual Fund scheme(s) disclose the stock, ₹1.85 cr ≈ 8,921 shares vs Bloomberg 8,425 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 UTI Mutual Fund scheme(s) disclose the stock, ₹1.85 cr ≈ 8,921 shares vs Bloomberg 8,425 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        null,
+        7390,
+        7682,
+        8425,
+        9669
+      ],
+      "values": [
+        null,
+        null,
+        11500318.0,
+        11658971.4,
+        16653697.5,
+        21068751.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Biyani Asha Kailash",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        9000,
+        9000,
+        9000,
+        9000,
+        9000,
+        9000
+      ],
+      "values": [
+        9718650.0,
+        12720600.0,
+        14005800.0,
+        13659300.0,
+        17790300.0,
+        19611000.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Indusind Nippon Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: IndusInd Nippon Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 121. IRDAI's List of Life Insurers carries 'IndusInd Nippon Life Insurance Company Limited' at registration no. 121. RENAMED: formerly 'Reliance Nippon Life Insurance Company Limited'. The insurer's own site disclaimer reads: \"IndusInd Nippon Life Insurance Company Limited (Formerly Reliance Nippon Life Insurance Company Limited). IRDAI Registration No. 121. CIN: U66010MH2001PLC167089.\" IRDAI registration 121 and the CIN are unchanged across the rename.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Formerly Reliance Nippon Life Insurance Company Limited"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        7984,
+        8786
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        15781972.8,
+        19144694.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Edelweiss Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Edelweiss Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 147. IRDAI's List of Life Insurers carries 'Edelweiss Life Insurance Company Limited' at registration no. 147. RENAMED: formerly 'Edelweiss Tokio Life Insurance Company Limited'. The insurer's own site states: \"Edelweiss Life Insurance Company Limited (formerly known as ‘Edelweiss Tokio Life Insurance Company Limited’). IRDAI Reg. No.: 147. CIN: U66010MH2009PLC197336\". IRDAI registration 147 is unchanged.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Formerly Edelweiss Tokio Life Insurance Company Limited"
+      ],
+      "shares": [
+        null,
+        null,
+        6768,
+        8162,
+        7966,
+        7944
+      ],
+      "values": [
+        null,
+        null,
+        10532361.6,
+        12387467.4,
+        15746392.2,
+        17309976.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Zerodha Asset Management Pvt Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Zerodha Asset Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/080/23/06. AMFI member list gives fund house 'Zerodha Mutual Fund' with AMC legal name 'Zerodha Asset Management Private Limited'. The fund itself is on SEBI's register of mutual funds as 'ZERODHA MUTUAL FUND', registration MF/080/23/06 (Aug 11, 2023 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 1 Zerodha Mutual Fund scheme(s) disclose the stock, ₹1.38 cr ≈ 6,655 shares vs Bloomberg 6,511 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 1 Zerodha Mutual Fund scheme(s) disclose the stock, ₹1.38 cr ≈ 6,655 shares vs Bloomberg 6,511 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        null,
+        null,
+        1586,
+        5264,
+        6511,
+        7779
+      ],
+      "values": [
+        null,
+        null,
+        2468133.2,
+        7989172.8,
+        12870293.7,
+        16950441.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Navi AMC Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Navi AMC Limited (IN, class mutual_fund_amc) — SEBI reg MF/062/09/03. AMFI member list gives fund house 'Navi Mutual Fund' with AMC legal name 'Navi AMC Limited'. The fund itself is on SEBI's register of mutual funds as 'NAVI MUTUAL FUND', registration MF/062/09/03 (Dec 04, 2009 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1. | Indian MF disclosures (July-2026 portfolios): 3 Navi Mutual Fund scheme(s) disclose the stock, ₹1.28 cr ≈ 6,173 shares vs Bloomberg 6,458 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Indian MF disclosures (July-2026 portfolios): 3 Navi Mutual Fund scheme(s) disclose the stock, ₹1.28 cr ≈ 6,173 shares vs Bloomberg 6,458 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        1740,
+        2324,
+        5142,
+        6638,
+        6458,
+        6260
+      ],
+      "values": [
+        1878939.0,
+        3284741.6,
+        8001980.4,
+        10074492.6,
+        12765528.6,
+        13640540.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Gupta Aishwariya P",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group NonResidentIndividualsOrForeignIndividuals) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing"
+      ],
+      "shares": [
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000
+      ],
+      "values": [
+        6479100.0,
+        8480400.0,
+        9337200.0,
+        9106200.0,
+        11860200.0,
+        13074000.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Angel One Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Angel One Asset Management Company Limited (IN, class mutual_fund_amc) — SEBI reg MF/083/24/09. AMBIGUOUS - Bloomberg names the listed PARENT, not the AMC. Angel One's AMC is 'Angel One Asset Management Company Limited' and the fund is on SEBI's register as 'ANGEL ONE MUTUAL FUND', MF/083/24/09, granted Nov 25, 2024 (launch evidence). But 'ANGEL ONE LIMITED' is itself separately a SEBI-registered PORTFOLIO MANAGER, INP000001546, valid Jan 16, 2015 - Perpetual, and a third group entity 'ANGEL ONE INVESTMENT MANAGERS & ADVISORS PRIVATE LIMITED' holds INP000009117 (Nov 27, 2024). A holding booked as 'Angel One Ltd' could be the broker/parent's own or PMS book rather than mutual fund scheme assets; treat the MF mapping as the likely but unproven reading. | Indian MF disclosures (July-2026 portfolios): 4 Angel One Mutual Fund scheme(s) disclose the stock, ₹0.99 cr ≈ 4,774 shares vs Bloomberg 4,559 for Q2/2026 — agrees",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": true,
+      "notes": [
+        "Registry match confidence medium",
+        "Indian MF disclosures (July-2026 portfolios): 4 Angel One Mutual Fund scheme(s) disclose the stock, ₹0.99 cr ≈ 4,774 shares vs Bloomberg 4,559 for Q2/2026 — agrees"
+      ],
+      "shares": [
+        252,
+        348,
+        3492,
+        3682,
+        4559,
+        5161
+      ],
+      "values": [
+        272122.2,
+        491863.2,
+        5434250.4,
+        5588171.4,
+        9011775.3,
+        11245819.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Canara HSBC Life Insurance Co Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Canara HSBC Life Insurance Company Limited (IN, class insurer) — IRDAI reg no. 136. IRDAI's List of Life Insurers carries 'Canara HSBC Life Insurance Company Limited' at registration no. 136; Bloomberg's spelling is the same entity with 'Company Limited' abbreviated. No rename in the 2024-2026 window.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        3959,
+        4598
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        7825755.3,
+        10019042.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Legal & General Group PLC",
+      "category": "Foreign Insurance",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Legal & General Group Plc (GB, class insurer, holds via Legal & General Investment Management (LGIM) - principally Legal & General Investment Management Limited) — UK FCA / Prudential Regulation Authority (insurance group); US SEC 13F filer - CIK 0000764068. GLEIF records 'LEGAL & GENERAL GROUP PLC', legal address London, country GB, legal form code B6ES (public limited company), status ISSUED. SEC EDGAR lists 'Legal & General Group Plc' as a 13F-HR and SCHEDULE 13G filer, state of incorporation X0 (non-US).",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/213800JH9QQWHLO99821",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        4328,
+        4328,
+        4328,
+        4328,
+        4328,
+        4328
+      ],
+      "values": [
+        4673590.8,
+        6117195.2,
+        6735233.6,
+        6568605.6,
+        8555157.6,
+        9430712.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Franklin Templeton Inc",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Franklin Templeton, Inc. (formerly Franklin Resources, Inc.) (US, class asset_manager, holds via Franklin Templeton Asset Management (India) Pvt. Ltd. (Indian AMC); internationally Franklin Advisers, Inc. and Templeton Asset Management Ltd.) — US SEC (NYSE-listed issuer; adviser subsidiaries on Form ADV) - CIK 0000038777; the Indian AMC is SEBI-registered. NOTE THE RENAME: SEC EDGAR CIK 0000038777 now has the conformed name 'FRANKLIN TEMPLETON INC' with former name 'FRANKLIN RESOURCES INC', state of incorporation DE, SIC 'Investment Advice', business address in California. GLEIF independently records 'Franklin Templeton, Inc.', US, jurisdiction US-DE, status ISSUED. So Bloomberg's 'Franklin Templeton Inc' is the current legal name of the listed parent formerly known as Franklin Resources, Inc. The Indian mutual fund business is run by Franklin Templeton Asset Management (India) Pvt. Ltd.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000038777.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        15648,
+        7450,
+        0,
+        3026
+      ],
+      "values": [
+        null,
+        null,
+        24351417.6,
+        11306865.0,
+        0.0,
+        6593654.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "ALPHAGREP INVESTMENT MGMT INDIA",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: AlphaGrep Investment Management Private Limited (IN, class mutual_fund_amc) — SEBI reg MF/090/26/16 (mutual fund); INP000007401 (portfolio manager). DUAL REGISTRATION - the task's hypothesis (that this is not an MF AMC) is now OUT OF DATE. The SAME legal entity, 'AlphaGrep Investment Management Private Limited', is (a) a SEBI-registered PORTFOLIO MANAGER, INP000007401, valid Apr 16, 2025 - Perpetual, and (b) the AMC of AlphaGrep Mutual Fund per AMFI's member list, with the fund on SEBI's mutual fund register as 'ALPHAGREP MUTUAL FUND', MF/090/26/16, granted Mar 11, 2026. AlphaGrep also already has live schemes: it appears as a fund-house section header in AMFI's daily NAVAll.txt file. Both records give the same Parinee Crescenzo, BKC, Mumbai 400051 address. A search of SEBI's Alternative Investment Funds register for 'AlphaGrep' returns 'No record(s) available.' (caveat: that register lists AIF schemes by fund name, not their managers, so it does not rule out AIF activity). Because the MF registration is only ~6 months old, a Bloomberg holding under this name may well be PMS rather than MF scheme assets.",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": true,
+      "notes": [
+        "Registry match confidence medium"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        2075
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        4521425.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "FlexShares Trust",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: FlexShares Trust (US, class trust_etf, holds via Northern Trust Investments, Inc. (investment adviser and sponsor); Northern Trust Corporation is the ultimate parent) — US SEC (registered open-end investment company / ETF trust) - CIK 0001491978; Maryland statutory trust. SEC EDGAR lists 'FLEXSHARES TRUST', state of organisation MD, business address Chicago IL, filing NPORT-P, 497K and N-PX - and its FORMER NAME is 'NT ETF Trust', i.e. the Northern Trust ETF Trust, which corroborates the Northern Trust sponsorship. GLEIF records 'FLEXSHARES TRUST', US, entity category FUND, legal form FUND, status ISSUED. FlexShares is the ETF brand of Northern Trust; the funds are advised by Northern Trust Investments, Inc.",
+      "source_url": "https://data.sec.gov/submissions/CIK0001491978.json",
+      "alternative": "Bank",
+      "review": true,
+      "notes": [
+        "Also in foreign.yaml as Northern Trust Corporation (US, class bank) -> Bank"
+      ],
+      "shares": [
+        3072,
+        3006,
+        1890,
+        1890,
+        1476,
+        1476
+      ],
+      "values": [
+        3317299.2,
+        4248680.4,
+        2941218.0,
+        2868453.0,
+        2917609.2,
+        3216204.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Canadian Imperial Bank of Commerce",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Canadian Imperial Bank of Commerce (CA, class bank, holds via CIBC Asset Management Inc.; CIBC Global Asset Management) — OSFI Canada (Schedule I bank under the Bank Act); US SEC foreign private issuer - CIK 0001045520. GLEIF records 'Canadian Imperial Bank of Commerce', legal address Toronto, country CA, legal form 'BANK', status ISSUED. SEC EDGAR lists 'CANADIAN IMPERIAL BANK OF COMMERCE /CAN/', SIC 'Commercial Banks, NEC', filing 6-K and 424B2 as a foreign private issuer. A separate GLEIF record (549300H8L46OOZOFHU82) is a US BRANCH, not the parent.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/2IGI19DL77OX0HC3ZE78",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        534,
+        764
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        1055557.8,
+        1664756.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Bandhan Life Insurance Ltd",
+      "category": "Domestic Insurance",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Bandhan Life Insurance Limited (IN, class insurer) — IRDAI reg no. 138. IRDAI's List of Life Insurers carries 'Bandhan Life Insurance Limited' at registration no. 138. RENAMED: formerly 'Aegon Life Insurance Company Limited'. WEAKEST OF THE FIVE RENAMES: bandhanlife.com does NOT carry a 'formerly Aegon' line on its homepage or About Us page. Regulator-side evidence: IRDAI's own document index carries this entity under the title \"(AEGON) Bandhan Life Insurance Company Limited\", i.e. IRDAI files it under both names. Corroboration: a Bandhan Bank product disclaimer PDF (bandhan.bank.in/sites/default/files/2024-11/Disclaimers-Bandhan-Life-iGuarantee-Vishwas.pdf) reads \"Bandhan Life Insurance Limited (formerly Aegon Life Insurance Company Limited), IRDAI Reg. No. 138\"; and bandhanlife.com/about-us says \"Established in 2008\", Aegon Life's founding year, with IRDAI registration 138 continuous. Bandhan Financial Holdings' acquisition of Aegon Life received final IRDAI approval in Feb 2024 and the rebrand followed in Apr 2024. Category confidence high (IRDAI reg 138); the medium confidence concerned only the former-name evidence.",
+      "source_url": "https://irdai.gov.in/list-of-life-insurers1",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Formerly Aegon Life Insurance Company Limited"
+      ],
+      "shares": [
+        null,
+        null,
+        140,
+        116,
+        286,
+        319
+      ],
+      "values": [
+        null,
+        null,
+        217868.0,
+        176053.2,
+        565336.2,
+        695101.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Credit Agricole Group",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Credit Agricole S.A. (Crédit Agricole S.A.) - the listed central body of the Crédit Agricole mutual banking group (FR, class bank, holds via Amundi Asset Management (Crédit Agricole's asset-management arm); in India via Amundi's stake in SBI Funds Management Ltd.) — European Central Bank / ACPR France (significant institution); Amundi is an AMF-authorised asset manager and a US SEC-registered adviser. GLEIF records 'CREDIT AGRICOLE SA', legal address Montrouge, France, country FR, legal form code K65D, status ISSUED. The Amundi link is documented at the SEC: EDGAR CIK 0001280690 has conformed name 'Amundi Asset Management' with FORMER NAMES 'Amundi' and 'CREDIT AGRICOLE ASSET MANAGEMENT', state of incorporation I0 (France), filing 13F-NT and N-PX.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/969500TJ5KRTCJQWXH05",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        108,
+        191,
+        190
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        163911.6,
+        377549.7,
+        414010.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Deutsche Bank AG",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Deutsche Bank Aktiengesellschaft (DE, class bank, holds via DWS Group GmbH & Co. KGaA (DWS Investment GmbH / DWS Investments UK) - Deutsche Bank's listed asset-management arm) — BaFin / European Central Bank (significant institution); US SEC foreign private issuer - CIK 0001159508. GLEIF records 'DEUTSCHE BANK AKTIENGESELLSCHAFT', legal address Frankfurt am Main, country DE, legal form code 6QQB (Aktiengesellschaft), status ISSUED. SEC EDGAR lists 'DEUTSCHE BANK AKTIENGESELLSCHAFT', SIC 'State Commercial Banks'. Other GLEIF records under the same name (e.g. 529900IH9V4I3VHQVO92, Paris) are BRANCHes, not the parent.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/7LTWFZYICNSX8D621K86",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        164,
+        158,
+        158,
+        188,
+        188
+      ],
+      "values": [
+        null,
+        231797.6,
+        245879.6,
+        239796.6,
+        371619.6,
+        409652.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rathi Suresh",
+      "category": "Promoter",
+      "tier": "T1-filing",
+      "evidence": "In SEBI promoter & promoter group table (Table II, group IndividualsOrHUF) in filings 2025-06-30..2026-06-30; status used: 2026-06-30 filing for Q3/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1693635_15072026073252_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "No filing for Q3/2026 yet; status carried from the 2026-06-30 filing",
+        "Filing also lists a separate HUF under this name; Bloomberg's count combines both (see the counts gate)"
+      ],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Prudential Financial Inc",
+      "category": "Foreign Insurance",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Prudential Financial, Inc. (US, class insurer, holds via PGIM, Inc. (incl. PGIM Limited, Jennison Associates LLC and PGIM India Asset Management Pvt. Ltd.)) — New Jersey Department of Banking and Insurance (insurance group) / US SEC - CIK 0001137774. SEC EDGAR lists 'PRUDENTIAL FINANCIAL INC', state of incorporation NJ, SIC 'Life Insurance', business address Newark NJ. GLEIF records 'PRUDENTIAL FINANCIAL, INC.', US, jurisdiction US-NJ, status ISSUED. Asset management is conducted through the PGIM group.",
+      "source_url": "https://data.sec.gov/submissions/CIK0001137774.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        37906,
+        70328,
+        0,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        53576340.4,
+        109444433.6,
+        0.0,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "FIL Ltd",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: FIL Limited (BM, class asset_manager, holds via FIL Investment Management (Hong Kong) Limited; FIL Investments International (UK) - trading as Fidelity International) — Bermuda Monetary Authority (BMA); operating subsidiaries authorised by UK FCA, HK SFC etc.; US SEC 13F/13G filer - CIK 0000318989. GLEIF records 'FIL Limited', legal address Hamilton, Bermuda, country BM, status ISSUED. SEC EDGAR lists 'FIL Ltd' with FORMER NAME 'FIDELITY INTERNATIONAL LTD', filing SC 13G/A and 13F-HR - confirming FIL Limited is the Fidelity International group parent.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/549300SGJNFISS8EB433",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Russell Investments Group Ltd",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Russell Investments Group, Ltd. (KY, class asset_manager, holds via Russell Investments Group, LLC / Russell Investment Management, LLC (Seattle, WA) and Russell Investments Limited (UK)) — Cayman Islands Registrar of Companies (holding company); operating advisers registered with the US SEC - CIK 0001692234. GLEIF records 'Russell Investments Group, Ltd.', legal address George Town, Cayman Islands, country KY, jurisdiction KY, legal form code UE3G, status ISSUED. SEC EDGAR carries a registrant of the same name (CIK 0001692234). The Cayman entity is the top holding company of the Russell Investments group, which was taken private by TA Associates/Reverence Capital and Hamilton Lane.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/549300AEUZMOCHOEKJ16",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        18632,
+        18632,
+        18632,
+        0,
+        null,
+        0
+      ],
+      "values": [
+        20119765.2,
+        26334468.8,
+        28995118.4,
+        0.0,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rathi Amit",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: resident individuals in filings 2025-06-30..2025-09-30; status used: 2025-09-30 filing for Q3/2025",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1549229_15102025055251_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        5130000,
+        5130000,
+        5130000,
+        5130000,
+        5130000,
+        0
+      ],
+      "values": [
+        5539630500.0,
+        7250742000.0,
+        7983306000.0,
+        7785801000.0,
+        10140471000.0,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rawal Rakesh",
+      "category": "Individual",
+      "tier": "T3-rule",
+      "evidence": "Rule: Bloomberg's holder type is 'Individual' and the name carries no legal form ('individual'): two independent signals, so not flagged",
+      "source_url": "",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Appears in the SEBI filing only as trustee in 'Rakesh Rawal - Rawal Family Trust'; that row's shares belong to the trust"
+      ],
+      "shares": [
+        2048400,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        2211964740.0,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rathi Supriya",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: resident individuals in filings 2025-06-30..2025-06-30; status used: 2025-06-30 filing for Q2/2025",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1483109_15072025035451_WEB.xml",
+      "alternative": "",
+      "review": true,
+      "notes": [
+        "Possible duplicate of 'Saigal Supriya': identical positions in Q3/2025, Q4/2025, Q1/2026, Q2/2026"
+      ],
+      "shares": [
+        1905200,
+        1905200,
+        1905200,
+        1905200,
+        1905200,
+        0
+      ],
+      "values": [
+        2057330220.0,
+        2692809680.0,
+        2964872240.0,
+        2891522040.0,
+        3766008840.0,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rawal Preeti",
+      "category": "Individual",
+      "tier": "T3-rule",
+      "evidence": "Rule: Bloomberg's holder type is 'Individual' and the name carries no legal form ('individual'): two independent signals, so not flagged",
+      "source_url": "",
+      "alternative": "",
+      "review": false,
+      "notes": [
+        "Appears in the SEBI filing only as trustee in 'Preeti Rawal - Suhas Gupta Family Trust'; that row's shares belong to the trust"
+      ],
+      "shares": [
+        1823000,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        1968566550.0,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Saigal Supriya",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: resident individuals in filings 2025-09-30..2025-09-30; status used: 2025-09-30 filing for Q3/2025",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1549229_15102025055251_WEB.xml",
+      "alternative": "",
+      "review": true,
+      "notes": [
+        "Possible duplicate of 'Rathi Supriya': identical positions in Q3/2025, Q4/2025, Q1/2026, Q2/2026"
+      ],
+      "shares": [
+        null,
+        1905200,
+        1905200,
+        1905200,
+        1905200,
+        0
+      ],
+      "values": [
+        null,
+        2692809680.0,
+        2964872240.0,
+        2891522040.0,
+        3766008840.0,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Ali Fahim Sultan",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: resident individuals in filings 2026-03-31..2026-03-31; status used: 2026-03-31 filing for Q1/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1652699_16042026080339_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        1874970,
+        1874970,
+        0
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        2845641969.0,
+        3706253199.0,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "JPMorgan Chase & Co",
+      "category": "Bank",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: JPMorgan Chase & Co. (US, class bank, holds via J.P. Morgan Asset Management - principally J.P. Morgan Investment Management Inc. and JPMorgan Asset Management (UK) Limited) — US Federal Reserve (bank holding company / financial holding company) / OCC / US SEC - CIK 0000019617. SEC EDGAR lists 'JPMORGAN CHASE & CO', state of incorporation DE, SIC 'National Commercial Banks', business address New York NY. GLEIF records 'JPMORGAN CHASE & CO.', US, jurisdiction US-DE, status ISSUED. It is a US financial holding company; asset management runs through the J.P. Morgan Asset Management subsidiaries.",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        404,
+        0,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        571013.6,
+        0.0,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Sun Life Financial Inc",
+      "category": "Foreign Insurance",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Sun Life Financial Inc. (CA, class insurer, holds via MFS Investment Management (Massachusetts Financial Services Company); also SLC Management) — OSFI Canada (insurance holding company under the Insurance Companies Act); US SEC 13F filer - CIK 0001097362. GLEIF records 'Sun Life Financial Inc.', legal address Toronto, Ontario, country CA, jurisdiction CA-ON, status ISSUED. SEC EDGAR lists 'SUN LIFE FINANCIAL INC', SIC 'Life Insurance', filing 6-K and 13F-HR, former names 'SUN LIFE FINANCIAL SERVICES INC' / 'SUN LIFE FINANCIAL SERVICES OF CANADA INC'. MFS Investment Management is Sun Life's wholly owned US asset manager and the usual source of its listed-equity holdings.",
+      "source_url": "https://api.gleif.org/api/v1/lei-records/549300V040JZX5S66Z78",
+      "alternative": "Foreign AMC",
+      "review": true,
+      "notes": [],
+      "shares": [
+        null,
+        8374,
+        2072,
+        0,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        11835811.6,
+        3224446.4,
+        0.0,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Shriram Asset Management Co Ltd",
+      "category": "Domestic AMC",
+      "tier": "T2-registry",
+      "evidence": "domestic.yaml: Shriram Asset Management Co. Ltd. (IN, class mutual_fund_amc) — SEBI reg MF/017/94/4. AMFI member list gives fund house 'Shriram Mutual Fund' with AMC legal name 'Shriram Asset Management Co. Ltd.'. The fund itself is on SEBI's register of mutual funds as 'SHRIRAM MF', registration MF/017/94/4 (Nov 21, 1994 - Perpetual). Bloomberg's spelling is the AMC company name and maps 1:1.",
+      "source_url": "https://www.amfiindia.com/aboutamfi?tab=members",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        0,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        0.0,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Rawal Family Trust",
+      "category": "Individual",
+      "tier": "T3-rule",
+      "evidence": "Rule: trust name -> Individual (decision 4: family trust)",
+      "source_url": "",
+      "alternative": "Domestic corporate",
+      "review": true,
+      "notes": [],
+      "shares": [
+        1750352,
+        1750352,
+        1750352,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        1890117607.2,
+        2473947516.8,
+        2723897782.4,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "SUHAS GUPTA FAMILY TRUST",
+      "category": "Individual",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: other non-institutions (trusts, HUFs) -> Individual per decision 4 in filings 2025-06-30..2025-06-30; status used: 2025-06-30 filing for Q2/2025",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1483109_15072025035451_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        1748992,
+        1748992,
+        1748992,
+        1748992,
+        1748992,
+        0
+      ],
+      "values": [
+        1888649011.2,
+        2472025292.8,
+        2721781350.4,
+        2654445158.4,
+        3457232486.4,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Munix India Pvt Ltd",
+      "category": "Domestic corporate",
+      "tier": "T1-filing",
+      "evidence": "SEBI public table: Bodies Corporate in filings 2025-06-30..2026-03-31; status used: 2026-03-31 filing for Q1/2026",
+      "source_url": "https://nsearchives.nseindia.com/corporate/xbrl/SHP_1652699_16042026080339_WEB.xml",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        1668468,
+        1668468,
+        1668468,
+        1668468,
+        1668468,
+        0
+      ],
+      "values": [
+        1801695169.8,
+        2358212671.2,
+        2596469901.6,
+        2532233883.6,
+        3298060695.6,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "ANANDRATHI HOUSING FIN LTD",
+      "category": "Promoter",
+      "tier": "override",
+      "evidence": "Override by holdermap research (MCA via ZaubaCorp) on 2026-09-22: MCA master data (registration no. 304174, CIN now U68200MH2018PLC304174) shows Anandrathi Housing Finance Limited was RENAMED Twelfth Tier Property Limited, which the SEBI filings list in the promoter & promoter group table (Table II). Bloomberg carries the same legal entity under both names: this row (720,000 restated shares in Q2/2025-Q3/2025, then 0) and 'Twelfth Tier Property Ltd' (714,492 throughout). Treat the two Q2/2025-Q3/2025 cells here as a likely duplicate of the Twelfth Tier row when summing.",
+      "source_url": "https://www.zaubacorp.com/company/ANANDRATHI-HOUSING-FINANCE-LIMITED/U67100MH2018PLC304174",
+      "alternative": "Domestic corporate",
+      "review": true,
+      "notes": [],
+      "shares": [
+        720000,
+        720000,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        777492000.0,
+        1017648000.0,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    },
+    {
+      "holder": "Wilshire Advisors LLC",
+      "category": "Foreign AMC",
+      "tier": "T2-registry",
+      "evidence": "foreign.yaml: Wilshire Advisors LLC (US, class asset_manager) — US SEC (registered investment adviser; 13F filer) - CIK 0001616628. SEC EDGAR lists 'Wilshire Advisors LLC', state of incorporation CA, business address in California, former name 'Wilshire Associates Inc', filing 13F-HR and N-PX. GLEIF records 'WILSHIRE ADVISORS LLC', US, jurisdiction US-DE, legal form LLC, status ISSUED.",
+      "source_url": "https://data.sec.gov/submissions/CIK0001616628.json",
+      "alternative": "",
+      "review": false,
+      "notes": [],
+      "shares": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0
+      ],
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.0
+      ],
+      "extra": false,
+      "owner": "",
+      "owner_detail": "",
+      "owner_source": ""
+    }
+  ],
+  "extra_rows": [],
+  "categories": [
+    "Promoter",
+    "Domestic AMC",
+    "Domestic Insurance",
+    "Domestic corporate",
+    "Individual",
+    "Domestic Pension Fund",
+    "Government",
+    "Foreign Government",
+    "Foreign AMC",
+    "Foreign Insurance",
+    "Foreign corporate",
+    "Bank"
+  ]
+}
