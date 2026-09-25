@@ -65,7 +65,7 @@ Resources:
       Name: holdermap-dashboard-deploy
       Description: Build and publish the holdermap dashboard (push to main + trading-day evenings)
       ServiceRole: !GetAtt BuildRole.Arn
-      ConcurrentBuildLimit: 1
+      ConcurrentBuildLimit: 3  # with 1, a push that arrives during a build is rejected (not queued); deploy.sh publishes newest-wins
       TimeoutInMinutes: 20
       Source:
         Type: GITHUB

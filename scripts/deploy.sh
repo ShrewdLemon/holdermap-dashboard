@@ -17,6 +17,11 @@ python3 pipeline/live.py "$@"
 python3 build.py
 if command -v node >/dev/null; then node --check dashboard/site/app.js; fi
 aws s3 cp cache/closes.json "$STATE" --only-show-errors
+# Builds can overlap (two pushes close together): publish only if this commit is at least as new as the live one.
+TS=$(git log -1 --format=%ct 2>/dev/null || echo 0); SHA=$(git rev-parse --short HEAD 2>/dev/null || echo local)
+LIVE_TS=$(aws s3 cp "s3://$BUCKET/_state/deployed.json" - 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin).get('ts', 0))" 2>/dev/null || echo 0)
+if [ "$TS" -lt "$LIVE_TS" ]; then echo "skipped: a newer commit is already live ($SHA is older)"; exit 0; fi
 aws s3 sync dashboard/site "s3://$BUCKET/" --delete --exclude "_state/*" --cache-control "no-cache" --only-show-errors
 aws cloudfront create-invalidation --distribution-id "$DIST" --paths "/*" --query Invalidation.Id --output text >/dev/null
-echo "published $URL ($(git rev-parse --short HEAD 2>/dev/null || echo local))"
+printf '{"sha": "%s", "ts": %s}\n' "$SHA" "$TS" | aws s3 cp - "s3://$BUCKET/_state/deployed.json" --only-show-errors
+echo "published $URL ($SHA)"
