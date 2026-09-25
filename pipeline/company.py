@@ -96,6 +96,155 @@ ORG = re.compile(r"\b(ltd|limited|pvt|private|llp|trust|foundation|inc|corp|corp
                  r"trustee|trustees|advisors?|properties|infra\w*)\b", re.I)
 
 
+# Individuals lists show natural persons: these words mark a trust, firm or category line, not a person
+NONPERSON = re.compile(r"\b(esop|employees?|welfare|trusts?|traders?|garments|corporates?|bod(y|ies))\b|\bb\.\s?v\b", re.I)
+# a SEBI category line read as a holder's name ("Overseas Bodies Corporates")
+LABEL = re.compile(r"^\s*(overseas\s+(corporate\s+)?bod(y|ies)(\s+corporates?)?|bodies\s+corporates?|clearing\s+members?|"
+                   r"non[- ]resident\s+indians?(\s*\(?nri\)?)?|foreign\s+nationals?|any\s+other.*|others?)\s*$", re.I)
+_STOPW = {"mr", "mrs", "ms", "dr", "shri", "smt", "the", "of", "and", "partner", "representing", "jointly", "with",
+          "ac", "trustee", "trustees", "for", "on", "behalf", "late"}
+# a fund house's trustee company (the filing's registered holder) and its asset manager (Bloomberg's
+# investment manager) hold the same units: both reduce to one key
+_FUND_TAIL = re.compile(r"\b(mutual\s+fund|trustees?(hip)?(\s+(co|company|services))?|asset\s+management(\s+(co|company))?|"
+                        r"asset\s+managers?|investment\s+managers?|funds?\s+management|money\s+managers|amc|trust|"
+                        r"pvt|private|ltd|limited|india|co|company|the)\b|[().,&/]", re.I)
+
+
+def _words(name):
+    return [w for w in re.findall(r"[a-z]+", name.lower()) if w not in _STOPW]
+
+
+def _same_person(a, b, equal_shares):
+    """One name's words all in the other's, an initial matching a word's first letter ('Kotak Suresh A' in
+    'Suresh Amritlal Kotak'; 'Parekh Madhukar Balvantray' in 'Madhukar Balvantray Parekh partner representing
+    Triveni Corporations'). Two full words must match, one when the share counts are equal ('M K HAMIED')."""
+    for x, y in ((a, b), (b, a)):
+        wx, wy = _words(x), _words(y)
+        full, ok = 0, bool(wx)
+        for w in wx:
+            if len(w) == 1:
+                ok = ok and any(v[0] == w for v in wy)
+            elif w in wy:
+                full += 1
+            else:
+                ok = False
+        if ok and full >= (1 if equal_shares else 2):
+            return True
+    return False
+
+
+_SCHEME = re.compile(r"\s+a/?c\b|\s+-\s+", re.I)          # 'X Trustee Co Ltd A/C Y Fund', 'X Mutual Fund - Y Fund'
+_AGG = re.compile(r"asset\s+manage|funds?\s+management|investment\s+managers|money\s+managers|\bamc\b|trustee", re.I)
+
+
+def _fund_house(name):
+    base = _SCHEME.split(name, maxsplit=1)[0]
+    return re.sub(r"\s+", " ", _FUND_TAIL.sub(" ", base.lower())).strip() or None
+
+
+def _fund_aggregate(name):
+    """The fund house's own line (its asset manager, or its trustee for all schemes), not one scheme's."""
+    return bool(_AGG.search(name)) and not _SCHEME.search(name)
+
+
+def _is_prom(r):
+    return (r.get("category") == "Promoter" or r.get("alternative") == "Promoter"
+            or "promoter & promoter group table" in (r.get("evidence") or "").lower())
+
+
+def reconcile(rows, extra_ids, qi, filed_prom):
+    """The holder rows as the site lists them, one line per holding. holdermap keeps every row as Bloomberg
+    and the filing have it; listed together, some repeat a holding:
+      1. no name ('1') or a SEBI category line read as a name: dropped;
+      2. one holder under two Bloomberg names (holdermap's 'count it once' note), or a fund house's trustee
+         company and its asset manager: one row, the larger count each quarter;
+      3. a filing-only row repeating a Bloomberg row: the same person with the same shares, or a partner's
+         firm holding while the promoter rows add up to more than the filed promoter total: dropped;
+      4. promoter rows still over the filed total by exactly one row's shares (an aggregate of other rows,
+         e.g. 'Prasad G V' = 'GVP Family Trust' + 'Gunupati Venkateswar Prasad'): that row is dropped.
+    qi: the run column of the last filed quarter; filed_prom: that filing's promoter shares, on the run's
+    share basis. Returns (rows, notes)."""
+    notes = []
+    n = max((len(r["shares"]) for r in rows), default=0)
+
+    def s(r):
+        return (r["shares"][qi] or 0) if qi is not None and qi < len(r["shares"]) else 0
+
+    out = []
+    for r in rows:
+        h = r["holder"] or ""
+        if not re.search(r"[A-Za-z]", h) or LABEL.match(h):
+            notes.append(f"dropped '{h}' ({r['category']}, {s(r):,} shares): not a holder's name")
+            continue
+        out.append(r)
+    def merge_groups(groups):
+        for key, rs in groups.items():
+            if len(rs) < 2:
+                continue
+            # schemes of one fund house add up, so only a group holding the house's own line merges
+            if key[0] == "fund" and not any(_fund_aggregate(r["holder"]) for r in rs):
+                continue
+            keep = max(rs, key=lambda r: (s(r), sum(x or 0 for x in r["shares"])))
+            if key[0] == "fund":   # the fund house by its asset manager's name, as the lists name the others
+                keep = next((r for r in rs if re.search(r"asset manage|funds? management|investment managers|amc\b",
+                                                       r["holder"], re.I)), keep)
+            sh = []
+            for i in range(n):
+                v = [r["shares"][i] for r in rs if i < len(r["shares"]) and r["shares"][i] is not None]
+                sh.append(max(v) if v else None)
+            at = min(out.index(r) for r in rs)
+            for r in rs:
+                out.remove(r)
+            out.insert(at, dict(keep, shares=sh, review=True))
+            notes.append(f"one holding under {len(rs)} names ({'; '.join(r['holder'] for r in rs)}): listed once as "
+                         f"'{keep['holder']}', the larger count each quarter")
+
+    def once_key(r):
+        for t in r.get("notes") or []:
+            m = re.search(r"under \d+ names \((.+?)\), the same entity.*count it once", t)
+            if m:
+                return ("once",) + tuple(sorted(x.strip() for x in m.group(1).split(";")))
+        return None
+
+    def fund_key(r):
+        fh = _fund_house(r["holder"]) if r["category"] == "Domestic AMC" else None
+        return ("fund", fh) if fh else None
+    for keyf in (once_key, fund_key):      # a fund house can be two Bloomberg names and a filing trustee line
+        groups = {}
+        for r in out:
+            k = keyf(r)
+            if k:
+                groups.setdefault(k, []).append(r)
+        merge_groups(groups)
+    bb = [r for r in out if id(r) not in extra_ids]
+    excess = sum(s(r) for r in out if _is_prom(r)) - filed_prom if filed_prom else 0
+    for e in sorted([r for r in out if id(r) in extra_ids and s(r) > 0], key=lambda r: -s(r)):
+        for b in bb:
+            if _is_prom(b) != _is_prom(e) or not s(b):
+                continue
+            eq = abs(s(b) - s(e)) <= max(1, 0.0005 * s(e))
+            if not _same_person(b["holder"], e["holder"], eq):
+                continue
+            if eq or (_is_prom(e) and s(b) >= s(e) and excess >= 0.99 * s(e)):
+                out.remove(e)
+                if _is_prom(e):
+                    excess -= s(e)
+                notes.append(f"dropped filing-only '{e['holder']}' ({s(e):,} shares): the same holding as "
+                             f"Bloomberg's '{b['holder']}' ({s(b):,})")
+                break
+    if filed_prom and excess > 0.005 * filed_prom:
+        c = [r for r in out if _is_prom(r) and abs(s(r) - excess) <= max(1, 0.0005 * excess)]
+        if c:
+            r = sorted(c, key=lambda r: id(r) not in extra_ids)[0]
+            out.remove(r)
+            excess -= s(r)
+            notes.append(f"dropped '{r['holder']}' ({s(r):,} shares): the promoter rows added up to more than the "
+                         f"filed promoter total by exactly this row (an aggregate of other rows)")
+    if filed_prom and excess > 0.005 * filed_prom:
+        notes.append(f"promoter rows add up to {100 * (filed_prom + excess) / filed_prom:.1f}% of the filed promoter total")
+    return out, notes
+
+
 def D(s): return dt.date.fromisoformat(s)
 
 
@@ -669,6 +818,22 @@ def load_override(sym):
     return json.load(open(p)) if p.exists() else {}
 
 
+def bbg_asof(run):
+    """'Bloomberg, 23 Sep 2026' for a run from a team Bloomberg export: the day the workbook was saved
+    (its metadata, in IST), which is when the Q3/2026-to-date screen was taken. None otherwise."""
+    p = (run.get("config") or {}).get("bloomberg_path") or ""
+    if not (run.get("batch") or {}).get("bloomberg") or not p or not Path(p).exists():
+        return None
+    import zipfile
+    try:
+        x = zipfile.ZipFile(p).read("docProps/core.xml").decode("utf-8", "replace")
+        m = re.search(r"<dcterms:modified[^>]*>([^<]+)<", x)
+        t = dt.datetime.fromisoformat(m.group(1).replace("Z", "+00:00")) + dt.timedelta(hours=5, minutes=30)
+    except Exception:
+        return None
+    return f"Bloomberg, {t.day} {t:%b %Y}"
+
+
 def generic_name(h):
     n = h.strip()
     if n.endswith("/The"):
@@ -899,6 +1064,10 @@ def build(ctx, sym, verbose=False):
     # (listed later, or a filing the run could not find) is null in every holder's s[] and listed in co.hq_missing
     if "Q2/2026" not in pidx:
         raise Fail(f"run periods {periods} lack Q2/2026, the last closed quarter")
+    jf = tq.get("Jun-26")
+    rows, rec = reconcile(rows, {id(r) for r in run.get("extra_rows", [])}, pidx.get("Q2/2026"),
+                          int(round(jf["prom"] * jf["bf"])) if jf else 0)
+    warn += [f"{sym}: holders: {x}" for x in rec]
     use = PERIODS[:5] + (["Q3/2026"] if oq else [])
     hq_missing = [HQ[i] for i, p in enumerate(use) if p not in pidx]
     if hq_missing:
@@ -926,9 +1095,16 @@ def build(ctx, sym, verbose=False):
             b = on_or_before(S, PEND[p])
             note = ""
         if b is None:
-            prices.append(dict(q=p, d=None, c=None, f=None, a=None, note=f"not yet listed (first close {S[0]['d']})"))
+            prices.append(dict(q=p, d=None, c=None, f=None, a=None, r=None, note=f"not yet listed (first close {S[0]['d']})"))
             continue
-        prices.append(dict(q=p, d=b["d"], c=b["raw"], f=b["f"], a=round(b["c"], 4), note=note))
+        # a: the close that values the holdings then, on the holders' share basis (bonuses and splits only);
+        # r: the close adjusted for every later event (demergers too), for returns. They differ only across a demerger.
+        dmf = b["f"] / b["sf"]
+        if abs(dmf - 1) > 1e-6:
+            note = (note + "; " if note else "") + (f"demerger after this date: holdings are valued at the actual close; "
+                                                    f"returns use ₹{b['c']:,.2f} (adjusted ×{dmf:.4f})")
+        prices.append(dict(q=p, d=b["d"], c=b["raw"], f=b["sf"], a=round(b["raw"] / b["sf"], 4), r=round(b["c"], 4),
+                           note=note))
         rp = next((x for x in run.get("prices", []) if x.get("label") == p), None)
         if rp and p != "Q3/2026" and (rp.get("trade_date") != b["d"] or abs(rp.get("close", 0) - b["raw"]) > 0.005
                                       or abs((rp.get("factor") or 1) - b["sf"]) > 1e-6):
@@ -974,13 +1150,26 @@ def build(ctx, sym, verbose=False):
 
     def iepf(r):      # the IEPF authority is a statutory custodian of unclaimed shares, not an investor
         return "public table: iepf" in (r.get("evidence") or "").lower() or "investor education" in r["holder"].lower()
+    # a holder larger than its whole filed category (FII + foreign companies; DII + government) is not one of
+    # them: a promoter entity Bloomberg names differently from the filing ('GSK plc' for Glaxo Group)
+    bfj = jf["bf"] if jf else 1
+    capf = ((last.get("_fii_filed") or 0) + (last.get("fcos") or 0)) * bfj
+    capd = ((last.get("_dii_filed") or 0) + (last.get("govt") or 0)) * bfj
+
+    def over(r, cap):
+        if cap > 0 and sh(r, 4) > 1.02 * cap:
+            warn.append(f"{sym}: holders: '{r['holder']}' ({sh(r, 4):,} shares) is larger than its filed category "
+                        f"({int(cap):,}); not listed as {r['category']}")
+            return True
+        return False
     fii = [H(r) for r in sorted([r for r in rows if r["category"] in FOREIGN and sh(r, L) > 0 and not is_prom(r)
-                                 and not dom_bank(r)], key=lambda r: -sh(r, L))[:20]]
+                                 and not dom_bank(r) and not over(r, capf)], key=lambda r: -sh(r, L))[:20]]
     dii = [H(r) for r in sorted([r for r in rows if (r["category"] in DOM or dom_bank(r)) and sh(r, L) > 0
-                                 and not is_prom(r) and not iepf(r)], key=lambda r: -sh(r, L))[:20]]
+                                 and not is_prom(r) and not iepf(r) and not over(r, capd)], key=lambda r: -sh(r, L))[:20]]
     ind_excl = set(ov.get("ind_excl", []))
     creg = re.compile(ov["ind_company_regex"]) if ov.get("ind_company_regex") else ORG
-    indr = [r for r in rows if (r["category"] == "Individual" or (r["category"] == "Promoter" and not creg.search(r["holder"])))
+    indr = [r for r in rows if r["category"] in ("Individual", "Promoter") and not creg.search(r["holder"])
+            and (ov.get("ind_company_regex") or not NONPERSON.search(r["holder"]))   # an override's own rule stands
             and r["holder"] not in ind_excl and sh(r, 4) > 0]
     indl = []
     for r in sorted(indr, key=lambda r: -sh(r, 4))[:20]:
@@ -1087,7 +1276,7 @@ def build(ctx, sym, verbose=False):
     rf = ref(ctx, sym)
     co = dict(s=sym, n=run.get("company") or (rf.get("n") or "").rstrip(".") or sym, isin=isin, bse=bse,
               sector=rf.get("ind") or "", industry=rf.get("ind") or "", **membership(ctx, sym),
-              bb=(run.get("holder_source") or "").lower().startswith("bloomberg"),
+              bb=(run.get("holder_source") or "").lower().startswith("bloomberg"), oq_src=bbg_asof(run),
               fil=lf["fd"], fil_q=last["fd"], fil_missing=miss, hq_missing=hq_missing, oq=oq, px_end=END, bonus_after=[], listed=lst["d"],
               listed_is_first_available=first_avail, symbols=syms,
               ca=[[a["d"], a["r"], a["kind"]] for a in applied],
@@ -1146,7 +1335,8 @@ def validate(ctx, sym, out, fl, S, applied, bse_code=None):
     # comparable filing totals: FII list also holds foreign companies (SEBI non-institutions, B3);
     # the DII list also holds non-promoter Government holders (SEBI B4)
     lf = fl[-1]
-    for k, tot in (("fii", lf["_fii_filed"] + lf["fcos"]), ("dii", lf["_dii_filed"] + lf["govt"])):
+    bfl = (out["trend"][-1].get("bf") or 1) if out.get("trend") else 1   # the lists are on today's share count
+    for k, tot in (("fii", int((lf["_fii_filed"] + lf["fcos"]) * bfl)), ("dii", int((lf["_dii_filed"] + lf["govt"]) * bfl))):
         s = sum(x["s"][4] for x in out[k])
         checks[k + "_top20_share"] = round(s / tot, 4) if tot else None
         if s > tot:
