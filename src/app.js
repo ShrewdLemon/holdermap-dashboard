@@ -58,7 +58,7 @@ function setCompany(sym) {
   if (D.snapshot) return setSnapshot(sym);
   AR = sym === 'ANANDRATHI';
   CO = Object.assign({}, AR ? AR_META : { s: sym, n: sym, bb: false, oq: true }, D.co || {});
-  const L = LP && LP.co ? LP.co[sym] : null;
+  const L = D.live || (LP && LP.co ? LP.co[sym] : null);
   const MULT = L && L.rebased ? L.rebased.m : 1;  // shares per snapshot share after a later split/bonus
   if (!D._init) {
     if (L) {
@@ -125,7 +125,7 @@ function setCompany(sym) {
 function setSnapshot(sym) {
   AR = false;
   CO = Object.assign({ s: sym, n: sym }, D.co || {});
-  const L = LP && LP.co ? LP.co[sym] : null;
+  const L = D.live || (LP && LP.co ? LP.co[sym] : null);
   if (!D._init) { if (L) { D.px_series = D.px_series.concat(L.add || []); D.w52 = L.w52; } D._init = true; }
   const ser = D.px_series, lr = ser[ser.length - 1];
   NOW = L ? Object.assign({}, L.now, LP.ix.now) : { d: lr[0], c: lr[1], prev: CO.ipo_price || lr[1], prevd: 'IPO' };
@@ -556,11 +556,11 @@ function reviewBody() {
 
 /* ---------- UNIVERSE ---------- */
 const BK = m => m >= 500000 ? 'mega' : m >= 100000 ? 'large' : 'mid';
-const MEM = { join: u => !!u.n500_from, leave: u => !!u.n500_to, extra: u => !!u.extra };
+const MEM = { n500: u => (u.idx || []).includes('n500'), join: u => !!u.n500_from, leave: u => !!u.n500_to, extra: u => !!u.extra };
 function memTag(u) {
   return u.n500_from ? `<span class="pill ok" style="margin-left:6px;font-size:10px">JOINS NIFTY 500 ${esc(sdate(u.n500_from).toUpperCase())}</span>`
     : u.n500_to ? `<span class="pill warn" style="margin-left:6px;font-size:10px">LEAVES NIFTY 500 ${esc(sdate(u.n500_to).toUpperCase())}</span>`
-    : u.extra ? `<span class="pill" style="margin-left:6px;font-size:10px">${u.exch === 'BSE' ? 'BSE ONLY' : 'OUTSIDE NIFTY 500'}</span>` : '';
+    : u.exch === 'BSE' ? `<span class="pill" style="margin-left:6px;font-size:10px">BSE ONLY</span>` : '';
 }
 function uList() {
   const q = S.uQ.trim().toLowerCase();
@@ -583,7 +583,7 @@ function viewUniverse() {
   <div class="ustat"><div><b>${cu(U.length)}</b><span class="lbl">Companies</span></div><div><b>${cu(U.reduce((a, u) => a + u.h, 0))}</b><span class="lbl">Holder rows</span></div><div><b>${cu(U.filter(u => u.ok).length)}</b><span class="lbl">All gates passed</span></div></div></div>
   <div style="--i:1;display:flex;flex-direction:column;gap:12px;margin-top:20px">${pinHtml || `<p class="cap">Your watchlist is empty. Open a company and tap Watch to pin it here.</p>`}</div>
   <section class="card" style="--i:2;margin-top:20px">
-    <div class="frow"><div class="fchips" role="group" aria-label="Market cap filter">${[['all', 'All', U.length], ['mega', '≥ ₹5 lakh cr', cnt.mega], ['large', '₹1–5 lakh cr', cnt.large], ['mid', '< ₹1 lakh cr', cnt.mid], ['watch', '★ Watchlist', S.watch.length]].concat([['join', 'Joining 30 Sep'], ['leave', 'Leaving 30 Sep'], ['extra', 'Outside Nifty 500']].map(o => o.concat([U.filter(MEM[o[0]]).length])).filter(o => o[2] > 0)).map(o => `<button type="button" class="fchip" data-set="uB" data-val="${o[0]}" aria-pressed="${S.uB === o[0]}">${o[1]}<span class="ct">${o[2]}</span></button>`).join('')}</div>
+    <div class="frow"><div class="fchips" role="group" aria-label="Market cap filter">${[['all', 'All', U.length], ['mega', '≥ ₹5 lakh cr', cnt.mega], ['large', '₹1–5 lakh cr', cnt.large], ['mid', '< ₹1 lakh cr', cnt.mid], ['watch', '★ Watchlist', S.watch.length]].concat([['n500', 'Nifty 500'], ['join', 'Joining 30 Sep'], ['leave', 'Leaving 30 Sep'], ['extra', 'Outside Nifty 500']].map(o => o.concat([U.filter(MEM[o[0]]).length])).filter(o => o[2] > 0)).map(o => `<button type="button" class="fchip" data-set="uB" data-val="${o[0]}" aria-pressed="${S.uB === o[0]}">${o[1]}<span class="ct">${o[2]}</span></button>`).join('')}</div>
     <div style="display:flex;gap:8px;align-items:center;flex:1;justify-content:flex-end;min-width:200px"><label for="uq" class="vh">Filter companies</label><input id="uq" class="field" type="search" placeholder="Filter by name or symbol" value="${esc(S.uQ)}" style="flex:1;max-width:280px;min-width:0">
     <label for="uSortSel" class="vh">Sort</label><select id="uSortSel" class="field pm2" data-sortsel="u">${[['m', 'Market cap'], ['q', 'QTD'], ['pr', 'Promoter %'], ['fi', 'FII %'], ['di', 'DII %'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.uSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></div></div>
     <div id="uBody">${uBody()}</div>
