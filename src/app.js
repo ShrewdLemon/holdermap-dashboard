@@ -171,8 +171,7 @@ function hStats(h, basis) {
   const a0 = at(0), z = at(n - 1);
   return {
     vals, q, ch: a0 == null || z == null ? null : z - a0, sh: h.s[q] || 0, v: (h.s[q] || 0) * PX[q] / 1e7, pt: 100 * (h.s[q] || 0) / DEN, pff: h.c === 'Promoter' || !FF[q] ? null : 100 * (h.s[q] || 0) / FF[q],
-    mean: ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : null, mx: ok.length ? Math.max.apply(null, ok) : null, mn: ok.length ? Math.min.apply(null, ok) : null,
-    d: (h.s[q] || 0) - (h.s[q - 1] || 0)
+    mean: ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : null, mx: ok.length ? Math.max.apply(null, ok) : null, mn: ok.length ? Math.min.apply(null, ok) : null
   };
 }
 const fmtB = (x, basis) => x == null ? '—' : basis === 'val' ? fin(x, 1) : x.toFixed(3);
@@ -204,7 +203,7 @@ function snapHeader() {
   return `<section class="co" aria-label="Company summary"><div class="wrap">
   <div class="crumb">${coCrumb(CO.s, CO.sector)}</div>
   <div class="cohead"><div class="coname"><h1>${esc(CO.n)}</h1>
-      <div class="chips"><span class="chip">BSE: ${esc(CO.bse)}</span><span class="chip">ISIN ${esc(CO.isin)}</span><span class="pill" title="An exchange cannot list on itself: NSE's shares trade only on BSE">BSE ONLY · LISTED ${esc(sdate(CO.listed).toUpperCase())}</span>${coCap(U.find(x => x.s === CO.s))}
+      <div class="chips"><span class="pill" title="An exchange cannot list on itself: NSE's shares trade only on BSE">BSE ONLY · LISTED ${esc(sdate(CO.listed).toUpperCase())}</span>${coCap(U.find(x => x.s === CO.s))}
       <button class="star" type="button" data-act="watch" data-sym="${esc(CO.s)}" aria-pressed="${w}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><span>${w ? 'Watching' : 'Watch'}</span></button></div></div>
     <div class="px"><div class="pxv"><span class="big">₹${cu(NOW.c, 2)}</span><span class="chg ${cl(NOW.c - NOW.prev)}">${sgn(NOW.c - NOW.prev, 2)} (${sgn(100 * (NOW.c / NOW.prev - 1), 2, '%')})${NOW.prevd === 'IPO' ? ' vs IPO price' : ''}</span><small>BSE close · ${dfmt(NOW.d)}</small></div></div>
   </div>
@@ -258,7 +257,7 @@ function snapEvidence() {
   <li>Checks run: every holder's shares reproduce the prospectus percentage; shares offered add up to the 12,64,36,650 in the offer; EPS × 247.5 crore shares = PAT to owners in every period.</li></ul></section>`;
 }
 function companyHeader() {
-  const w = S.watch.includes(CO.s), L5 = T[T.length - 1], L4 = T[T.length - 2], gok = D.gates.filter(g => g.ok !== false).length;
+  const w = S.watch.includes(CO.s), L5 = T[T.length - 1], L4 = T[T.length - 2];
   const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (QE && (QE.r || QE.a) ? sgn(100 * (NOW.c / (QE.r || QE.a) - 1), 1, '%') + ' since ' + sdate(QE.d) : 'No close at the last quarter-end'), 'overview'], ['P/E (TTM)', TTMP > 0 ? (MCAP / TTMP).toFixed(1) + '×' : TTMP == null ? '—' : 'n.m.', TTMP == null ? 'Results not loaded' : 'TTM PAT ₹' + fin(TTMP, 1) + ' cr', 'overview'], ['P/B', BVPS > 0 ? (NOW.c / BVPS).toFixed(1) + '×' : BVPS < 0 ? 'n.m.' : '—', BVPS ? 'BVPS ₹' + BVPS.toFixed(1) : 'Book value not on file', 'overview'], ['Dividend yield', DPS != null ? (100 * DPS / NOW.c).toFixed(2) + '%' : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', 'overview'], ['ROE', ROE != null ? ROE.toFixed(1) + '%' : NEGEQ ? 'n.m.' : '—', AR ? 'FY26, company-reported' : ROE != null ? ((D.val || {}).roe_basis || 'TTM, from filings') : NEGEQ ? 'Negative equity' : 'Not on file', 'overview'], ['Free float', (100 - pct(L5.prom, L5.den)).toFixed(2) + '%', L5.q + ' filing', 'holders'], ['Shareholders', cu(L5.nh), L4 ? sgn(100 * (L5.nh / L4.nh - 1), 1, '%') + ' ' + qoqLabel() : 'First filing ' + L5.q, 'overview']];
   const W5 = D.w52, lo = W5.lo, hi = W5.hi;
   const tabs = [['overview', 'Overview'], ['holders', 'Shareholding'], ['flows', 'Buyers &amp; sellers'], ['evidence', 'Evidence &amp; gates']];
@@ -266,7 +265,7 @@ function companyHeader() {
   <div class="crumb">${coCrumb(CO.s, CO.sector)}</div>
   <div class="cohead">
     <div class="coname"><h1>${esc(CO.n)}</h1>
-      <div class="chips"><span class="chip">NSE: ${esc(CO.s)}</span>${CO.bse ? `<span class="chip">BSE: ${esc(CO.bse)}</span>` : ''}${CO.isin ? `<span class="chip">ISIN ${esc(CO.isin)}</span>` : ''}<span class="pill ${gok === D.gates.length ? 'ok' : 'warn'}">${gok}/${D.gates.length} GATES</span>${CO.bb ? '' : '<span class="pill" title="Holders from SEBI filings, MF portfolio disclosures and SEC N-PORT; no Bloomberg export">FILINGS</span>'}${(() => { const u = U.find(x => x.s === CO.s); return u ? coCap(u) + memTag(u) : ''; })()}
+      <div class="chips">${CO.bb ? '' : '<span class="pill" title="Holders from SEBI filings, MF portfolio disclosures and SEC N-PORT; no Bloomberg export">FILINGS</span>'}${(() => { const u = U.find(x => x.s === CO.s); return u ? coCap(u) + memTag(u) : ''; })()}
       <button class="star" type="button" data-act="watch" data-sym="${esc(CO.s)}" aria-pressed="${w}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><span>${w ? 'Watching' : 'Watch'}</span></button></div>
     </div>
     <div class="px">
@@ -316,62 +315,16 @@ function ownBody() {
   const Lf = T[T.length - 1], drn = Lf.dr_in_public && Lf.filed ? `<p class="note grey">The ${Lf.q} filing counts the ${fin(Lf.dr)} shares underlying ADRs/GDRs (${pct(Lf.dr, Lf.tot).toFixed(2)}% of all shares) inside foreign institutions. They are shown on their own line here so every quarter compares on the same basis. As filed: FII ${(+Lf.filed.fii).toFixed(2)}%, DII ${(+Lf.filed.dii).toFixed(2)}%${Lf.filed.prom != null ? ', promoter ' + (+Lf.filed.prom).toFixed(2) + '%' : ''}.</p>` : T.some(t => t.dr > 0) ? `<p class="note grey">Shares underlying ADRs/GDRs sit outside SEBI's percentages (as in the filings), so they are listed separately and carry no %.</p>` : '';
   return `<span class="cap">${cap}</span>${ownTable()}${drn}`;
 }
-const INS_AR = [
-  ['PROMOTER · −1.74 PP', 'dn', 'Anand Rathi Financial Services sold 2.89 mn shares', 'Promoter group down to 41.37%, the lowest in six quarters. This sale explains the whole quarterly change: ₹572 cr at the Jun-26 close.', 'flows|A|Anand Rathi Financial Services Ltd'],
-  ['DII · +1.29 PP', 'up', 'Domestic institutions at a six-quarter high of 10.39%', 'Insurers rose from 0.21% to 0.93% (Axis Max Life, Bajaj Life, Tata AIA, HDFC Life). Mutual funds hold 9.23%.', 'holders|dii'],
-  ['FII · +0.59 PP', 'up', 'Vanguard holds 2.63% alone and added 0.94 mn shares this quarter', 'Named foreign holders cover 63% of FPI shares. The rest sit below disclosure. Norges Bank trimmed in Dec-25.', 'holders|fii|The Vanguard Group'],
-  ['BREADTH · +24.3%', 'mut', '80,729 shareholders, up from 64,931', 'The jump came in the quarter of the Jun-26 1:1 bonus. The count was 54,938 at the start of the six quarters.', 'cat|ind']
-];
-function insights() {
-  if (AR) return INS_AR;
-  if (T.length < 2) {
-    const L = T[0], f = k => (100 * L[k] / L.den).toFixed(2) + '%';
-    return [['FIRST FILING', 'mut', 'Listed recently: one shareholding filing so far (' + L.q + ')', 'Promoter group ' + f('prom') + ', FPIs ' + f('fii') + ', domestic institutions ' + f('dii') + ', individuals ' + f('ind') + '. Quarter-on-quarter changes start with the next filing.', 'cat|prom'],
-      ['BREADTH', 'mut', fin(L.nh) + ' shareholders at ' + L.q, 'Mutual funds hold ' + f('mf') + ' and insurers ' + f('ins') + '.', 'cat|ind']];
-  }
-  const n = T.length, L = T[n - 1], P = T[n - 2], lv = k => pct(L[k], L.den), pp = k => lv(k) - pct(P[k], P.den);
-  const tg = x => x > 0.005 ? 'up' : x < -0.005 ? 'dn' : 'mut', f2 = x => x.toFixed(2) + '%', mn = x => (Math.abs(x) / 1e6).toFixed(2) + ' mn', z = x => Math.abs(x) < 0.005 ? 0 : x, nq = n === 6 ? 'six' : String(n);
-  const ext = k => { const all = T.map(t => pct(t[k], t.den)), v = lv(k); return v >= Math.max.apply(null, all) - 1e-9 && pp(k) > 0.005 ? ', a ' + nq + '-quarter high' : v <= Math.min.apply(null, all) + 1e-9 && pp(k) < -0.005 ? ', the lowest in ' + nq + ' quarters' : ''; };
-  const fl = D.flows && D.flows.A ? D.flows.A.all : [];
-  const mover = (g, sign) => fl.filter(o => GRP(o.c) === g && (sign ? Math.sign(o.d) === sign : true)).sort((a, b) => Math.abs(b.d) - Math.abs(a.d))[0];
-  const qn = L.q, out = [], hi = HQ.indexOf(L.q) >= 0 ? HQ.indexOf(L.q) : 4;  // holder column of the latest filed quarter
-  // promoter
-  if (L.prom === 0) {
-    out.push(['NO PROMOTER GROUP', 'mut', 'Professionally run: no promoter group in SEBI filings', 'Foreign portfolio investors hold ' + f2(lv('fii')) + ' and domestic institutions ' + f2(lv('dii')) + ' at ' + qn + '.', 'holders|fii']);
-  } else {
-    const pm = mover('prom'), d = pp('prom');
-    out.push(['PROMOTER · ' + sgn(z(d), 2, ' PP'), tg(d), Math.abs(d) < 0.005 ? 'Promoter group steady at ' + f2(lv('prom')) : 'Promoter group ' + (d > 0 ? 'up' : 'down') + ' to ' + f2(lv('prom')) + ext('prom'),
-      pm && Math.abs(d) >= 0.005 ? esc(pm.n) + (pm.d > 0 ? ' bought ' : ' sold ') + mn(pm.d) + ' shares in the quarter to ' + qn + (pm.v ? ' (₹' + fin(Math.abs(pm.v)) + ' cr at the ' + qn + ' close).' : '.') : 'No change in promoter holding between the last two filings.', 'cat|prom']);
-  }
-  // domestic institutions
-  { const d = pp('dii'), b = mover('dii', 1), sl = mover('dii', -1);
-    const mv = [b ? 'biggest buyer ' + esc(b.n) + ' (+' + mn(b.d) + ')' : '', sl ? 'biggest seller ' + esc(sl.n) + ' (−' + mn(sl.d) + ')' : ''].filter(Boolean).join('; ');
-    out.push(['DII · ' + sgn(z(d), 2, ' PP'), tg(d), 'Domestic institutions at ' + f2(lv('dii')) + ext('dii'),
-      'Mutual funds ' + f2(pct(P.mf, P.den)) + ' → ' + f2(lv('mf')) + ', insurers ' + f2(pct(P.ins, P.den)) + ' → ' + f2(lv('ins')) + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), 'holders|dii']); }
-  // foreign
-  { const d = pp('fii'), f0 = (D.fii || [])[0], b = mover('fii', 1), sl = mover('fii', -1);
-    const cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[hi] || 0), 0), D.fii_total - (L.fdi || 0)) : null;  // FPIs only: a foreign parent company is not an FPI
-    const mv = [b ? esc(b.n) + ' added ' + mn(b.d) : '', sl ? esc(sl.n) + ' cut ' + mn(sl.d) : ''].filter(Boolean).join('; ');
-    out.push(['FII · ' + sgn(z(d), 2, ' PP'), tg(d), f0 && f0.s[hi] ? esc(f0.n) + ' is the largest named foreign holder at ' + f2(pct(f0.s[hi], DEN)) : 'Foreign portfolio investors at ' + f2(lv('fii')) + ext('fii'),
-      (L.fdi > 0 ? 'Foreign institutions hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing, of which foreign direct investment ' + f2(lv('fdi')) + ' and FPIs ' + f2(pct(L.f1 + L.f2, L.den)) : 'FPIs hold ' + f2(lv('fii')) + ' in the ' + qn + ' filing') + (cov != null && cov > 0 ? '; named holders cover ' + cov.toFixed(0) + '% of FPI shares' : '') + '.' + (mv ? ' In the quarter: ' + mv + '.' : ''), f0 ? 'holders|fii|' + f0.n : 'holders|fii']); }
-  // breadth
-  { const b = 100 * (L.nh / P.nh - 1), b6 = 100 * (L.nh / T[0].nh - 1);
-    out.push(['BREADTH · ' + sgn(b, 1, '%'), 'mut', fin(L.nh) + ' shareholders, ' + (b >= 0 ? 'up' : 'down') + ' from ' + fin(P.nh), 'At ' + T[0].q + ' the count was ' + fin(T[0].nh) + ' (' + sgn(b6, 1, '%') + ' since). Individuals hold ' + f2(lv('ind')) + '.', 'cat|ind']); }
-  return out;
-}
 function viewOverview() {
-  const L = T[T.length - 1], P = T[T.length - 2] || T[T.length - 1], pp = k => 100 * L[k] / L.den - 100 * P[k] / P.den;
-  const pat = `<div>${CATS.map(c => `<button type="button" class="prow" data-act="catgo" data-k="${c.k}" style="width:100%;background:none;border:0;border-bottom:1px solid var(--rule);cursor:pointer;text-align:left"><span>${c.l}</span><span class="num"><b style="font-weight:600">${(100 * L[c.k] / L.den).toFixed(2)}%</b><span class="${cl(pp(c.k))}" style="display:inline-block;width:72px;text-align:right">${sgn(pp(c.k), 2, ' pp')}</span></span></button>`).join('')}</div>`;
+  const L = T[T.length - 1];
   const qEnd = q => { const m = { Mar: '03-31', Jun: '06-30', Sep: '09-30', Dec: '12-31' }[q.slice(0, 3)]; return '20' + q.slice(4) + '-' + m; };
   const uu = U.find(x => x.s === CO.s), newer = uu && uu.f && uu.f > qEnd(L.q) ? `<p class="note grey">A later filing dated ${dfmt(uu.f)} (after a merger, allotment or sale) shows promoter ${(uu.pr || 0).toFixed(2)}%, FII ${(uu.fi || 0).toFixed(2)}%, DII ${(uu.di || 0).toFixed(2)}%. The universe table uses it; this page stays on quarter-end filings so quarters compare.</p>` : '';
-  const ins = `<ul class="ins">${insights().map(x => `<li><button type="button" data-go="${x[4]}" style="display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:0;text-align:left;cursor:pointer;width:100%"><span class="tg ${x[1]}">${x[0]}</span><b>${x[2]}</b><span class="b">${x[3]}</span><span style="font-size:12px;font-weight:600;color:var(--acc);display:inline-flex;gap:6px;align-items:center">View detail ${arrow}</span></button></li>`).join('')}</ul>`;
   const tiles = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (QE && (QE.r || QE.a) ? sgn(100 * (NOW.c / (QE.r || QE.a) - 1), 1, '%') + ' since ' + sdate(QE.d) : 'No close at the last quarter-end'), 'Shares ' + (SHN / 1e7).toFixed(2) + ' cr' + (SHN !== TOT ? ' (NSE, current)' : '') + ' × ₹' + fin(NOW.c, 2)], ['P/E (TTM)', TTMP > 0 ? cu(+(MCAP / TTMP).toFixed(1), 1, '', '×') : '—', TTMP ? 'On TTM reported PAT ₹' + fin(TTMP, 1) + ' cr' : 'Results not loaded', TTMP ? 'Market cap ₹' + fin(MCAP) + ' cr ÷ PAT' + (PATO !== PAT ? ' attributable to owners' : '') + ' of the last four quarters (₹' + TTM.join(' + ') + ' cr)' : 'No results on file'], ['P/B', BVPS > 0 ? cu(+(NOW.c / BVPS).toFixed(1), 1, '', '×') : BVPS < 0 ? 'n.m.' : '—', BVPS ? 'Book value ₹' + BVPS.toFixed(1) + ' per share' + (BVPS < 0 ? ' (negative equity)' : '') : 'Book value not on file', AR ? 'Mar-26 consolidated equity ≈ ₹999 cr ÷ 166.04 mn shares' : BVPS ? 'Equity attributable to owners ÷ shares, ' + ((D.val || {}).bs_date || 'latest balance sheet') : ''], ['Dividend yield', DPS != null ? cu(+(100 * DPS / NOW.c).toFixed(2), 2, '', '%') : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', AR ? '₹6 interim (ex 17 Oct 2025) + ₹7 final (ex 15 May 2026), halved for the Jun-26 bonus' : 'Dividends with an ex-date in the last 12 months (NSE corporate actions)']];
   return `<div class="g12">
-  <section class="card s8" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, ' + (T.length === 6 ? 'six' : T.length) + ' filed quarters', seg('unit', [['pct', '% of shares'], ['val', 'Value ₹ cr'], ['sh', 'Shares mn']], S.unit, 'Ownership unit'))}<div id="ownBody">${ownBody()}</div></section>
-  <section class="card s4" style="--i:1">${sh('Latest · ' + L.q + ' filing', 'Pattern and what changed')}${pat}${newer}${ins}</section>
-  <section class="card s5" style="--i:2">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div>${mcapTable()}</section>
+  <section class="card s12" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, ' + (T.length === 6 ? 'six' : T.length) + ' filed quarters', seg('unit', [['pct', '% of shares'], ['val', 'Value ₹ cr'], ['sh', 'Shares mn']], S.unit, 'Ownership unit'))}<div id="ownBody">${ownBody()}</div>${newer}</section>
+  <section class="card s5" style="--i:1">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div>${mcapTable()}</section>
   ${earnCard()}
-  <section class="card s12" style="--i:4">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to ' + dfmt(NOW.d))}${retTable()}</section>
+  <section class="card s12" style="--i:3">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to ' + dfmt(NOW.d))}${retTable()}</section>
   </div>${footer(AR ? 'NSE shareholding patterns (XBRL, SEBI LODR Reg. 31), Mar-25 to Jun-26 · NSE bhavcopy daily closes (stockanalysis.com for 10 Aug–22 Sep 2026, checked against 5 NSE closes) · company results press releases and investor presentations · ' + (LP ? 'Nifty 50 and Nifty 500 closes from NSE\'s daily index files. Prices refresh every trading day from NSE; last close ' + dfmt(NOW.d) + '.' : 'Nifty 50 and Nifty 500 closes as of the snapshot.') + ' Values are shares × NSE close at quarter end (28 Mar 2025 for Mar-25).' : 'NSE shareholding patterns (XBRL, SEBI LODR Reg. 31), ' + T[0].q + ' to ' + T[T.length - 1].q + ' · NSE bhavcopy daily closes, adjusted for bonuses and splits · quarterly results as filed with NSE · Nifty 50 and Nifty 500 closes from NSE\'s daily index files. Prices refresh every trading day; last close ' + dfmt(NOW.d) + '. Values are shares × NSE close at quarter end.')}`;
 }
 function mcapTable() {
@@ -383,24 +336,14 @@ function revLabel() {
   return f === 'BANKING' || /interest earned/i.test(b) ? 'Interest earned' : f === 'GI' || f === 'LI' || /premium/i.test(b) ? 'Net premium' : 'Revenue from ops';
 }
 function earnCard() {
-  if (!PAT) return `<section class="card s7" id="earn" style="--i:3">${sh('Earnings', 'Earnings', 'Quarterly results')}<p class="cap">Results for ${esc(CO.s)} are not loaded yet.</p></section>`;
-  const note = AR ? "Figures as reported in the company's results. Q1 FY27 PAT of ₹163.0 cr includes about ₹110 cr of other income, mostly fair-value gains on investments; the company's adjusted PAT is ₹116 cr, up 24% YoY. Reported EPS for Q4 FY25–Q4 FY26 is on 83.02 mn shares (before the Jun-26 1:1 bonus); Q1 FY27 is reported diluted EPS on 166.04 mn. The last row restates every quarter to 166.04 mn shares so they compare. Q1 FY27 matches the reported ₹9.82."
-    : 'As filed with NSE (' + esc((D.val || {}).scope || D.earn.scope || 'consolidated where filed') + '). EPS is basic, as reported.' + ((D.earn.notes || []).length ? ' ' + D.earn.notes.map(esc).join(' ') : '');
-  return `<section class="card s7" id="earn" style="--i:3">${sh('Earnings', 'Earnings', '₹ crore · ' + PAT.length + ' reported quarters')}${earnTable()}${ttmStrip()}<p class="note">${note}</p></section>`;
+  if (!PAT) return `<section class="card s7" id="earn" style="--i:2">${sh('Earnings', 'Earnings', 'Quarterly results')}<p class="cap">Results for ${esc(CO.s)} are not loaded yet.</p></section>`;
+  return `<section class="card s7" id="earn" style="--i:2">${sh('Earnings', 'Earnings', '₹ crore · ' + PAT.length + ' reported quarters')}${earnTable()}</section>`;
 }
 function earnTable() {
   const row = (lab, vs, f, bold, yoy, suf) => `<tr><td class="l" style="font-weight:${bold ? 600 : 500}">${lab}</td>${vs.map((v, i) => `<td style="font-weight:${bold && i === vs.length - 1 ? 600 : 400}">${v == null ? '—' : f(v)}</td>`).join('')}<td class="${cl(yoy)}" style="font-weight:600">${yoy == null ? '<span class="mut" title="Share basis changed">n.m.</span>' : sgn(yoy, 1, suf || '%')}</td></tr>`;
   const h = `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">₹ crore</th>${EQ.map((q, i) => `<th scope="col"><span style="display:block">${q}</span><span style="display:block;font-weight:400;letter-spacing:0;text-transform:none">${EQd[i]}</span></th>`).join('')}<th scope="col">YoY</th></tr></thead><tbody>`;
   const n = PAT.length - 1, y = n - 4, yoy = (a, b) => y >= 0 && a != null && b ? 100 * (a / b - 1) : null;
   return h + `${row(revLabel(), REV, v => fin(v, 2), false, yoy(REV[n], REV[y]))}${row('PAT (reported)', PAT, v => fin(v, 2), true, yoy(PAT[n], PAT[y]))}${PATO !== PAT ? row('PAT to owners', PATO, v => fin(v, 2), false, yoy(PATO[n], PATO[y])) : ''}${row(revLabel() === 'Revenue from ops' ? 'PAT margin' : 'PAT / ' + revLabel().toLowerCase(), PAT.map((p, i) => REV[i] ? 100 * p / REV[i] : null), v => v.toFixed(1) + '%', false, y >= 0 && REV[n] && REV[y] ? 100 * PAT[n] / REV[n] - 100 * PAT[y] / REV[y] : null, ' pp')}${row(AR ? 'EPS as reported (₹)' : 'EPS, basic, as reported (₹)', EPSR, v => v.toFixed(2), !AR && !EPSADJ, AR || EPSADJ ? null : yoy(EPSR[n], EPSR[y]))}${!AR && EPSADJ ? row('EPS, adjusted for splits/bonuses (₹)', EPSA, v => v.toFixed(2), true, yoy(EPSA[n], EPSA[y])) : ''}${AR ? row('EPS on 166.04 mn shares (₹)', EPS, v => v.toFixed(2), true, yoy(EPS[n], EPS[y])) : ''}</tbody></table></div>`;
-}
-function ttmStrip() {  // the last four reported quarters added up (the P/E above uses the same PAT to owners)
-  if (!PAT || PAT.length < 4) return '';
-  const sum = a => a.slice(-4).some(v => v == null) ? null : a.slice(-4).reduce((x, y) => x + y, 0);
-  const rv = sum(REV), pt = sum(PAT), po = sum(PATO), eps = sum(AR ? EPS : EPSADJ ? EPSA : EPSR), rl = revLabel();
-  const k = [[rl, rv == null ? '—' : '₹' + fin(rv, 1) + ' cr'], [PATO !== PAT ? 'PAT to owners' : 'PAT', po == null ? '—' : '₹' + fin(po, 1) + ' cr'],
-    [rl === 'Revenue from ops' ? 'PAT margin' : 'PAT / ' + rl.toLowerCase(), rv && pt != null ? (100 * pt / rv).toFixed(1) + '%' : '—'], ['EPS' + (EPSADJ && !AR ? ', adjusted' : ''), eps == null ? '—' : '₹' + eps.toFixed(2)]];
-  return `<div><span class="lbl">Last four quarters, ${EQ[EQ.length - 4]} to ${EQ[EQ.length - 1]}</span><div class="kvs">${k.map(x => `<div><span class="cap">${x[0]}</span><b class="num">${x[1]}</b></div>`).join('')}</div></div>`;
 }
 const RP = [['1m', '1 month', '2026-08-21', null], ['3m', '3 months', '2026-06-23', null], ['6m', '6 months', '2026-03-24', null], ['ytd', 'Year to date', '2025-12-31', null], ['1y', '1 year', '2025-09-23', null], ['3y', '3 years, annualised', '2023-09-22', 3], ['sl', 'Since listing, annualised', '2021-12-14', (Date.UTC(2026, 8, 23) - Date.UTC(2021, 11, 14)) / 864e5 / 365.25]];
 const LAST = '2026-09-23';
@@ -413,11 +356,7 @@ function retTable() {
 
 /* ---------- HOLDERS ---------- */
 function viewHolders() {
-  const L5 = T[T.length - 1], q = CO.oq === false ? 4 : 5, sh = (h) => h ? (h.s[q] || 0) : 0, nm = h => h ? esc(h.n.replace(/ (Ltd|Limited|Inc|LLC|plc)\.?$/i, '')) : '—';
-  const f2 = D.fii.slice(0, 2), d2 = D.dii.slice(0, 2), cov = D.fii_total ? pct(D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0), D.fii_total - (L5.fdi || 0)) : null;
-  const k = [['fii', 'FII / FPI · ' + L5.q + ' filing', pct(L5.fii, L5.den).toFixed(2) + '%', AR ? '127 FPI accounts. Named holders cover 63% of FPI shares.' : 'FPI Cat I ' + pct(L5.f1, L5.den).toFixed(2) + '% · Cat II ' + pct(L5.f2, L5.den).toFixed(2) + '%' + (L5.fdi > 0 ? ' · FDI ' + pct(L5.fdi, L5.den).toFixed(2) + '%' : '') + (cov != null ? '. Named holders cover ' + cov.toFixed(0) + '% of FPI shares.' : '')], ['dii', 'DII · ' + L5.q + ' filing', pct(L5.dii, L5.den).toFixed(2) + '%', 'Mutual funds ' + pct(L5.mf, L5.den).toFixed(2) + '% · insurers ' + pct(L5.ins, L5.den).toFixed(2) + '% · AIFs ' + pct(L5.aif, L5.den).toFixed(2) + '%'], ['fii', 'Top 2 foreign holders', pct(f2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', f2.map(h => nm(h) + ' ' + pct(sh(h), DEN).toFixed(2) + '%').join(' + ') || 'None named'], ['dii', 'Top 2 domestic holders', pct(d2.reduce((a, h) => a + sh(h), 0), DEN).toFixed(2) + '%', AR ? 'Quant MF + SBI MF, mostly small-cap schemes' : d2.map(nm).join(' + ') || 'None named']];
-  return `<div class="kpis" style="--i:0">${k.map(x => `<button type="button" class="kpi" data-set="hTab" data-val="${x[0]}" style="text-align:left;cursor:pointer"><span class="lbl">${x[1]}</span><span class="v">${x[2]}</span><span class="s">${x[3]}</span></button>`).join('')}</div>
-  <section class="card" id="hCard" style="--i:1;margin-top:24px">${holdersHead()}<div id="hBody">${holdersBody()}</div></section>
+  return `<section class="card" id="hCard" style="--i:0">${holdersHead()}<div id="hBody">${holdersBody()}</div></section>
   ${AR ? footer('holdermap run of 23 Sep 2026 on the Bloomberg Security Ownership export (ANANDRAT IN), reconciled to NSE shareholding filings (7/7 gates). Categories come from SEBI Table II/III, AMFI, IRDAI, SEC registries and GLEIF. Shares are restated for the Jun-26 1:1 bonus. Free float = total shares minus the promoter group in that quarter\'s filing.') : footer('holdermap run of ' + dfmt(D.gen.slice(0, 10)) + (CO.bb ? ' on the Bloomberg Security Ownership export' : ' in filing mode: holders named in SEBI shareholding filings (1% and above), mutual-fund portfolio disclosures (fund-house level) and US fund N-PORT filings') + ', reconciled to NSE shareholding filings (' + D.gates.filter(g => g.ok !== false).length + '/' + D.gates.length + ' gates). Categories come from SEBI Table II/III, AMFI, IRDAI, SEC registries and GLEIF. Free float = total shares minus the promoter group in that quarter\'s filing.')}`;
 }
 function holdersHead() {
@@ -428,16 +367,16 @@ function holdersHead() {
 function holdersBody() {
   const L = GROUPS[S.hTab].slice(), b = S.basis, q = S.hTab === 'ind' ? 4 : 5;
   const st = new Map(L.map(h => [h, hStats(h, b)]));
-  const key = { n: h => h.n.toLowerCase(), cty: h => h.cty, s: h => st.get(h).sh, v: h => st.get(h).v, pt: h => st.get(h).pt, pff: h => st.get(h).pff == null ? -1 : st.get(h).pff, mean: h => st.get(h).mean || 0, mx: h => st.get(h).mx || 0, mn: h => st.get(h).mn || 0, d: h => st.get(h).d, ch: h => st.get(h).ch == null ? -Infinity : st.get(h).ch }[S.hSort] || (h => st.get(h).sh);
+  const key = { n: h => h.n.toLowerCase(), cty: h => h.cty, s: h => st.get(h).sh, v: h => st.get(h).v, pt: h => st.get(h).pt, pff: h => st.get(h).pff == null ? -1 : st.get(h).pff, mean: h => st.get(h).mean || 0, mx: h => st.get(h).mx || 0, mn: h => st.get(h).mn || 0, ch: h => st.get(h).ch == null ? -Infinity : st.get(h).ch }[S.hSort] || (h => st.get(h).sh);
   L.sort((a, c) => { const x = key(a), y = key(c); return (x > y ? 1 : x < y ? -1 : 0) * S.hDir; });
   const asof = S.hTab === 'ind' ? T[T.length - 1].q + ' filing · value at ' + (QE && QE.a ? '₹' + fin(QE.a, 2) + ' (' + dfmt(QE.d) + ')' : 'the quarter-end close') : 'Q3/2026 to date · ' + (CO.oq_src || (CO.bb ? 'Bloomberg, 22 Sep 2026' : 'latest fund disclosures')) + ' · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const sortBtn = (k, lab, cls) => `<span class="${cls || ''}"><button type="button" data-sort="h" data-k="${k}" ${S.hSort === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${S.hSort === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
   const qlab = S.hTab === 'ind' ? '5Q' : '6Q';
   let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['pct', '% of total'], ['ff', '% of free float'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
-    <label class="pm2" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)">Sort <select class="field" id="hSortSel" data-sortsel="h">${[['s', 'Shares'], ['v', 'Value'], ['pt', '% total'], ['d', 'QoQ change'], ['mean', 'Mean'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.hSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></label></div>
+    <label class="pm2" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)">Sort <select class="field" id="hSortSel" data-sortsel="h">${[['s', 'Shares'], ['v', 'Value'], ['pt', '% total'], ['mean', 'Mean'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.hSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></label></div>
     <span class="cap"><b style="color:var(--ink);font-weight:600">As of</b> ${asof}</span></div>
     <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>${qlab} Δ (first to latest quarter), mean, max and min use ${unitB[b]} across ${HQ[0]} to ${HQ[qlab === '6Q' ? 5 : 4]}. Tap a row for quarter-by-quarter detail.</span></div>
-    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row"><span class="l">#</span>${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Cty', 'l')}${sortBtn('s', 'Shares mn')}${sortBtn('v', 'Value ₹ cr')}${sortBtn('pt', '% total')}${sortBtn('pff', '% FF')}${sortBtn('ch', qlab + ' Δ')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('mn', 'Min', 'xm')}${sortBtn('d', 'QoQ Δ')}<span></span></div>`;
+    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row"><span class="l">#</span>${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Cty', 'l')}${sortBtn('s', 'Shares mn')}${sortBtn('v', 'Value ₹ cr')}${sortBtn('pt', '% total')}${sortBtn('pff', '% FF')}${sortBtn('ch', qlab + ' Δ')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('mn', 'Min', 'xm')}<span></span></div>`;
   L.forEach((x, i) => {
     const s = st.get(x);
     const pm = b === 'val' ? `₹${fin(s.v, 1)} cr` : b === 'ff' ? (s.pff == null ? '—' : s.pff.toFixed(3) + '%') : s.pt.toFixed(3) + '%';
@@ -448,12 +387,11 @@ function holdersBody() {
       <span class="xp">${(s.sh / 1e6).toFixed(3)}</span><span class="xp">${fin(s.v, 1)}</span><span class="xp" style="font-weight:600">${s.pt.toFixed(3)}%</span><span class="xp">${s.pff == null ? '—' : s.pff.toFixed(3) + '%'}</span>
       <span class="xp ${cl(s.ch)}">${fmtBD(s.ch, b)}</span>
       <span class="xp xm mut">${fmtB(s.mean, b)}</span><span class="xp xm mut">${fmtB(s.mx, b)}</span><span class="xp xm mut">${fmtB(s.mn, b)}</span>
-      <span class="xp ${cl(s.d)}" style="font-weight:500">${s.d ? sgnI(s.d) : '0'}</span>
-      <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">${pm}</b><span class="${cl(s.d)}" style="font-size:11px">${s.d ? sgnI(s.d) : 'no change'}</span></span>
+      <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">${pm}</b></span>
       ${chev}</button><div class="det"><div></div></div></div>`;
   });
   const tS = L.reduce((a, x) => a + st.get(x).sh, 0), tV = L.reduce((a, x) => a + st.get(x).v, 0);
-  h += `<div class="ltot gH"><span class="xp"></span><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span><span class="xp">${(tS / 1e6).toFixed(3)}</span><span class="xp">${fin(tV, 1)}</span><span class="xp">${(100 * tS / DEN).toFixed(3)}%</span><span class="xp">${S.hTab === 'ind' ? '' : FF[q] ? (100 * tS / FF[q]).toFixed(3) + '%' : '—'}</span><span class="xp"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp"></span><span class="pm pm2">${(100 * tS / DEN).toFixed(2)}% · ₹${fin(tV)} cr</span><span class="xp"></span></div></div>`;
+  h += `<div class="ltot gH"><span class="xp"></span><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span><span class="xp">${(tS / 1e6).toFixed(3)}</span><span class="xp">${fin(tV, 1)}</span><span class="xp">${(100 * tS / DEN).toFixed(3)}%</span><span class="xp">${S.hTab === 'ind' ? '' : FF[q] ? (100 * tS / FF[q]).toFixed(3) + '%' : '—'}</span><span class="xp"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp xm"></span><span class="pm pm2">${(100 * tS / DEN).toFixed(2)}% · ₹${fin(tV)} cr</span><span class="xp"></span></div></div>`;
   if (S.hTab === 'fii') {
     const fpd = D.fii_total - (T[T.length - 1].fdi || 0), fps = D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0);
     if (fpd > 0 && fps > 0) h += fps <= fpd * 1.005
@@ -843,7 +781,7 @@ document.addEventListener('click', e => {
     if (S[k] === v && k !== 'hTab') return;
     S[k] = v;
     if (k === 'unit') patch('ownBody', ownBody);
-    else if (k === 'hTab') { S.hSort = 's'; S.hDir = -1; const c = $('#hCard'); if (c) { c.firstElementChild.outerHTML = holdersHead(); patch('hBody', holdersBody); if (t.classList.contains('kpi')) c.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); } }
+    else if (k === 'hTab') { S.hSort = 's'; S.hDir = -1; const c = $('#hCard'); if (c) { c.firstElementChild.outerHTML = holdersHead(); patch('hBody', holdersBody); } }
     else if (k === 'basis') patch('hBody', holdersBody);
     else if (k === 'fP') { S.fG = null; patch('fBody', flowsBody); }
     else if (k === 'lz') { S.uPg = 1; patch('uBody', uBody); }
@@ -863,12 +801,10 @@ document.addEventListener('click', e => {
     const p = t.dataset.go.split('|');
     if (p[0] === 'flows') { S.fP = p[1]; S.fG = null; S.focus = p[2]; go('flows'); }
     else if (p[0] === 'holders') { S.hTab = p[1]; S.focus = p[2] || null; S.hSort = 's'; S.hDir = -1; S.basis = 'pct'; go('holders'); }
-    else if (p[0] === 'cat') { S.openCat[p[1]] = true; patch('ownBody', ownBody); setTimeout(() => $('#own').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }), 60); }
     return;
   }
   const a = t.dataset.act;
   if (a === 'cat') { S.openCat[t.dataset.k] = !S.openCat[t.dataset.k]; patch('ownBody', ownBody); }
-  else if (a === 'catgo') { S.openCat[t.dataset.k] = true; patch('ownBody', ownBody); $('#own').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); }
   else if (a === 'row' || a === 'frow') toggleRow(t.closest('.lrow'));
   else if (a === 'fgrp') { S.fG = S.fG === t.dataset.g ? null : t.dataset.g; patch('fBody', flowsBody); }
   else if (a === 'sheet') { if (DASH.has(t.dataset.sym) && t.classList.contains('rb')) openCompany(t.dataset.sym); else openSheet(t.dataset.sym); }
