@@ -1006,7 +1006,7 @@ def build(ctx, sym, verbose=False):
                 continue
             tag = "New" if sh(r, a) == 0 and sh(r, b) > 0 else ("Exit" if sh(r, b) == 0 else "")
             out.append(dict(n=nm(r["holder"]), c=r["category"], sub=SUB.get(r["category"], r["category"]), cty=country(r),
-                            d=d, v=round(d * PX[b] / 1e7, 2), a=sh(r, b), b=sh(r, a), t=tag))
+                            d=d, v=round(d * PX[b] / 1e7, 2) if PX[b] is not None else None, a=sh(r, b), b=sh(r, a), t=tag))
         buy = sorted([o for o in out if o["d"] > 0], key=lambda o: -o["d"])[:25]
         sell = sorted([o for o in out if o["d"] < 0], key=lambda o: o["d"])[:25]
         return dict(buy=buy, sell=sell, all=out)
@@ -1105,7 +1105,7 @@ def build(ctx, sym, verbose=False):
     out["co"]["checks"] = v["checks"]
     info = dict(sym=sym, run=str(run_path), secs=round(time.time() - t0, 2), warn=warn, fail=v["fail"],
                 events=[[a["d"], a["r"], a["kind"], a["src"], a["snapped"]] for a in applied], after=after)
-    pxu = dict(shares=co["shares_now"], shares_filing=latest["shares"], qbase_close=on_or_before(S, "2026-06-30")["raw"],
+    pxu = dict(shares=co["shares_now"], shares_filing=latest["shares"], qbase_close=(on_or_before(S, "2026-06-30") or {}).get("raw"),  # none if first traded after 30 Jun
                bonus_events=[[a["d"], float(a["r"])] for a in applied if a["kind"] in ("bonus", "split", "inferred")],
                price_events=[[a["d"], float(a["r"]), a["kind"]] for a in applied])
     return out, info, pxu
@@ -1151,7 +1151,7 @@ def validate(ctx, sym, out, fl, S, applied, bse_code=None):
         checks[k + "_top20_share"] = round(s / tot, 4) if tot else None
         if s > tot:
             fail.append(f"{k} top-20 sum {s:,} > filing {k.upper()}{' + foreign cos' if k == 'fii' else ' + govt'} "
-                        f"{tot:,} at Jun-26 ({100 * s / tot:.1f}%)")
+                        f"{tot:,} at Jun-26 ({(100 * s / tot) if tot else float('inf'):.1f}%)")
     # 4. Jun-26 promoter % on SEBI's denominator (tot - C1) == NSE's published pr_and_prgrp (2 dp)
     # style 1 (DRs in C1 or none): prom/den IS the filed %; style 2 (depository inside the public
     # table): den also drops the depository, so the filed reconstruction is what NSE publishes

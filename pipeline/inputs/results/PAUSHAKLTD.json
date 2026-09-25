@@ -1,0 +1,52 @@
+{
+ "sym": "PAUSHAKLTD",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 48.8,
+   "pat": 6.17,
+   "pat_owners": 6.17,
+   "eps": 2.5,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_138590_29012026180924_iXBRL_WEB.html",
+   "shares": 24657000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 55.14,
+   "pat": 12.51,
+   "pat_owners": 12.51,
+   "eps": 5.07,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155676_05052026201908_iXBRL_WEB.html",
+   "shares": 24657000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 83.55,
+   "pat": 15.1,
+   "pat_owners": 15.1,
+   "eps": 6.13,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_180983_30072026221405_iXBRL_WEB.html",
+   "shares": 24657000
+  }
+ ],
+ "bvps": 199.18,
+ "equity_cr": 491.12,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 2.5,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "24,657,000 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:22:50+00:00"
+}

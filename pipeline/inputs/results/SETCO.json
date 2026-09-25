@@ -1,0 +1,63 @@
+{
+ "sym": "SETCO",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 178.75,
+   "pat": -42.23,
+   "pat_owners": null,
+   "eps": -2.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_110271_12082025160936_iXBRL_WEB.html",
+   "shares": 133750000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 179.01,
+   "pat": -41.27,
+   "pat_owners": null,
+   "eps": -2.54,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_128562_14112025221847_iXBRL_WEB.html",
+   "derived": "year-to-date 2025-04-01..2025-09-30 as filed minus prior quarters",
+   "ytd_filed": {
+    "rev": 357.76,
+    "pat": -83.5,
+    "pat_owners": -68.88,
+    "eps": -5.15
+   },
+   "shares": 133750000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 196.55,
+   "pat": -57.18,
+   "pat_owners": -50.69,
+   "eps": -3.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142943_13022026170253_iXBRL_WEB.html",
+   "shares": 133750000
+  }
+ ],
+ "bvps": -58.32,
+ "equity_cr": -780.07,
+ "bs_date": "2025-09-30",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 13.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "133,750,000 shares: paid-up equity capital / face value Rs 2 at 2025-09-30 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q1 FY26: owners-of-parent line blank in filing and PAT -42.23 is >15% from EPS x shares (-34.9) - minority interest likely; pat_owners left null",
+  "Q2 FY26: filing's quarter column states period 2025-04-01 to 2025-09-30 (year-to-date); quarter derived as YTD minus Q1 FY26 (EPS by subtraction is approximate)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:23:02+00:00"
+}

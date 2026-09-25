@@ -1,0 +1,30 @@
+{
+ "sym": "RHFL",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 190.0,
+   "pat": -68810.0,
+   "pat_owners": -68810.0,
+   "eps": -0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_93135_23052025130004_iXBRL_WEB.html",
+   "shares": 48505880000000
+  }
+ ],
+ "bvps": -1.09,
+ "equity_cr": -5300800.0,
+ "bs_date": "2025-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "48,505,880,000,000 shares: paid-up equity capital / face value Rs 10 at 2025-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

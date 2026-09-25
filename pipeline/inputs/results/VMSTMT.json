@@ -1,0 +1,65 @@
+{
+ "sym": "VMSTMT",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 183.06,
+   "pat": 2.13,
+   "pat_owners": 2.13,
+   "eps": 0.59,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129413_25112025132821_iXBRL_WEB.html",
+   "shares": 49631200
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 202.13,
+   "pat": 8.04,
+   "pat_owners": 8.04,
+   "eps": 1.62,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142732_12022026213514_iXBRL_WEB.html",
+   "shares": 49631200
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 241.11,
+   "pat": 2.29,
+   "pat_owners": 2.29,
+   "eps": 0.46,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163752_29052026175516_iXBRL_WEB.html",
+   "shares": 49631200
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 247.76,
+   "pat": 4.47,
+   "pat_owners": 4.47,
+   "eps": 0.9,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187058_13082026214647_iXBRL_WEB.html",
+   "shares": 49631200
+  }
+ ],
+ "bvps": 45.97,
+ "equity_cr": 228.13,
+ "bs_date": "2026-03-31",
+ "roe": 7.35,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "49,631,200 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.59 x 4.963 cr sh = 2.9 vs pat_owners 2.13 (+37.5%); implied EPS denominator 3.610 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:02+00:00"
+}

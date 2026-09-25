@@ -1,0 +1,47 @@
+{
+ "sym": "KISSHT",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 619.35,
+   "pat": 82.18,
+   "pat_owners": null,
+   "eps": 10.37,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_162301_27052026201337_iXBRL_WEB.html",
+   "shares": 118780000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 669.5,
+   "pat": 95.08,
+   "pat_owners": 95.08,
+   "eps": 6.41,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_184467_10082026155108_iXBRL_WEB.html",
+   "shares": 168480000
+  }
+ ],
+ "bvps": 113.05,
+ "equity_cr": 1342.78,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "118,780,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 95.08 used (within 15% of EPS x shares; see EPS gate)",
+  "Q1 FY27: share count x1.42 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY26: owners-of-parent line blank in filing and PAT 82.18 is >15% from EPS x shares (123.2) - minority interest likely; pat_owners left null"
+ ],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 6.41 x 16.848 cr sh = 108.0 vs pat_owners 95.08 (+13.6%); implied EPS denominator 14.833 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:42+00:00"
+}

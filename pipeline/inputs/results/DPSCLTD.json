@@ -1,0 +1,84 @@
+{
+ "sym": "DPSCLTD",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 150.21,
+   "pat": -1.87,
+   "pat_owners": -1.77,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_94678_28052025104807_iXBRL_WEB.html",
+   "shares": 973790000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 163.67,
+   "pat": 3.05,
+   "pat_owners": 3.05,
+   "eps": 0.02,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_114161_05092025111620_iXBRL_WEB.html",
+   "shares": 973790000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 197.94,
+   "pat": 3.78,
+   "pat_owners": 3.78,
+   "eps": 0.02,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_123791_30102025204347_iXBRL_WEB.html",
+   "shares": 973790000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 155.32,
+   "pat": 1.85,
+   "pat_owners": 1.85,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143938_18022026194014_iXBRL_WEB.html",
+   "shares": 973790000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 166.08,
+   "pat": 4.14,
+   "pat_owners": 4.23,
+   "eps": 0.03,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_165004_30052026194821_iXBRL_WEB.html",
+   "shares": 973790000
+  }
+ ],
+ "bvps": 9.15,
+ "equity_cr": 890.55,
+ "bs_date": "2026-03-31",
+ "roe": 1.45,
+ "roe_basis": "TTM PAT to owners Q1 FY26-Q4 FY26 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "973,790,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "balance-sheet equity share capital implies 1,577,933,000 shares vs 973,790,000 from the results page (treasury shares / unit slip)"
+ ],
+ "flags": [
+  "Q4 FY25 EPS gate: EPS 0.01 x 97.379 cr sh = 1.0 vs pat_owners -1.77 (-155.0%) (sign differs); implied EPS denominator -177.000 cr sh",
+  "Q1 FY26 EPS gate: EPS 0.02 x 97.379 cr sh = 1.9 vs pat_owners 3.05 (-36.1%); implied EPS denominator 152.500 cr sh",
+  "Q2 FY26 EPS gate: EPS 0.02 x 97.379 cr sh = 1.9 vs pat_owners 3.78 (-48.5%); implied EPS denominator 189.000 cr sh",
+  "Q3 FY26 EPS gate: EPS 0.01 x 97.379 cr sh = 1.0 vs pat_owners 1.85 (-47.4%); implied EPS denominator 185.000 cr sh",
+  "Q4 FY26 EPS gate: EPS 0.03 x 97.379 cr sh = 2.9 vs pat_owners 4.23 (-30.9%); implied EPS denominator 141.000 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:56+00:00"
+}

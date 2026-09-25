@@ -1,0 +1,101 @@
+{
+ "sym": "QMSMEDI",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 88.45,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 3.51,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_96566_30052025155420_iXBRL_WEB.html",
+   "shares": 17850000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 4649500.0,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 1.64,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_111026_13082025180541_iXBRL_WEB.html",
+   "shares": 19337400
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 91.2,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 3.32,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_127667_13112025213625_iXBRL_WEB.html",
+   "shares": 19337400
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 37.26,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 1.24,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_143444_14022026161549_iXBRL_WEB.html",
+   "shares": 19337400
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 81.68,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 2.11,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_164924_30052026184854_iXBRL_WEB.html",
+   "shares": 19337400
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 56.87,
+   "pat": 3.96,
+   "pat_owners": 3.65,
+   "eps": 2.05,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187398_14082026172532_iXBRL_WEB.html",
+   "shares": 19337400
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [
+  "Q1 FY26: filing's paid-up capital / face value gives 178,500,000,000,000,000 shares, inconsistent with the other quarters; 19,337,400 used (median, corporate-action adjusted)",
+  "Q2 FY26: filing's quarter column states period 2025-04-01 to 2025-09-30 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY26: filing's quarter column states period 2025-10-01 to 2026-03-31 - revenue is quarter-sized, treated as a date typo"
+ ],
+ "flags": [
+  "Q4 FY25: pat missing",
+  "Q1 FY26: pat missing",
+  "Q2 FY26: pat missing",
+  "Q3 FY26: pat missing",
+  "Q4 FY26: pat missing",
+  "Q1 FY27 EPS gate: EPS 2.05 x 1.934 cr sh = 4.0 vs pat_owners 3.65 (+8.6%) (EPS matches total PAT); implied EPS denominator 1.780 cr sh",
+  "Q1 FY26 revenue jump x52566.42 QoQ (88.45 -> 4649500.0)",
+  "Q2 FY26 revenue jump x0.00 QoQ (4649500.0 -> 91.2)",
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:23:00+00:00"
+}

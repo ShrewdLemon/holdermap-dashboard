@@ -1,0 +1,57 @@
+{
+ "sym": "AEROPLANE",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 571.21,
+   "pat": 34.69,
+   "pat_owners": 34.69,
+   "eps": 4.19,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_151112_16042026220022_iXBRL_WEB.html",
+   "shares": 82797000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 694.68,
+   "pat": 19.96,
+   "pat_owners": null,
+   "eps": 2.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_158701_18052026211808_iXBRL_WEB.html",
+   "shares": 103552000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 663.73,
+   "pat": 36.63,
+   "pat_owners": 36.63,
+   "eps": 3.55,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_181969_03082026231214_iXBRL_WEB.html",
+   "shares": 103552000
+  }
+ ],
+ "bvps": 89.24,
+ "equity_cr": 924.13,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "103,552,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 36.63 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 34.69 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank in filing and PAT 19.96 is >15% from EPS x shares (24.4) - minority interest likely; pat_owners left null",
+  "Q4 FY26: share count x1.25 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:49+00:00"
+}

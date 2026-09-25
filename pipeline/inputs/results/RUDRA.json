@@ -1,0 +1,56 @@
+{
+ "sym": "RUDRA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 158.59,
+   "pat": 7.38,
+   "pat_owners": 7.38,
+   "eps": 0.74,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_135916_19012026204106_iXBRL_WEB.html",
+   "shares": 100343800
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 178.26,
+   "pat": 1.04,
+   "pat_owners": 1.04,
+   "eps": 0.1,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159495_20052026223255_iXBRL_WEB.html",
+   "shares": 100343800
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 159.56,
+   "pat": 3.62,
+   "pat_owners": 3.62,
+   "eps": 0.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187651_14082026192044_iXBRL_WEB.html",
+   "shares": 100343800
+  }
+ ],
+ "bvps": 13.82,
+ "equity_cr": 138.72,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "100,343,800 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 3.62 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 7.38 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 1.04 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:23:03+00:00"
+}

@@ -1,0 +1,43 @@
+{
+ "sym": "TCC",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 83.87,
+   "pat": 30.98,
+   "pat_owners": 29.2,
+   "eps": 6.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_160491_23052026085257_iXBRL_WEB.html",
+   "shares": 47528200
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 128.28,
+   "pat": 12.64,
+   "pat_owners": 12.27,
+   "eps": 2.58,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_181330_31072026192811_iXBRL_WEB.html",
+   "shares": 47528100
+  }
+ ],
+ "bvps": 69.11,
+ "equity_cr": 1642.22,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "237,641,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions), x5 for bonus/split after that date (current basis)",
+ "notes": [
+  "BVPS on current share basis (x5 bonus/split after 2026-03-31)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:52+00:00"
+}

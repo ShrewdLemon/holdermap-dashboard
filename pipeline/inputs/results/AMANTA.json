@@ -1,0 +1,84 @@
+{
+ "sym": "AMANTA",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 65.31,
+   "pat": 3.51,
+   "pat_owners": 3.51,
+   "eps": 1.22,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_117376_27092025121249_iXBRL_WEB.html",
+   "shares": 2882900
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 70.89,
+   "pat": 1.21,
+   "pat_owners": 1.21,
+   "eps": 0.35,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161755_27052026114816_iXBRL_WEB.html",
+   "shares": 3433600
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 74.49,
+   "pat": 4.63,
+   "pat_owners": 4.63,
+   "eps": 1.35,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163451_29052026145818_iXBRL_WEB.html",
+   "shares": 3433600
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 76.99,
+   "pat": 5.53,
+   "pat_owners": 5.53,
+   "eps": 1.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163450_29052026145750_iXBRL_WEB.html",
+   "shares": 3433600
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 68.8,
+   "pat": 3.31,
+   "pat_owners": 3.31,
+   "eps": 0.85,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_182805_05082026183442_iXBRL_WEB.html",
+   "shares": 3882900
+  }
+ ],
+ "bvps": 641.34,
+ "equity_cr": 220.21,
+ "bs_date": "2026-03-31",
+ "roe": 6.81,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "3,433,600 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY26: filing's paid-up capital / face value gives 38,829,400 shares, inconsistent with the other quarters; 3,433,600 used (median, corporate-action adjusted)",
+  "balance-sheet equity share capital implies 38,829,400 shares vs 3,433,600 from the results page (treasury shares / unit slip)"
+ ],
+ "flags": [
+  "Q1 FY26 EPS gate: EPS 1.22 x 0.288 cr sh = 0.4 vs pat_owners 3.51 (-90.0%); implied EPS denominator 2.877 cr sh",
+  "Q2 FY26 EPS gate: EPS 0.35 x 0.343 cr sh = 0.1 vs pat_owners 1.21 (-90.1%); implied EPS denominator 3.457 cr sh",
+  "Q3 FY26 EPS gate: EPS 1.35 x 0.343 cr sh = 0.5 vs pat_owners 4.63 (-90.0%); implied EPS denominator 3.430 cr sh",
+  "Q4 FY26 EPS gate: EPS 1.61 x 0.343 cr sh = 0.6 vs pat_owners 5.53 (-90.0%); implied EPS denominator 3.435 cr sh",
+  "Q1 FY27 EPS gate: EPS 0.85 x 0.388 cr sh = 0.3 vs pat_owners 3.31 (-90.0%); implied EPS denominator 3.894 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:56+00:00"
+}

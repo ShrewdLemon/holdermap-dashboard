@@ -1,0 +1,54 @@
+{
+ "sym": "NEPHROPLUS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 259.73,
+   "pat": 32.24,
+   "pat_owners": 32.24,
+   "eps": 3.43,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141796_10022026212633_iXBRL_WEB.html",
+   "shares": 100340000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 265.62,
+   "pat": 30.37,
+   "pat_owners": 30.37,
+   "eps": 3.03,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159095_19052026222942_iXBRL_WEB.html",
+   "shares": 100340000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 281.75,
+   "pat": 31.97,
+   "pat_owners": 31.97,
+   "eps": 3.19,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185439_11082026202609_iXBRL_WEB.html",
+   "shares": 100340000
+  }
+ ],
+ "bvps": 111.27,
+ "equity_cr": 1116.49,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "100,340,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS 3.43 x 10.034 cr sh = 34.4 vs pat_owners 32.24 (+6.8%); implied EPS denominator 9.399 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:41+00:00"
+}

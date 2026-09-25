@@ -1,0 +1,68 @@
+{
+ "sym": "SGMART",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 1704.25,
+   "pat": 26.54,
+   "pat_owners": 26.54,
+   "eps": 2.11,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_123597_30102025182128_iXBRL_WEB.html",
+   "shares": 126000000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 1644.43,
+   "pat": 10.74,
+   "pat_owners": 10.74,
+   "eps": 0.85,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_137045_23012026170048_iXBRL_WEB.html",
+   "shares": 126000000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 1822.84,
+   "pat": 41.47,
+   "pat_owners": 41.47,
+   "eps": 3.29,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155492_04052026201732_iXBRL_WEB.html",
+   "shares": 126000000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 1308.57,
+   "pat": 45.58,
+   "pat_owners": 45.58,
+   "eps": 3.62,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_176137_20072026182623_iXBRL_WEB.html",
+   "shares": 126000000
+  }
+ ],
+ "bvps": 126.71,
+ "equity_cr": 1596.53,
+ "bs_date": "2026-03-31",
+ "roe": 7.96,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "126,000,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 45.58 used (EPS-consistent)",
+  "Q2 FY26: owners-of-parent line blank; PAT = 26.54 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 10.74 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 41.47 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:40+00:00"
+}

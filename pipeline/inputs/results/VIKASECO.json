@@ -1,0 +1,80 @@
+{
+ "sym": "VIKASECO",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 102.61,
+   "pat": 4.3,
+   "pat_owners": 4.3,
+   "eps": 0.03,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_96829_30052025181012_iXBRL_WEB.html",
+   "shares": 1388356000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 64.72,
+   "pat": 1.75,
+   "pat_owners": null,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_133817_06012026141932_iXBRL_WEB.html",
+   "shares": 1388356000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 68.72,
+   "pat": -0.54,
+   "pat_owners": -0.54,
+   "eps": 0.0,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_140501_05022026172055_iXBRL_WEB.html",
+   "shares": 1388356000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 116.19,
+   "pat": -0.44,
+   "pat_owners": -0.8,
+   "eps": 0.0,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_173839_11072026122620_iXBRL_WEB.html",
+   "shares": 1388356000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 119.15,
+   "pat": 2.0,
+   "pat_owners": null,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_190057_27082026123432_iXBRL_WEB.html",
+   "shares": 1388356000
+  }
+ ],
+ "bvps": 2.84,
+ "equity_cr": 394.96,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "1,388,356,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank in filing and PAT 2.0 is >15% from EPS x shares (1.4) - minority interest likely; pat_owners left null",
+  "Q2 FY26: owners-of-parent line blank in filing and PAT 1.75 is >15% from EPS x shares (1.4) - minority interest likely; pat_owners left null",
+  "Q3 FY26: owners-of-parent line blank; PAT used (no EPS check possible)",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: owners-of-parent line blank; PAT = 4.30 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:23:03+00:00"
+}

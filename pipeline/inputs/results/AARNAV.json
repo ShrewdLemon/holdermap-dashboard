@@ -1,0 +1,41 @@
+{
+ "sym": "AARNAV",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 132.7,
+   "pat": 3.23,
+   "pat_owners": 3.23,
+   "eps": 0.77,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_165083_30052026205914_iXBRL_WEB.html",
+   "shares": 42238600
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 86.53,
+   "pat": 1.68,
+   "pat_owners": 1.68,
+   "eps": 0.4,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_179433_28072026190910_iXBRL_WEB.html",
+   "shares": 42238600
+  }
+ ],
+ "bvps": 46.54,
+ "equity_cr": 196.58,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "42,238,600 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:23:04+00:00"
+}

@@ -1,0 +1,72 @@
+{
+ "sym": "KOTYARK",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 91.34,
+   "pat": null,
+   "pat_owners": null,
+   "eps": -3.4,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_93369_23052025193910_iXBRL_WEB.html",
+   "shares": 10279100
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 147.32,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 5.97,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_127638_13112025210752_iXBRL_WEB.html",
+   "shares": 10279100
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 63.66,
+   "pat": 9.38,
+   "pat_owners": 9.33,
+   "eps": 9.08,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_153384_27042026235141_iXBRL_WEB.html",
+   "shares": 10279100
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 91.98,
+   "pat": 4.46,
+   "pat_owners": 3.84,
+   "eps": 0.34,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_192782_07092026174142_iXBRL_WEB.html",
+   "shares": 113070300
+  }
+ ],
+ "bvps": 15.98,
+ "equity_cr": 180.73,
+ "bs_date": "2026-03-31",
+ "roe": 7.29,
+ "roe_basis": "TTM PAT to owners / closing equity 2026-03-31 (one balance sheet only)",
+ "dps_ttm": 0.4545,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "113,070,100 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions), x11 for bonus/split after that date (current basis)",
+ "notes": [
+  "BVPS on current share basis (x11 bonus/split after 2026-03-31)",
+  "Q1 FY27: share count x11.00 vs prior quarter = corporate action x11",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - revenue is quarter-sized, treated as a date typo"
+ ],
+ "flags": [
+  "Q4 FY25: pat missing",
+  "Q2 FY26: pat missing",
+  "Q2 FY26: filing's quarter column states period 2025-04-01 to 2025-09-30 - may hold year-to-date figures"
+ ],
+ "generated": "2026-09-25T02:23:00+00:00"
+}

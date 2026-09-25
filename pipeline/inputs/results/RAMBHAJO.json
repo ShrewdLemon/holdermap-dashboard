@@ -1,0 +1,45 @@
+{
+ "sym": "RAMBHAJO",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 43.23,
+   "pat": 8.74,
+   "pat_owners": 8.74,
+   "eps": 2.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_191287_02092026142318_iXBRL_WEB.html",
+   "shares": 32010000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 35.32,
+   "pat": 8.19,
+   "pat_owners": 8.19,
+   "eps": 2.46,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_191290_02092026142716_iXBRL_WEB.html",
+   "shares": 45810000
+  }
+ ],
+ "bvps": 28.93,
+ "equity_cr": 92.59,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "32,010,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: share count x1.43 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 2.46 x 4.581 cr sh = 11.3 vs pat_owners 8.19 (+37.6%); implied EPS denominator 3.329 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:52+00:00"
+}

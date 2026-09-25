@@ -1,0 +1,32 @@
+{
+ "sym": "SETUINFRA",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 0.0,
+   "pat": 0.0,
+   "pat_owners": 0.0,
+   "eps": 0.0,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_145076_10032026174418_iXBRL_WEB.html",
+   "shares": null
+  }
+ ],
+ "bvps": null,
+ "equity_cr": 45.14,
+ "bs_date": "2025-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - may hold year-to-date figures"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

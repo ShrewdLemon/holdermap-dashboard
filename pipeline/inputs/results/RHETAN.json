@@ -1,0 +1,66 @@
+{
+ "sym": "RHETAN",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 4.76,
+   "pat": 2.87,
+   "pat_owners": 2.87,
+   "eps": 0.04,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_134339_10012026125410_iXBRL_WEB.html",
+   "shares": 796875000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 6.15,
+   "pat": 4.45,
+   "pat_owners": 4.45,
+   "eps": 0.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142372_12022026163718_iXBRL_WEB.html",
+   "shares": 796875000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 8.49,
+   "pat": 2.22,
+   "pat_owners": 2.22,
+   "eps": 0.08,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155319_02052026211312_iXBRL_WEB.html",
+   "shares": 796875000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 4.06,
+   "pat": 3.16,
+   "pat_owners": 3.16,
+   "eps": 0.08,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185915_12082026180454_iXBRL_WEB.html",
+   "shares": 796875000
+  }
+ ],
+ "bvps": 1.36,
+ "equity_cr": 108.61,
+ "bs_date": "2026-03-31",
+ "roe": 12.32,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "796,875,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS 0.08 x 79.688 cr sh = 6.4 vs pat_owners 2.22 (+187.2%); implied EPS denominator 27.750 cr sh",
+  "Q1 FY27 EPS gate: EPS 0.08 x 79.688 cr sh = 6.4 vs pat_owners 3.16 (+101.7%); implied EPS denominator 39.500 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:52+00:00"
+}

@@ -1,0 +1,52 @@
+{
+ "sym": "ADVAIT",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 211.03,
+   "pat": 17.39,
+   "pat_owners": 16.59,
+   "eps": 15.19,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142147_11022026200708_iXBRL_WEB.html",
+   "shares": 10937400
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 228.2,
+   "pat": 19.07,
+   "pat_owners": 17.67,
+   "eps": 16.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_162442_27052026230510_iXBRL_WEB.html",
+   "shares": 10943000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 179.27,
+   "pat": 14.8,
+   "pat_owners": 13.89,
+   "eps": 12.7,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_183735_07082026172814_iXBRL_WEB.html",
+   "shares": 10943000
+  }
+ ],
+ "bvps": 254.16,
+ "equity_cr": 278.12,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "10,943,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:22:49+00:00"
+}

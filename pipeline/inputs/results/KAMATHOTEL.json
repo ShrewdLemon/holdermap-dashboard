@@ -1,0 +1,101 @@
+{
+ "sym": "KAMATHOTEL",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 92.46,
+   "pat": 10.99,
+   "pat_owners": 10.99,
+   "eps": 3.62,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_89922_09052025125320_iXBRL_WEB.html",
+   "shares": 294800720000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 82.65,
+   "pat": 4.23,
+   "pat_owners": 3.64,
+   "eps": 1.42,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_190506_29082026140446_iXBRL_WEB.html",
+   "shares": 294800720000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 75.13,
+   "pat": -2.19,
+   "pat_owners": -2.94,
+   "eps": 0.72,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_125431_08112025192447_iXBRL_WEB.html",
+   "shares": 294800720000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 117.74,
+   "pat": 19.06,
+   "pat_owners": 17.3,
+   "eps": 6.28,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_139902_03022026173802_iXBRL_WEB.html",
+   "shares": 294800720000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 110.12,
+   "pat": 17.46,
+   "pat_owners": 16.39,
+   "eps": 5.75,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_157120_13052026084633_iXBRL_WEB.html",
+   "shares": 294800720000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 90.54,
+   "pat": 9.69,
+   "pat_owners": 9.4,
+   "eps": 3.19,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185249_11082026182654_iXBRL_WEB.html",
+   "shares": 294800720000
+  }
+ ],
+ "bvps": 0.01,
+ "equity_cr": 316.01,
+ "bs_date": "2026-03-31",
+ "roe": 13.44,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "294,800,720,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26: filing's paid-up capital / face value gives 29,480,100 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "Q1 FY27: filing's paid-up capital / face value gives 2,948,007,200,000 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "Q2 FY26: filing's paid-up capital / face value gives 294,800,720,000 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "Q3 FY26: filing's paid-up capital / face value gives 29,480,100 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's paid-up capital / face value gives 2,948,007,200,000 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "Q4 FY26: filing's paid-up capital / face value gives 29,480,100 shares, inconsistent with the other quarters; 294,800,720,000 used (median, corporate-action adjusted)",
+  "balance-sheet equity share capital implies 30,068,600 shares vs 294,800,720,000 from the results page (treasury shares / unit slip)"
+ ],
+ "flags": [
+  "Q4 FY25 EPS gate: EPS 3.62 x 29,480.072 cr sh = 106,717.9 vs pat_owners 10.99 (+970945.1%); implied EPS denominator 3.036 cr sh",
+  "Q1 FY26 EPS gate: EPS 1.42 x 29,480.072 cr sh = 41,861.7 vs pat_owners 3.64 (+1149946.8%); implied EPS denominator 2.563 cr sh",
+  "Q2 FY26 EPS gate: EPS 0.72 x 29,480.072 cr sh = 21,225.7 vs pat_owners -2.94 (-722060.9%) (sign differs); implied EPS denominator -4.083 cr sh",
+  "Q3 FY26 EPS gate: EPS 6.28 x 29,480.072 cr sh = 185,134.9 vs pat_owners 17.3 (+1070043.7%); implied EPS denominator 2.755 cr sh",
+  "Q4 FY26 EPS gate: EPS 5.75 x 29,480.072 cr sh = 169,510.4 vs pat_owners 16.39 (+1034130.7%); implied EPS denominator 2.850 cr sh",
+  "Q1 FY27 EPS gate: EPS 3.19 x 29,480.072 cr sh = 94,041.4 vs pat_owners 9.4 (+1000340.7%); implied EPS denominator 2.947 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:56+00:00"
+}

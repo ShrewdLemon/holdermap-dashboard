@@ -1,0 +1,72 @@
+{
+ "sym": "RNBDENIMS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 112.63,
+   "pat": 7.13,
+   "pat_owners": 5.55,
+   "eps": 0.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_128573_14112025223010_iXBRL_WEB.html",
+   "shares": 89973500
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 113.03,
+   "pat": 8.29,
+   "pat_owners": 5.91,
+   "eps": 0.93,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143588_14022026192733_iXBRL_WEB.html",
+   "shares": 89973500
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 137.65,
+   "pat": 1.12,
+   "pat_owners": null,
+   "eps": 0.13,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_164061_29052026201848_iXBRL_WEB.html",
+   "shares": 89973500
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 119.34,
+   "pat": 4.38,
+   "pat_owners": 4.38,
+   "eps": 0.17,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187362_14082026170920_iXBRL_WEB.html",
+   "shares": 269920000
+  }
+ ],
+ "bvps": 7.41,
+ "equity_cr": 200.12,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "269,920,500 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions), x3 for bonus/split after that date (current basis)",
+ "notes": [
+  "BVPS on current share basis (x3 bonus/split after 2026-03-31)",
+  "Q1 FY27: owners-of-parent line blank; PAT = 4.38 used (EPS-consistent)",
+  "Q1 FY27: share count x3.00 vs prior quarter = corporate action x3",
+  "Q4 FY26: EPS is on the post-bonus/split basis (x3 between quarter end and filing)",
+  "Q4 FY26: owners-of-parent line blank in filing and PAT 1.12 is >15% from EPS x shares (3.5) - minority interest likely; pat_owners left null"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.79 x 8.997 cr sh = 7.1 vs pat_owners 5.55 (+28.1%) (EPS matches total PAT); implied EPS denominator 7.025 cr sh",
+  "Q3 FY26 EPS gate: EPS 0.93 x 8.997 cr sh = 8.4 vs pat_owners 5.91 (+41.6%) (EPS matches total PAT); implied EPS denominator 6.355 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:02+00:00"
+}

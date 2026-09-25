@@ -1,0 +1,45 @@
+{
+ "sym": "CSM",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 60.43,
+   "pat": 9.3,
+   "pat_owners": 9.33,
+   "eps": 2.41,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_176270_21072026002010_iXBRL_WEB.html",
+   "shares": 38702500
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 42.7,
+   "pat": -8.28,
+   "pat_owners": -8.31,
+   "eps": -2.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187460_14082026175230_iXBRL_WEB.html",
+   "shares": 51603500
+  }
+ ],
+ "bvps": 26.53,
+ "equity_cr": 102.67,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "38,702,500 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: share count x1.33 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS -2.14 x 5.160 cr sh = -11.0 vs pat_owners -8.31 (+32.9%); implied EPS denominator 3.883 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:58+00:00"
+}

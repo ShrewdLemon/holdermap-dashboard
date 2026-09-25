@@ -1,0 +1,58 @@
+{
+ "sym": "HALDER",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 145.26,
+   "pat": 20.78,
+   "pat_owners": 20.78,
+   "eps": 16.71,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143182_13022026192427_iXBRL_WEB.html",
+   "shares": 11597300
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 299.91,
+   "pat": 19.13,
+   "pat_owners": 16.19,
+   "eps": 15.38,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_166917_12062026103326_iXBRL_WEB.html",
+   "shares": 11615400
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 187.07,
+   "pat": 3.46,
+   "pat_owners": 5.98,
+   "eps": 2.78,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187036_13082026210923_iXBRL_WEB.html",
+   "shares": 11615400
+  }
+ ],
+ "bvps": 153.68,
+ "equity_cr": 178.51,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "11,615,400 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q3 FY26: owners-of-parent line blank; PAT = 20.78 used (within 15% of EPS x shares; see EPS gate)"
+ ],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS 16.71 x 1.160 cr sh = 19.4 vs pat_owners 20.78 (-6.7%); implied EPS denominator 1.244 cr sh",
+  "Q4 FY26 EPS gate: EPS 15.38 x 1.162 cr sh = 17.9 vs pat_owners 16.19 (+10.3%); implied EPS denominator 1.053 cr sh",
+  "Q1 FY27 EPS gate: EPS 2.78 x 1.162 cr sh = 3.2 vs pat_owners 5.98 (-46.0%); implied EPS denominator 2.151 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:01+00:00"
+}

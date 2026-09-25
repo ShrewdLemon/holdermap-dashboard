@@ -1,0 +1,41 @@
+{
+ "sym": "INA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 793.93,
+   "pat": 69.84,
+   "pat_owners": 70.07,
+   "eps": 3.17,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161090_25052026223240_iXBRL_WEB.html",
+   "shares": 220395000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 740.7,
+   "pat": 38.02,
+   "pat_owners": 37.04,
+   "eps": 1.73,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186105_12082026192717_iXBRL_WEB.html",
+   "shares": 220449000
+  }
+ ],
+ "bvps": 36.62,
+ "equity_cr": 807.14,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "220,395,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:22:49+00:00"
+}

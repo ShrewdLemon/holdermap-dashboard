@@ -1,0 +1,78 @@
+{
+ "sym": "ZUARIIND",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 257.46,
+   "pat": -0.48,
+   "pat_owners": 0.05,
+   "eps": 0.02,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_110487_12082025190156_iXBRL_WEB.html",
+   "shares": 29781700
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 241.17,
+   "pat": 164.29,
+   "pat_owners": 164.8,
+   "eps": 55.34,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_126756_12112025190914_iXBRL_WEB.html",
+   "shares": 29781700
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 262.63,
+   "pat": -26.43,
+   "pat_owners": -25.88,
+   "eps": -8.69,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143100_13022026182633_iXBRL_WEB.html",
+   "shares": 29781700
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 283.56,
+   "pat": -31.61,
+   "pat_owners": -31.01,
+   "eps": -10.41,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_160995_25052026201644_iXBRL_WEB.html",
+   "shares": 29781700
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 311.93,
+   "pat": 0.05,
+   "pat_owners": 0.6,
+   "eps": 0.2,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186582_13082026172047_iXBRL_WEB.html",
+   "shares": 29781700
+  }
+ ],
+ "bvps": 1215.91,
+ "equity_cr": 3621.2,
+ "bs_date": "2026-03-31",
+ "roe": 2.62,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 1.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "29,781,700 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [
+  "2025-03-31: filing not downloaded"
+ ],
+ "generated": "2026-09-25T02:22:55+00:00"
+}

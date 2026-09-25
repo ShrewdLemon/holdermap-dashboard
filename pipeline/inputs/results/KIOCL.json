@@ -1,0 +1,100 @@
+{
+ "sym": "KIOCL",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 246.46,
+   "pat": -36.86,
+   "pat_owners": -36.86,
+   "eps": -0.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_96541_30052025153049_iXBRL_WEB.html",
+   "shares": 6077510960000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 90.94,
+   "pat": -37.79,
+   "pat_owners": -37.79,
+   "eps": -0.62,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_111377_14082025124807_iXBRL_WEB.html",
+   "shares": 6077510960000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 142.54,
+   "pat": -17.16,
+   "pat_owners": -17.16,
+   "eps": -0.28,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_137711_28012026103611_iXBRL_WEB.html",
+   "shares": 6077510960000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 159.65,
+   "pat": 18.13,
+   "pat_owners": 18.13,
+   "eps": 0.3,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_147452_26032026122035_iXBRL_WEB.html",
+   "shares": 6077510960000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 220.33,
+   "pat": 53.39,
+   "pat_owners": 53.39,
+   "eps": 0.88,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_162607_28052026143250_iXBRL_WEB.html",
+   "shares": 6077510960000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 158.01,
+   "pat": -15.48,
+   "pat_owners": -15.48,
+   "eps": -0.25,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187115_14082026113224_iXBRL_WEB.html",
+   "shares": 6077510960000
+  }
+ ],
+ "bvps": 0.0,
+ "equity_cr": 1736.23,
+ "bs_date": "2026-03-31",
+ "roe": 2.29,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "6,077,510,960,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q1 FY27: filing's paid-up capital / face value gives 607,751,100 shares, inconsistent with the other quarters; 6,077,510,960,000 used (median, corporate-action adjusted)",
+  "Q3 FY26: filing's paid-up capital / face value gives 60,775,100 shares, inconsistent with the other quarters; 6,077,510,960,000 used (median, corporate-action adjusted)",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's paid-up capital / face value gives 60,775,109,600,000 shares, inconsistent with the other quarters; 6,077,510,960,000 used (median, corporate-action adjusted)",
+  "Q4 FY26: filing's paid-up capital / face value gives 60,775,100 shares, inconsistent with the other quarters; 6,077,510,960,000 used (median, corporate-action adjusted)",
+  "balance-sheet equity share capital implies 607,751,100 shares vs 6,077,510,960,000 from the results page (treasury shares / unit slip)"
+ ],
+ "flags": [
+  "Q4 FY25 EPS gate: EPS -0.61 x 607,751.096 cr sh = -370,728.2 vs pat_owners -36.86 (+1005673.7%); implied EPS denominator 60.426 cr sh",
+  "Q1 FY26 EPS gate: EPS -0.62 x 607,751.096 cr sh = -376,805.7 vs pat_owners -37.79 (+997004.2%); implied EPS denominator 60.952 cr sh",
+  "Q2 FY26 EPS gate: EPS -0.28 x 607,751.096 cr sh = -170,170.3 vs pat_owners -17.16 (+991568.5%); implied EPS denominator 61.286 cr sh",
+  "Q3 FY26 EPS gate: EPS 0.3 x 607,751.096 cr sh = 182,325.3 vs pat_owners 18.13 (+1005555.4%); implied EPS denominator 60.433 cr sh",
+  "Q4 FY26 EPS gate: EPS 0.88 x 607,751.096 cr sh = 534,821.0 vs pat_owners 53.39 (+1001625.0%); implied EPS denominator 60.670 cr sh",
+  "Q1 FY27 EPS gate: EPS -0.25 x 607,751.096 cr sh = -151,937.8 vs pat_owners -15.48 (+981410.2%); implied EPS denominator 61.920 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:38+00:00"
+}

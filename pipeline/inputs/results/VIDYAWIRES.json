@@ -1,0 +1,70 @@
+{
+ "sym": "VIDYAWIRES",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 792.7,
+   "pat": 22.62,
+   "pat_owners": 22.62,
+   "eps": 1.41,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_131137_22122025212620_iXBRL_WEB.html",
+   "shares": 160000000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 448.16,
+   "pat": 15.42,
+   "pat_owners": 15.42,
+   "eps": 0.72,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_140516_05022026174554_iXBRL_WEB.html",
+   "shares": 212690000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 598.78,
+   "pat": 19.61,
+   "pat_owners": 19.61,
+   "eps": 0.93,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_157109_12052026233708_iXBRL_WEB.html",
+   "shares": 212690000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 549.71,
+   "pat": 17.14,
+   "pat_owners": 17.14,
+   "eps": 0.81,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185397_11082026194909_iXBRL_WEB.html",
+   "shares": 212690000
+  }
+ ],
+ "bvps": 22.56,
+ "equity_cr": 479.83,
+ "bs_date": "2026-03-31",
+ "roe": 22.37,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "212,690,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 17.14 used (EPS-consistent)",
+  "Q2 FY26: filing's quarter column states period 2025-04-01 to 2025-09-30 - revenue is quarter-sized, treated as a date typo",
+  "Q2 FY26: owners-of-parent line blank; PAT = 22.62 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 15.42 used (EPS-consistent)",
+  "Q3 FY26: share count x1.33 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY26: owners-of-parent line blank; PAT = 19.61 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:50+00:00"
+}

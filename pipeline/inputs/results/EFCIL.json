@@ -1,0 +1,67 @@
+{
+ "sym": "EFCIL",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 254.59,
+   "pat": 56.71,
+   "pat_owners": 44.63,
+   "eps": 5.7,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_126402_11112025235449_iXBRL_WEB.html",
+   "shares": 99553500
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 269.58,
+   "pat": 62.41,
+   "pat_owners": 63.24,
+   "eps": 4.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143618_14022026203054_iXBRL_WEB.html",
+   "shares": 137283500
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 292.88,
+   "pat": 68.86,
+   "pat_owners": 69.4,
+   "eps": 5.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_166034_04062026204757_iXBRL_WEB.html",
+   "shares": 137283500
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 282.88,
+   "pat": 70.85,
+   "pat_owners": 69.0,
+   "eps": 4.83,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_180142_29072026200411_iXBRL_WEB.html",
+   "shares": 147946000
+  }
+ ],
+ "bvps": 58.8,
+ "equity_cr": 807.25,
+ "bs_date": "2026-03-31",
+ "roe": 34.45,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "137,283,500 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q3 FY26: share count x1.38 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 5.7 x 9.955 cr sh = 56.7 vs pat_owners 44.63 (+27.1%) (EPS matches total PAT); implied EPS denominator 7.830 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:47+00:00"
+}

@@ -1,0 +1,95 @@
+{
+ "sym": "WEWIN",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 2029120.0,
+   "pat": 109410.0,
+   "pat_owners": 109410.0,
+   "eps": 1.09,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_91491_16052025193220_iXBRL_WEB.html",
+   "shares": 10161000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 2033980.0,
+   "pat": 59360.0,
+   "pat_owners": 59360.0,
+   "eps": 0.49,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_111000_13082025175647_iXBRL_WEB.html",
+   "shares": 10161000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 20.76,
+   "pat": 1.79,
+   "pat_owners": 1.79,
+   "eps": 1.77,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_128220_14112025190336_iXBRL_WEB.html",
+   "shares": 10161000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 21.78,
+   "pat": 1.17,
+   "pat_owners": 1.17,
+   "eps": 0.85,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143017_13022026174026_iXBRL_WEB.html",
+   "shares": 10161000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 30.77,
+   "pat": 0.95,
+   "pat_owners": 0.95,
+   "eps": -0.38,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_158016_15052026180510_iXBRL_WEB.html",
+   "shares": 10161000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 23.55,
+   "pat": 0.46,
+   "pat_owners": 0.46,
+   "eps": 0.69,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186733_13082026181926_iXBRL_WEB.html",
+   "shares": 10161000
+  }
+ ],
+ "bvps": 30.64,
+ "equity_cr": 31.13,
+ "bs_date": "2026-03-31",
+ "roe": 14.16,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "10,161,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26: filing's paid-up capital / face value gives 1,016,000,000,000 shares, inconsistent with the other quarters; 10,161,000 used (median, corporate-action adjusted)",
+  "Q4 FY25: filing's paid-up capital / face value gives 1,016,100,000,000 shares, inconsistent with the other quarters; 10,161,000 used (median, corporate-action adjusted)"
+ ],
+ "flags": [
+  "Q4 FY25 EPS gate: EPS 1.09 x 1.016 cr sh = 1.1 vs pat_owners 109410.0 (-100.0%); implied EPS denominator 100,376.147 cr sh",
+  "Q1 FY26 EPS gate: EPS 0.49 x 1.016 cr sh = 0.5 vs pat_owners 59360.0 (-100.0%); implied EPS denominator 121,142.857 cr sh",
+  "Q3 FY26 EPS gate: EPS 0.85 x 1.016 cr sh = 0.9 vs pat_owners 1.17 (-26.2%); implied EPS denominator 1.376 cr sh",
+  "Q4 FY26 EPS gate: EPS -0.38 x 1.016 cr sh = -0.4 vs pat_owners 0.95 (-140.6%) (sign differs); implied EPS denominator -2.500 cr sh",
+  "Q1 FY27 EPS gate: EPS 0.69 x 1.016 cr sh = 0.7 vs pat_owners 0.46 (+52.4%); implied EPS denominator 0.667 cr sh",
+  "Q2 FY26 revenue jump x0.00 QoQ (2033980.0 -> 20.76)"
+ ],
+ "generated": "2026-09-25T02:23:06+00:00"
+}

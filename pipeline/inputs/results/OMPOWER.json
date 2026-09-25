@@ -1,0 +1,43 @@
+{
+ "sym": "OMPOWER",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 174.62,
+   "pat": 16.65,
+   "pat_owners": 16.65,
+   "eps": 6.46,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159041_19052026205116_iXBRL_WEB.html",
+   "shares": 26670000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 121.63,
+   "pat": 10.52,
+   "pat_owners": 10.52,
+   "eps": 3.18,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185369_11082026192806_iXBRL_WEB.html",
+   "shares": 34245000
+  }
+ ],
+ "bvps": 51.35,
+ "equity_cr": 136.94,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "26,670,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: share count x1.28 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:57+00:00"
+}

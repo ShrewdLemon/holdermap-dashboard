@@ -1,0 +1,89 @@
+{
+ "sym": "VINYLINDIA",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 172.88,
+   "pat": 7.27,
+   "pat_owners": 7.27,
+   "eps": 3.96,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_89299_05052025170216_iXBRL_WEB.html",
+   "shares": 18300000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 151.23,
+   "pat": 4.45,
+   "pat_owners": 4.45,
+   "eps": 2.42,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_108308_04082025172626_iXBRL_WEB.html",
+   "shares": 18344000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 151.89,
+   "pat": 2.88,
+   "pat_owners": 2.88,
+   "eps": 1.58,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_121753_27102025142622_iXBRL_WEB.html",
+   "shares": 18300000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 169.48,
+   "pat": 4.52,
+   "pat_owners": 4.52,
+   "eps": 2.47,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_136039_20012026151306_iXBRL_WEB.html",
+   "shares": 18300000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 179.84,
+   "pat": 4.65,
+   "pat_owners": 4.65,
+   "eps": 2.53,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155190_01052026153620_iXBRL_WEB.html",
+   "shares": 18344000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 99.64,
+   "pat": 6.62,
+   "pat_owners": 6.62,
+   "eps": 3.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_180444_30072026142808_iXBRL_WEB.html",
+   "shares": 18344000
+  }
+ ],
+ "bvps": 71.01,
+ "equity_cr": 130.26,
+ "bs_date": "2026-03-31",
+ "roe": 14.85,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 7.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "18,344,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q1 FY26: filing states face value 183.44; NSE face value Rs 1 used for the share count",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:59+00:00"
+}

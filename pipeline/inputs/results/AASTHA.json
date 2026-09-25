@@ -1,0 +1,43 @@
+{
+ "sym": "AASTHA",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 129.36,
+   "pat": 6.76,
+   "pat_owners": 6.76,
+   "eps": 3.32,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_178827_27072026193412_iXBRL_WEB.html",
+   "shares": 31642200
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 77.47,
+   "pat": 3.09,
+   "pat_owners": 3.09,
+   "eps": 0.98,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187321_14082026165018_iXBRL_WEB.html",
+   "shares": 31642200
+  }
+ ],
+ "bvps": 50.69,
+ "equity_cr": 160.39,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.1,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "31,642,200 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS 3.32 x 3.164 cr sh = 10.5 vs pat_owners 6.76 (+55.4%); implied EPS denominator 2.036 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

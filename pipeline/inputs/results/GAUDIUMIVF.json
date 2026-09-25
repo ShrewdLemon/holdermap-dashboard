@@ -1,0 +1,58 @@
+{
+ "sym": "GAUDIUMIVF",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 24.51,
+   "pat": 3.63,
+   "pat_owners": 3.63,
+   "eps": 0.59,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_145598_18032026222906_iXBRL_WEB.html",
+   "shares": 61394400
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 30.35,
+   "pat": 8.36,
+   "pat_owners": 8.36,
+   "eps": 1.34,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163261_29052026012810_iXBRL_WEB.html",
+   "shares": 72786800
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 19.38,
+   "pat": 1.78,
+   "pat_owners": 1.78,
+   "eps": 0.25,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187070_13082026220836_iXBRL_WEB.html",
+   "shares": 72786800
+  }
+ ],
+ "bvps": 20.92,
+ "equity_cr": 152.3,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "72,786,800 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 1.78 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 3.63 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank; PAT = 8.36 used (within 15% of EPS x shares; see EPS gate)"
+ ],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS 1.34 x 7.279 cr sh = 9.8 vs pat_owners 8.36 (+16.7%); implied EPS denominator 6.239 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:55+00:00"
+}

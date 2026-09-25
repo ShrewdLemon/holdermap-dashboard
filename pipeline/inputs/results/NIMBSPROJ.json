@@ -1,0 +1,45 @@
+{
+ "sym": "NIMBSPROJ",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 218.23,
+   "pat": -31.17,
+   "pat_owners": -15.92,
+   "eps": -16.13,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_168704_24062026152100_iXBRL_WEB.html",
+   "shares": 19318700
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 2.94,
+   "pat": 3.26,
+   "pat_owners": -0.52,
+   "eps": 1.69,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186256_12082026213424_iXBRL_WEB.html",
+   "shares": 19318700
+  }
+ ],
+ "bvps": 144.23,
+ "equity_cr": 278.63,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "19,318,700 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS -16.13 x 1.932 cr sh = -31.2 vs pat_owners -15.92 (+95.7%) (EPS matches total PAT); implied EPS denominator 0.987 cr sh",
+  "Q1 FY27 EPS gate: EPS 1.69 x 1.932 cr sh = 3.3 vs pat_owners -0.52 (-727.9%) (sign differs); implied EPS denominator -0.308 cr sh",
+  "Q1 FY27 revenue jump x0.01 QoQ (218.23 -> 2.94)"
+ ],
+ "generated": "2026-09-25T02:22:59+00:00"
+}

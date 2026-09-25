@@ -1,0 +1,45 @@
+{
+ "sym": "RMC",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 142.94,
+   "pat": 9.27,
+   "pat_owners": 9.27,
+   "eps": 8.81,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_164321_29052026221529_iXBRL_WEB.html",
+   "shares": 10576900
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 37.24,
+   "pat": 2.08,
+   "pat_owners": 2.08,
+   "eps": 1.97,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185823_12082026172903_iXBRL_WEB.html",
+   "shares": 10581900
+  }
+ ],
+ "bvps": 123.34,
+ "equity_cr": 130.46,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "10,576,900 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 2.08 used (EPS-consistent)"
+ ],
+ "flags": [
+  "Q1 FY27 revenue jump x0.26 QoQ (142.94 -> 37.24)"
+ ],
+ "generated": "2026-09-25T02:23:02+00:00"
+}

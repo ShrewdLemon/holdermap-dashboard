@@ -48,7 +48,7 @@ IDX_HIST = ROOT / "pipeline" / "inputs" / "index_hist.json"
 PX_EXTRA = ROOT / "pipeline" / "inputs" / "px_extra.json"  # price feed for extra companies (pipeline/extra_*.py)  # Nifty 50 / 500 daily closes since inception
 BHAV_AR = ROOT / "pipeline" / "inputs" / "bhav_ar.json"
 CACHE = ROOT / "cache" / "closes.json"
-OUT = ROOT / "dashboard" / "site" / "prices.js"
+OUT = ROOT / "dashboard" / "prices_full.json"  # build.py splits it: shared prices.js + a block per company
 
 SYM = "ANANDRATHI"
 LISTED = "2021-12-14"
@@ -474,7 +474,7 @@ def main(argv=None):
     today = dt.date.fromisoformat(a.today) if a.today else dt.datetime.now(IST).date()
     px = build(today, a.offline)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text("window.__PX__ = " + json.dumps(px, separators=(",", ":")) + ";\n")
+    OUT.write_text(json.dumps(px, separators=(",", ":")))
     ar = px["co"].get(SYM, {}).get("now", {})
     print(f"prices.js: as of {px['asof']}; {len(px['co'])} companies; {len(px['univ'])} universe closes; "
           f"{SYM} {ar.get('c')}; Nifty 50 {px['ix']['now']['n50']}; {px['fetched']} NSE days fetched"

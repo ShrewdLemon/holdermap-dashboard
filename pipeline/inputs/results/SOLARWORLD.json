@@ -1,0 +1,80 @@
+{
+ "sym": "SOLARWORLD",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 68.24,
+   "pat": 12.91,
+   "pat_owners": 12.91,
+   "eps": 1.74,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_120680_17102025184416_iXBRL_WEB.html",
+   "shares": 74138000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 137.88,
+   "pat": 9.29,
+   "pat_owners": 9.29,
+   "eps": 1.24,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_126911_12112025203840_iXBRL_WEB.html",
+   "shares": 86674000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 578.23,
+   "pat": 49.22,
+   "pat_owners": 49.22,
+   "eps": 5.68,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_138634_29012026181248_iXBRL_WEB.html",
+   "shares": 86674000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 591.81,
+   "pat": 49.05,
+   "pat_owners": 49.05,
+   "eps": 5.66,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161565_26052026203314_iXBRL_WEB.html",
+   "shares": 86672000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 168.42,
+   "pat": 9.5,
+   "pat_owners": 9.5,
+   "eps": 1.1,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187427_14082026173728_iXBRL_WEB.html",
+   "shares": 86672000
+  }
+ ],
+ "bvps": 97.82,
+ "equity_cr": 847.8,
+ "bs_date": "2026-03-31",
+ "roe": 14.66,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "86,672,000 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26: owners-of-parent line blank; PAT = 12.91 used (EPS-consistent)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 1.24 x 8.667 cr sh = 10.7 vs pat_owners 9.29 (+15.7%); implied EPS denominator 7.492 cr sh",
+  "Q3 FY26 revenue jump x4.19 QoQ (137.88 -> 578.23)",
+  "Q1 FY27 revenue jump x0.28 QoQ (591.81 -> 168.42)"
+ ],
+ "generated": "2026-09-25T02:22:53+00:00"
+}

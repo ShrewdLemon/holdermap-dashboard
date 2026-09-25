@@ -1,0 +1,68 @@
+{
+ "sym": "ORKLAINDIA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 650.28,
+   "pat": 76.68,
+   "pat_owners": 76.68,
+   "eps": 5.6,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_127216_13112025170113_iXBRL_WEB.html",
+   "shares": 136990000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 636.06,
+   "pat": 56.64,
+   "pat_owners": 56.64,
+   "eps": 4.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142038_11022026182518_iXBRL_WEB.html",
+   "shares": 136990000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 625.8,
+   "pat": 73.44,
+   "pat_owners": 73.44,
+   "eps": 5.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_158896_19052026175819_iXBRL_WEB.html",
+   "shares": 136960000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 659.1,
+   "pat": 87.7,
+   "pat_owners": 87.7,
+   "eps": 6.4,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_182212_04082026174014_iXBRL_WEB.html",
+   "shares": 136990000
+  }
+ ],
+ "bvps": 200.79,
+ "equity_cr": 2750.03,
+ "bs_date": "2026-03-31",
+ "roe": 10.97,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "136,960,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 87.70 used (EPS-consistent)",
+  "Q2 FY26: owners-of-parent line blank; PAT = 76.68 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT = 56.64 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank; PAT = 73.44 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:40+00:00"
+}
