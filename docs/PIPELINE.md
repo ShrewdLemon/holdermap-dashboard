@@ -33,9 +33,15 @@ Shareholding patterns are due within 21 days of quarter end, and results within 
    .venv/bin/python ~/Projects/nse500-runs/batch.py run --workers 6       # add --force to rerun existing runs
    .venv/bin/python ~/Projects/nse500-runs/batch.py bse-import SYM ...     # companies that file with BSE ("permitted")
    ```
-   The NSE 100 use the team's Bloomberg exports instead (holdermap `nse100.py`).
+   The NSE 100 use the team's Bloomberg exports instead (holdermap `nse100.py`, into `~/Projects/nse100-holders`).
+   **Bloomberg exports for other companies** (one OWN screen per sheet, 2025 Q2 – 2026 Q3, grouped by investment manager):
+   ```bash
+   .venv/bin/python ~/Projects/nse500-runs/batch.py bbg-plan ~/Projects/nse500-runs/bloomberg/<date>-team   # -> todo.bbg.json, bbg_skipped.json
+   BATCH_TODO=~/Projects/nse500-runs/todo.bbg.json .venv/bin/python ~/Projects/nse500-runs/batch.py run --workers 8 --force
+   ```
+   `bbg-plan` maps each sheet to a symbol by the ISIN on the screen (NSE's equity list catches ISINs changed by splits) and lists the sheets it leaves out, with the reason. Send those back to the team. The run a Bloomberg run replaces is kept as `run.filing.json`. 532 companies took 12 minutes on 8 workers. Pages show "Bloomberg, <date>" from the workbook's saved date.
 3. **Results:** `python3 pipeline/results.py --syms SYM1,SYM2,...`. Rerun anything logged as `HTTP 0` or `no NSE list`.
-4. **Export:** `python3 pipeline/company.py --nse100 --nifty500` for the index companies, and `python3 pipeline/company.py --add SYM ...` for the rest.
+4. **Export:** `python3 pipeline/company.py --nse100 --nifty500` for the index companies, and `python3 pipeline/company.py --add SYM ...` for the rest. For everything at once, run four processes with `--no-univ` on disjoint symbol lists, then `python3 pipeline/company.py --univ-only`: all 2,475 in about 100 s.
 5. **Move the quarter window forward:**
    - The filed quarters in `pipeline/company.py`.
    - `OPEN_Q_END` in `pipeline/live.py` (e.g. `2026-12-31`).
@@ -61,4 +67,7 @@ Shareholding patterns are due within 21 days of quarter end, and results within 
 - **Price series:** a move over 25% in a day is only accepted when NSE's own previous close agrees (a real move). Otherwise it is a corporate action: re-base with NSE's adjusted previous close, or fix the event in the export.
 - **`batch.py prepare` without `HM_FETCH_FROM`** downloads every filing back to 2021, one by one, which is slow and unnecessary.
 - **zsh does not split `$VAR`:** pass symbol lists as `${=S}`, or the whole list arrives as one symbol.
+- **Bloomberg sheets:** check the screen, not the tab name. On 25 Sep, the "CBOI" tab held CEMPRO's screen and "Diligent Media" held Digicontent's. A ticker changed by a rename can show no ISIN and only the current quarter (HEG). Bloomberg adds "/India" to Indian names ("HDFC Trustee Co Ltd/India").
+- **Duplicate holdings:** Bloomberg lists a fund house's trustee (from the filing) and its asset manager, and some holders under two names; holdermap adds filing-only rows that can repeat a Bloomberg row. `reconcile()` in `pipeline/company.py` lists each holding once. Check the log in `cache/company_report.json` after a new batch.
+- **Bloomberg below the filing:** on 25 Sep, 103 of the 3,043 holders the filings list at 1% or more showed less, zero or nothing on the Bloomberg pages (LIC policy funds, NPS schemes, one FPI). `fill_from_filing()` puts the filed count back from the company's filing-mode run (`run.filing.json`, kept beside each Bloomberg run). A brand is matched only within the same category: LIC the insurer is not LIC Mutual Fund or LIC Pension Fund.
 - **Long jobs:** keep the Mac awake and on power (`caffeinate -dimsu -t <seconds>`, check `pmset -g batt`). A sleep on battery paused one run for about 50 minutes and caused network failures that had to be retried.
