@@ -44,7 +44,8 @@ DATA = ROOT / "src" / "data.json"            # ANANDRATHI snapshot (fallback whe
 CO_DIR = ROOT / "src" / "co"                  # one holdings snapshot per company (pipeline/company.py)
 UNIV = ROOT / "pipeline" / "inputs" / "univ.json"
 PXU = ROOT / "pipeline" / "inputs" / "px_universe.json"  # shares, 30-Jun close, bonus events per symbol
-IDX_HIST = ROOT / "pipeline" / "inputs" / "index_hist.json"  # Nifty 50 / 500 daily closes since inception
+IDX_HIST = ROOT / "pipeline" / "inputs" / "index_hist.json"
+PX_EXTRA = ROOT / "pipeline" / "inputs" / "px_extra.json"  # price feed for extra companies (pipeline/extra_*.py)  # Nifty 50 / 500 daily closes since inception
 BHAV_AR = ROOT / "pipeline" / "inputs" / "bhav_ar.json"
 CACHE = ROOT / "cache" / "closes.json"
 OUT = ROOT / "dashboard" / "site" / "prices.js"
@@ -297,7 +298,9 @@ def company_prices(sym: str, D: dict, C: "Closes", today: dt.date, events: list,
             rows = [r for r in rows if r[0] < b[0]]
             add = [r for r in add if r[0] < b[0]]
             break
-    now_row, prev_row = rows[-1], rows[-2]
+    now_row = rows[-1]
+    # a first trading day has no previous close: compare with the IPO price instead
+    prev_row = rows[-2] if len(rows) > 1 else ["IPO", (D.get("co") or {}).get("ipo_price") or now_row[1]]
     asof = dt.date.fromisoformat(now_row[0])
     hist = D.get("px_hist") or {}
     rb = 1.0
@@ -378,6 +381,8 @@ def build(today: dt.date, offline: bool = False) -> dict:
     cos = load_companies()
     univ = {u["sym"]: u for u in json.loads(UNIV.read_text())}
     pxu = json.loads(PXU.read_text()) if PXU.exists() else {}
+    if PX_EXTRA.exists():  # companies outside the index universe (e.g. NSE, BSE-only)
+        pxu.update(json.loads(PX_EXTRA.read_text()))
     for s, u in univ.items():
         pxu.setdefault(s, {"shares": u["shares"], "qbase_close": u.get("close_q2"), "bonus_events": []})
     symbols = set(pxu) | set(cos)

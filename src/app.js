@@ -55,6 +55,7 @@ const AR_META = { s: 'ANANDRATHI', n: 'Anand Rathi Wealth Ltd', isin: 'INE463V01
 let NEGEQ, CO, NOW, OQ, OQP, QE, BVPS, DPS, ROE, TTM, TTMP, MCAP, SHN, Y1, T, TOT, DEN, FF, PX, HQ, GROUPS, EQ, EQd, REV, PAT, PATO, EPSR, EPSA, EPSADJ, EPS, RET, AR;
 function setCompany(sym) {
   D = window.__CO__[sym]; S.sym = sym; store.set('sym', sym);
+  if (D.snapshot) return setSnapshot(sym);
   AR = sym === 'ANANDRATHI';
   CO = Object.assign({}, AR ? AR_META : { s: sym, n: sym, bb: false, oq: true }, D.co || {});
   const L = LP && LP.co ? LP.co[sym] : null;
@@ -119,6 +120,18 @@ function setCompany(sym) {
   const eq = val.equity_cr != null ? val.equity_cr : BVPS != null ? BVPS * SHN / 1e7 : null;
   if (ROE == null && TTMP && eq > 0) { ROE = Math.round(1000 * TTMP / eq) / 10; val.roe_basis = 'TTM PAT to owners ÷ equity at ' + (val.bs_date ? dfmt(val.bs_date) : 'the latest balance sheet'); }
   NEGEQ = eq != null && eq < 0;
+  document.title = CO.s + ' · holdermap';
+}
+function setSnapshot(sym) {
+  AR = false;
+  CO = Object.assign({ s: sym, n: sym }, D.co || {});
+  const L = LP && LP.co ? LP.co[sym] : null;
+  if (!D._init) { if (L) { D.px_series = D.px_series.concat(L.add || []); D.w52 = L.w52; } D._init = true; }
+  const ser = D.px_series, lr = ser[ser.length - 1];
+  NOW = L ? Object.assign({}, L.now, LP.ix.now) : { d: lr[0], c: lr[1], prev: CO.ipo_price || lr[1], prevd: 'IPO' };
+  const v = D.val || {};
+  BVPS = v.bvps; DPS = v.dps; ROE = v.roe; TTMP = v.ttm_pat; TTM = null; SHN = CO.shares_now || D.tot; TOT = D.tot;
+  MCAP = SHN * NOW.c / 1e7; NEGEQ = false; T = []; RET = [];
   document.title = CO.s + ' · holdermap';
 }
 const pct = (a, b) => 100 * a / b;
@@ -189,6 +202,68 @@ function cu(to, dec, pre, suf) { return `<span data-cu="${to}" data-dec="${dec |
 /* ---------- company header ---------- */
 
 
+function snapHeader() {
+  const w = S.watch.includes(CO.s), I = D.ipo || {}, P = D.pattern || {};
+  const vsIpo = I.price ? 100 * (NOW.c / I.price - 1) : null;
+  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (SHN / 1e7).toFixed(2) + ' cr shares', 'overview'], ['P/E (TTM)', TTMP > 0 ? (MCAP / TTMP).toFixed(1) + '×' : '—', 'TTM PAT ₹' + fin(TTMP || 0, 1) + ' cr', 'overview'], ['P/B', BVPS > 0 ? (NOW.c / BVPS).toFixed(1) + '×' : '—', BVPS ? 'BVPS ₹' + BVPS.toFixed(1) + ' (' + dfmt(D.val.bs_date) + ')' : '', 'overview'], ['Dividend yield', DPS != null ? (100 * DPS / NOW.c).toFixed(2) + '%' : '—', DPS != null ? 'FY26 DPS ₹' + DPS.toFixed(2) + ' incl. special' : '', 'overview'], ['ROE', ROE != null ? ROE.toFixed(1) + '%' : '—', 'TTM, avg equity', 'overview'], ['IPO price', '₹' + fin(I.price || 0, 2), (vsIpo == null ? '' : sgn(vsIpo, 1, '%') + ' vs issue price'), 'overview'], ['Shareholders', cu(P.holders_count || 0), 'Before listing, ' + dfmt(P.date), 'holders']];
+  const tabs = [['overview', 'Overview'], ['holders', 'Shareholding'], ['flows', 'Buyers &amp; sellers'], ['evidence', 'Sources']];
+  return `<section class="co" aria-label="Company summary"><div class="wrap">
+  <div class="crumb"><a href="#universe">Universe</a><span>/</span><span>${esc(CO.sector || '')}</span><span>/</span><span style="color:var(--ink)">${esc(CO.s)}</span></div>
+  <div class="cohead"><div class="coname"><h1>${esc(CO.n)}</h1>
+      <div class="chips"><span class="chip">BSE: ${esc(CO.bse)}</span><span class="chip">ISIN ${esc(CO.isin)}</span><span class="pill" title="An exchange cannot list on itself: NSE's shares trade only on BSE">BSE ONLY · LISTED ${esc(sdate(CO.listed).toUpperCase())}</span>
+      <button class="star" type="button" data-act="watch" data-sym="${esc(CO.s)}" aria-pressed="${w}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><span>${w ? 'Watching' : 'Watch'}</span></button></div></div>
+    <div class="px"><div class="pxv"><span class="big">₹${cu(NOW.c, 2)}</span><span class="chg ${cl(NOW.c - NOW.prev)}">${sgn(NOW.c - NOW.prev, 2)} (${sgn(100 * (NOW.c / NOW.prev - 1), 2, '%')})${NOW.prevd === 'IPO' ? ' vs IPO price' : ''}</span><small>BSE close · ${dfmt(NOW.d)}</small></div></div>
+  </div>
+  <div class="stats">${stats.map(s => `<a class="stat" href="#${s[3]}"><span class="lbl">${s[0]}</span><span class="v">${s[1]}</span><span class="s">${s[2]}</span></a>`).join('')}
+    <div class="stat"><span class="lbl">Range since listing</span><span class="v" style="font-size:15px">₹${fin(D.w52.lo, 2)} – ₹${fin(D.w52.hi, 2)}</span><span class="s">BSE, intraday</span></div></div>
+  <nav class="tabs" aria-label="Company sections">${tabs.map(t => `<a href="#${t[0]}" data-tab="${t[0]}" ${S.route === t[0] ? 'aria-current="page"' : ''}>${t[1]}</a>`).join('')}<span class="tl" aria-hidden="true"></span></nav>
+  </div></section>`;
+}
+const SNAP_NOTE = 'The full dashboard (FII/DII split, named fund holders, quarter-on-quarter buyers and sellers) starts with NSE\'s first quarterly shareholding filing as a listed company, for the quarter to 30 Sep 2026, due by 21 Oct 2026.';
+function snapOverview() {
+  const I = D.ipo || {}, P = D.pattern || {}, A = D.earn_annual, Q = D.earn_q;
+  const pp = x => (100 * x / D.tot).toFixed(2) + '%';
+  const tbl = (E, lab) => `<div class="tscroll"><table class="t"><thead><tr><th class="l">₹ crore</th>${E.q.map(q => `<th>${q}</th>`).join('')}${E.q.length > 1 ? `<th>${lab}</th>` : ''}</tr></thead><tbody>
+    ${[['Revenue from ops', E.rev, v => fin(v, 2)], ['PAT to owners', E.pat, v => fin(v, 2)], ['PAT margin', E.pat.map((p, i) => 100 * p / E.rev[i]), v => v.toFixed(1) + '%'], ['EPS, basic (₹)', E.eps, v => v.toFixed(2)]].map(r => `<tr><td class="l">${r[0]}</td>${r[1].map(v => `<td>${r[2](v)}</td>`).join('')}${E.q.length > 1 ? `<td class="${cl(r[1][r[1].length - 1] - r[1][r[1].length - 2])}" style="font-weight:600">${r[0] === 'PAT margin' ? sgn(r[1][r[1].length - 1] - r[1][r[1].length - 2], 1, ' pp') : sgn(100 * (r[1][r[1].length - 1] / r[1][r[1].length - 2] - 1), 1, '%')}</td>` : ''}</tr>`).join('')}</tbody></table></div>`;
+  return `<div class="g12">
+  <section class="card s5" style="--i:0">${sh('Listing', 'IPO and listing', 'Offer for sale by existing shareholders: no new shares')}
+    <div class="tiles">${[['Issue price', '₹' + fin(I.price, 2), 'Band ₹' + fin(I.band[0]) + '–' + fin(I.band[1])], ['Offer size', '₹' + fin(I.size_cr) + ' cr', fin(I.offered) + ' shares'], ['Subscribed', I.subscription + '×', dfmt(I.open) + ' – ' + dfmt(I.close)], ['Listed', dfmt(I.listed), 'BSE · opened ₹' + fin(I.listing_open, 2) + ' (' + sgn(100 * (I.listing_open / I.price - 1), 2, '%') + ')']].map(t => `<div class="tile"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div>
+    <p class="note grey">Why NSE is outside the Nifty 500 and NSE's price files: an exchange cannot list on itself, so NSE's shares trade only on BSE. Prices here are BSE closes, refreshed every trading day.</p></section>
+  <section class="card s7" style="--i:1">${sh('Before listing · ' + dfmt(P.date), 'Shareholding pattern', fin(P.holders_count) + ' shareholders · no promoter group')}
+    <div class="pbar"><i style="width:${pp(P.public)};background:var(--dii)" data-tip="<b>Public</b><br>${pp(P.public)}"></i><i style="width:${pp(P.c3)};background:var(--oth)" data-tip="<b>Trading members and associates</b><br>${pp(P.c3)}"></i></div>
+    <div><div class="prow"><span><span class="sw" style="background:var(--dii)"></span>Public (B)</span><span class="num"><b style="font-weight:600">${pp(P.public)}</b><span class="mut" style="margin-left:10px">${fin(P.public)} sh</span></span></div>
+    <div class="prow"><span><span class="sw" style="background:var(--oth)"></span>Trading members and their associates (C3, non-public)</span><span class="num"><b style="font-weight:600">${pp(P.c3)}</b><span class="mut" style="margin-left:10px">${fin(P.c3)} sh</span></span></div></div>
+    <p class="note grey">Pre-offer pattern from the prospectus (SEBI format for an exchange: trading members' holdings sit outside public shareholding). ${SNAP_NOTE}</p></section>
+  <section class="card s7" id="earn" style="--i:2">${sh('Earnings', 'Earnings', 'Restated consolidated, ₹ crore (prospectus)')}${tbl(A, 'YoY')}<div style="height:14px"></div>${tbl(Q, 'YoY')}
+    <p class="note">FY24 EPS is restated for the 4:1 bonus of Nov 2024. Quarterly results as a listed company start with the quarter to 30 Sep 2026.</p></section>
+  <section class="card s5" style="--i:3">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${[['Market cap', '₹' + fin(MCAP) + ' cr', (SHN / 1e7).toFixed(2) + ' cr shares × ₹' + fin(NOW.c, 2)], ['P/E (TTM)', (MCAP / TTMP).toFixed(1) + '×', 'TTM PAT to owners ₹' + fin(TTMP, 1) + ' cr (Q1 FY27 + FY26 − Q1 FY26)'], ['P/B', (NOW.c / BVPS).toFixed(1) + '×', 'Book value ₹' + BVPS.toFixed(2) + ' per share, ' + dfmt(D.val.bs_date)], ['Dividend yield', (100 * DPS / NOW.c).toFixed(2) + '%', D.val.dps_note]].map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[2])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${esc(t[2])}</span></div>`).join('')}</div></section>
+  </div>${footer('National Stock Exchange of India Ltd, Red Herring Prospectus dated 10 Sep 2026 (shareholding p.119–121, restated consolidated financials p.79–83, dividends p.66, selling shareholders Annexure A p.623) · BSE daily bhavcopy (scrip 544937) · subscription as reported by the exchanges on 21 Sep 2026.')}`;
+}
+function snapHolders() {
+  const H = D.holders || [], tot = D.tot, f = x => (100 * x / tot).toFixed(2) + '%';
+  const sold = H.reduce((a, h) => a + h.sold, 0) + (D.other_sellers || []).reduce((a, h) => a + h.sold, 0);
+  return `<div class="kpis" style="--i:0">${[['Holders of 1% or more', H.length, 'Before listing: ' + f(H.reduce((a, h) => a + h.pre, 0)) + ' of shares'], ['Largest holder', 'LIC ' + f(H[0].pre), 'Did not sell in the IPO'], ['Sold in the IPO', fin(sold) + ' sh', f(sold) + ' of shares, by ' + (H.filter(h => h.sold).length + (D.other_sellers || []).length) + ' shareholders'], ['Shareholders', fin(D.pattern.holders_count), 'Before listing']].map(x => `<div class="kpi"><span class="lbl">${x[0]}</span><span class="v">${x[1]}</span><span class="s">${x[2]}</span></div>`).join('')}</div>
+  <section class="card" style="--i:1;margin-top:24px">${sh('Shareholding', 'Shareholders with 1% or more', 'Before the IPO (prospectus, ' + dfmt(D.pattern.date) + ') and after the offer for sale')}
+  <div class="tscroll"><table class="t"><thead><tr><th class="l">#</th><th class="l">Holder</th><th class="l">Type</th><th class="l">Cty</th><th>Before IPO</th><th>%</th><th>Sold in IPO</th><th>After IPO</th><th>%</th></tr></thead><tbody>
+  ${H.map((h, i) => `<tr><td class="l mut">${i + 1}</td><td class="l" style="white-space:normal;min-width:200px;font-weight:500">${esc(h.n)}</td><td class="l mut" style="white-space:normal">${esc(h.c)}</td><td class="l"><span class="chip">${h.cty}</span></td><td>${fin(h.pre)}</td><td>${f(h.pre)}</td><td class="${h.sold ? 'dn' : 'mut'}">${h.sold ? '−' + fin(h.sold) : '—'}</td><td style="font-weight:600">${fin(h.post)}</td><td style="font-weight:600">${f(h.post)}</td></tr>`).join('')}</tbody></table></div>
+  <p class="note grey">"After IPO" = before minus the shares each holder offered (prospectus Annexure A); the issue was ${D.ipo.subscription}× subscribed, so all offered shares were sold. Buyers in the IPO are not named until the first quarterly filing. Holder types are descriptive; the prospectus lists names only. ${SNAP_NOTE}</p></section>
+  ${footer('Red Herring Prospectus dated 10 Sep 2026: major shareholders p.121, selling shareholders Annexure A p.623.')}`;
+}
+function snapFlows() {
+  const all = D.holders.filter(h => h.sold).map(h => ({ n: h.n, sold: h.sold })).concat(D.other_sellers || []).sort((a, b) => b.sold - a.sold);
+  return `<section class="card" style="--i:0">${sh('Sellers', 'Sellers in the IPO', all.length + ' selling shareholders · value at the ₹' + fin(D.ipo.price, 2) + ' issue price')}
+  <div class="tscroll"><table class="t"><thead><tr><th class="l">#</th><th class="l">Selling shareholder</th><th>Shares sold</th><th>₹ cr at issue price</th><th>% of shares</th></tr></thead><tbody>
+  ${all.map((x, i) => `<tr><td class="l mut">${i + 1}</td><td class="l" style="font-weight:500">${esc(x.n)}</td><td class="dn">−${fin(x.sold)}</td><td>${fin(x.sold * D.ipo.price / 1e7, 1)}</td><td>${(100 * x.sold / D.tot).toFixed(2)}%</td></tr>`).join('')}
+  <tr class="tot"><td class="l"></td><td class="l">Total</td><td>−${fin(D.ipo.offered)}</td><td>${fin(D.ipo.size_cr, 1)}</td><td>${(100 * D.ipo.offered / D.tot).toFixed(2)}%</td></tr></tbody></table></div>
+  <p class="note grey">Buyers are the IPO allottees (institutions, non-institutional and retail investors). They appear by name only from the first quarterly shareholding filing. ${SNAP_NOTE}</p></section>`;
+}
+function snapEvidence() {
+  return `<section class="card" style="--i:0">${sh('Sources', 'Where every number comes from', 'Primary documents only; nothing estimated')}
+  <ul style="line-height:1.9;margin:0;padding-left:18px">
+  <li>Red Herring Prospectus dated 10 Sep 2026 — <a href="${esc(D.src)}" target="_blank" rel="noopener" style="color:var(--acc)">PDF</a>: shareholding pattern (p.119–120), holders of 1% or more (p.121), restated consolidated financials (p.79–83), dividends (p.66), selling shareholders (Annexure A, p.623).</li>
+  <li>BSE daily bhavcopy, scrip 544937 (ISIN INE721I01024): listing-day and later closes.</li>
+  <li>Checks run: every holder's shares reproduce the prospectus percentage; shares offered add up to the 12,64,36,650 in the offer; EPS × 247.5 crore shares = PAT to owners in every period.</li></ul></section>`;
+}
 function companyHeader() {
   const w = S.watch.includes(CO.s), L5 = T[T.length - 1], L4 = T[T.length - 2], gok = D.gates.filter(g => g.ok !== false).length;
   const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), sgn(100 * (NOW.c / QE.a - 1), 1, '%') + ' since ' + sdate(QE.d), 'overview'], ['P/E (TTM)', TTMP > 0 ? (MCAP / TTMP).toFixed(1) + '×' : TTMP == null ? '—' : 'n.m.', TTMP == null ? 'Results not loaded' : 'TTM PAT ₹' + fin(TTMP, 1) + ' cr', 'overview'], ['P/B', BVPS > 0 ? (NOW.c / BVPS).toFixed(1) + '×' : BVPS < 0 ? 'n.m.' : '—', BVPS ? 'BVPS ₹' + BVPS.toFixed(1) : 'Book value not on file', 'overview'], ['Dividend yield', DPS != null ? (100 * DPS / NOW.c).toFixed(2) + '%' : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', 'overview'], ['ROE', ROE != null ? ROE.toFixed(1) + '%' : NEGEQ ? 'n.m.' : '—', AR ? 'FY26, company-reported' : ROE != null ? ((D.val || {}).roe_basis || 'TTM, from filings') : NEGEQ ? 'Negative equity' : 'Not on file', 'overview'], ['Free float', (100 - pct(L5.prom, L5.den)).toFixed(2) + '%', L5.q + ' filing', 'holders'], ['Shareholders', cu(L5.nh), L4 ? sgn(100 * (L5.nh / L4.nh - 1), 1, '%') + ' ' + qoqLabel() : 'First filing ' + L5.q, 'overview']];
@@ -653,9 +728,9 @@ function render() {
   const company = S.route !== 'universe';
   if (company && (!D || D !== window.__CO__[S.sym])) return withCompany(S.sym, () => { setCompany(S.sym); render(); });
   const prevLast = document.documentElement.dataset.route;
-  $('#co').innerHTML = company ? companyHeader() : '';
+  $('#co').innerHTML = company ? (D && D.snapshot ? snapHeader() : companyHeader()) : '';
   const main = $('#main');
-  main.innerHTML = ({ universe: viewUniverse, overview: viewOverview, holders: viewHolders, flows: viewFlows, evidence: viewEvidence })[S.route]();
+  main.innerHTML = (company && D && D.snapshot ? { overview: snapOverview, holders: snapHolders, flows: snapFlows, evidence: snapEvidence } : { universe: viewUniverse, overview: viewOverview, holders: viewHolders, flows: viewFlows, evidence: viewEvidence })[S.route]();
   main.classList.remove('view'); void main.offsetWidth; main.classList.add('view');
   document.documentElement.dataset.route = S.route;
   $$('.tnav a').forEach(a => { const on = (a.dataset.nav === 'universe' && S.route === 'universe' && S.uB !== 'watch') || (a.dataset.nav === 'watchlist' && S.route === 'universe' && S.uB === 'watch') || (a.dataset.nav === 'company' && company); on ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'); });

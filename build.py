@@ -27,6 +27,11 @@ links = "\n".join(re.findall(r"<link[^>]+>", head))
 import json
 univ_src = src / "univ.json"
 univ = univ_src.read_text() if univ_src.exists() else json.dumps(json.loads(data)["univ"], separators=(",", ":"))
+extra_src = src / "univ_extra.json"  # companies outside the index universe (pipeline/extra_*.py)
+if extra_src.exists():
+    rows = json.loads(univ)
+    have = {r["s"] for r in rows}
+    univ = json.dumps(rows + [r for r in json.loads(extra_src.read_text()) if r["s"] not in have], separators=(",", ":"))
 assert "</script" not in univ
 (site / "data.js").write_text("window.__UNIV__ = " + univ + ";\n")
 co_dir = site / "co"
