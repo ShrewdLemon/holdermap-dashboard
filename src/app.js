@@ -437,7 +437,7 @@ function holdersBody() {
   const st = new Map(L.map(h => [h, hStats(h, b)]));
   const key = { n: h => h.n.toLowerCase(), cty: h => h.cty, s: h => st.get(h).sh, v: h => st.get(h).v, pt: h => st.get(h).pt, pff: h => st.get(h).pff == null ? -1 : st.get(h).pff, mean: h => st.get(h).mean || 0, mx: h => st.get(h).mx || 0, mn: h => st.get(h).mn || 0, d: h => st.get(h).d }[S.hSort] || (h => st.get(h).sh);
   L.sort((a, c) => { const x = key(a), y = key(c); return (x > y ? 1 : x < y ? -1 : 0) * S.hDir; });
-  const asof = S.hTab === 'ind' ? 'Q2/2026 · filing of 30 Jun 2026 · value at ₹1,976.70' : 'Q3/2026 to date · ' + (CO.bb ? 'Bloomberg, 22 Sep 2026' : (CO.oq_src || 'latest fund disclosures')) + ' · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
+  const asof = S.hTab === 'ind' ? T[T.length - 1].q + ' filing · value at ' + (QE && QE.a ? '₹' + fin(QE.a, 2) + ' (' + dfmt(QE.d) + ')' : 'the quarter-end close') : 'Q3/2026 to date · ' + (CO.bb ? 'Bloomberg, 22 Sep 2026' : (CO.oq_src || 'latest fund disclosures')) + ' · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const sortBtn = (k, lab, cls) => `<span class="${cls || ''}"><button type="button" data-sort="h" data-k="${k}" ${S.hSort === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${S.hSort === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
   const qlab = S.hTab === 'ind' ? '5Q' : '6Q';
   let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['pct', '% of total'], ['ff', '% of free float'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
@@ -488,7 +488,7 @@ function holderDetail(x) {
 const GRP = c => c === 'Promoter' ? 'prom' : ['Foreign AMC', 'Foreign Government', 'Foreign Insurance', 'Foreign corporate', 'Bank'].includes(c) ? 'fii' : ['Domestic AMC', 'Domestic Insurance', 'Domestic Pension Fund', 'Government'].includes(c) ? 'dii' : 'ind';
 const GL = { prom: 'Promoter group', fii: 'Foreign institutions', dii: 'Domestic institutions', ind: 'Individuals & corporates' };
 function viewFlows() {
-  return `<div class="frow" style="--i:0">${D.flows.A && D.flows.B && CO.oq !== false ? seg('fP', [['A', 'Q2/26 vs Q1/26 · filed'], ['B', 'Q3/26 to date · live']], S.fP, 'Comparison period') : ''}<span class="cap">Holder level, from the Bloomberg export reconciled to filings · shares restated for the Jun-26 bonus</span></div>
+  return `<div class="frow" style="--i:0">${D.flows.A && D.flows.B && CO.oq !== false ? seg('fP', [['A', (T[T.length - 2] || {}).q + ' → ' + T[T.length - 1].q + ' · filed'], ['B', T[T.length - 1].q + ' → now · latest']], S.fP, 'Comparison period') : ''}<span class="cap">Holder level, from the Bloomberg export reconciled to filings · shares restated for the Jun-26 bonus</span></div>
   <div id="fBody" style="--i:1;margin-top:20px">${flowsBody()}</div>
   ${footer('Buyer or seller = change in shares between two quarter-ends. NEW = no position in the earlier quarter; EXIT = none now.' + (AR ? ' The Anandrathi Housing Finance line is left out: it is the same entity as Twelfth Tier Property, renamed (MCA master data).' : ''))}`;
 }
@@ -496,7 +496,7 @@ function flowsBody() {
   if (!D.flows.B || CO.oq === false) S.fP = 'A';
   if (!D.flows[S.fP]) S.fP = D.flows.A ? 'A' : 'B';
   if (!D.flows[S.fP]) return `<p class="cap" style="padding:16px 0">No two consecutive filings to compare yet for ${esc(CO.s)}.</p>`;
-  const F = D.flows[S.fP], px = S.fP === 'A' ? '₹1,976.70 (30 Jun 2026)' : '₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
+  const F = D.flows[S.fP], px = S.fP === 'A' ? (QE && QE.a ? '₹' + fin(QE.a, 2) + ' (' + dfmt(QE.d) + ')' : 'the quarter-end close') : '₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const agg = { prom: 0, fii: 0, dii: 0, ind: 0 }, cnt = { prom: [0, 0], fii: [0, 0], dii: [0, 0], ind: [0, 0] };
   F.all.forEach(o => { const g = GRP(o.c); agg[g] += o.v; cnt[g][o.d > 0 ? 0 : 1]++; });
   const mx = Math.max.apply(null, Object.values(agg).map(Math.abs)) || 1;
@@ -505,7 +505,7 @@ function flowsBody() {
   const buy = filt(S.fG ? F.all.filter(o => o.d > 0).sort((a, b) => b.d - a.d).slice(0, 25) : F.buy), sell = filt(S.fG ? F.all.filter(o => o.d < 0).sort((a, b) => a.d - b.d).slice(0, 25) : F.sell);
   const noteB = AR && S.fP === 'B' ? `<p class="note grey">Five filing-only holders (Amit Rathi, Supriya Saigal, Fahim Sultan Ali, Suhas Gupta Family Trust and Munix India) read 0 in Bloomberg's open quarter. They are held back until the Sep-26 filing confirms an actual exit.</p>` : '';
   const chip = S.fG ? `<button type="button" class="fchip" data-act="fgrp" data-g="${S.fG}" aria-pressed="true">Showing ${GL[S.fG]} <span aria-hidden="true">✕</span></button>` : '';
-  return `<div class="g12"><section class="card s12">${sh('Net flow', 'Net flow by holder type', (S.fP === 'A' ? 'Mar-26 → Jun-26' : 'Jun-26 → 22 Sep 2026') + ' · value of the change at ' + px + '. Tap a type to filter the lists.', chip)}<div style="display:flex;flex-direction:column;gap:4px">${net}</div>${noteB}</section>
+  return `<div class="g12"><section class="card s12">${sh('Net flow', 'Net flow by holder type', (S.fP === 'A' ? (T[T.length - 2] || {}).q + ' → ' + T[T.length - 1].q : T[T.length - 1].q + ' → ' + (CO.bb ? '22 Sep 2026 (Bloomberg)' : 'latest disclosures')) + ' · value of the change at ' + px + '. Tap a type to filter the lists.', chip)}<div style="display:flex;flex-direction:column;gap:4px">${net}</div>${noteB}</section>
   <section class="card s6">${sh('Buyers', 'Top 25 buyers', buy.length + ' shown' + (S.fG ? ' · ' + GL[S.fG] : ''))}${flowList(buy, true)}</section>
   <section class="card s6">${sh('Sellers', 'Top 25 sellers', sell.length + ' shown' + (S.fG ? ' · ' + GL[S.fG] : ''))}${flowList(sell, false)}</section></div>`;
 }
@@ -737,7 +737,7 @@ function render() {
   $$('.bnav a').forEach(a => a.dataset.b === S.route ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   const nc = $('#navCo'); if (nc) { const u = U.find(x => x.s === S.sym); nc.textContent = (company && CO ? CO.n : u ? u.n : S.sym).replace(/ (Limited|Ltd\.?)$/i, ''); nc.href = '#' + encodeURIComponent(S.sym) + '/overview'; }
   const nd = $('#navDt'); if (nd) nd.textContent = 'NSE close · ' + dfmt(company && NOW ? NOW.d : LP ? LP.asof : U.length ? '2026-09-23' : '');
-  document.title = company ? 'holdermap' : 'holdermap';
+  document.title = company && CO ? CO.s + ' · holdermap' : 'holdermap';
   requestAnimationFrame(() => { drawCharts(document); placeSegs(document); if (S.first || prevLast !== S.route) countUp(document); S.first = false; focusPending(); });
   store.set('route', S.route);
 }

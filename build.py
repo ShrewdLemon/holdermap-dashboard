@@ -1,10 +1,11 @@
 """Assemble the dashboard from src/ into dashboard/site (for S3/CloudFront) and dashboard/standalone.html.
 
-    python3 pipeline/export.py   # optional: rebuild src/data.json from pipeline/inputs
-    python3 pipeline/live.py     # optional: latest NSE closes -> dashboard/site/prices.js
+    python3 pipeline/live.py     # latest NSE/BSE closes -> dashboard/prices_full.json (optional)
     python3 build.py
 
-Without prices.js the page shows the snapshot's own prices from data.json.
+Writes data.js (the universe: src/univ.json + src/univ_extra.json), co/<SYM>.js for every company in src/co/
+(each with its own live price block from prices_full.json), a small shared prices.js (as-of date, index
+closes, universe prices) and index.html. Without prices_full.json the pages use each snapshot's own prices.
 """
 import re
 from pathlib import Path

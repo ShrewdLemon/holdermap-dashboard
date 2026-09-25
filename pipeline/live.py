@@ -1,12 +1,12 @@
-"""Live price layer: the latest NSE closes, written to dashboard/site/prices.js.
+"""Live price layer: the latest closes for every company, written to dashboard/prices_full.json.
 
-    python3 pipeline/live.py            # fetch what is missing, write prices.js
+    python3 pipeline/live.py            # fetch what is missing, write prices_full.json
     python3 pipeline/live.py --offline  # use only the cache (no network)
 
-src/data.json is the holdings snapshot of one holdermap run and never changes
-here. This script overlays prices on it at build time: the page reads
-window.__PX__ when prices.js is present and falls back to the snapshot's own
-prices when it is not (a plain local build).
+The company snapshots in src/co/ never change here. This script overlays prices on them at build time:
+latest close, 52-week range, return bases (with Nifty 50 / Nifty 500 on the same dates) and universe
+prices. build.py splits the result into one block per company file plus a small shared prices.js.
+Companies listed only on BSE (pipeline/inputs/px_extra.json, "exch": "BSE") are read from BSE's daily file.
 
 Sources (only nsearchives.nseindia.com is contacted; www.nseindia.com sits
 behind Akamai and is never used):
