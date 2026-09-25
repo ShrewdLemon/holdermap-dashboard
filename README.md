@@ -65,3 +65,8 @@ pipeline/       data.py, export.py, prices.py, common.py, inputs/
 infra/          dashboard.yaml (CloudFormation)
 scripts/        deploy_dashboard.sh, refresh_dashboard_prices.py
 ```
+
+## Companies outside the Nifty 500
+
+`pipeline/extra_nse.py` builds a listing-snapshot page for NSE (the exchange company), which trades only on BSE.
+Its full page (FII/DII split, fund holders, quarter changes) comes with its first quarterly shareholding filing.
