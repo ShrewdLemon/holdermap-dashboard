@@ -34,7 +34,7 @@ The 26 companies leaving the Nifty 500 on 30 Sep keep their pages and are tagged
 | Screen | What it shows |
 |---|---|
 | Universe | Every company with search, market-cap and index filters, sorting, a watchlist and a quick view |
-| Overview | Ownership trend over six filed quarters (Promoter, FII, DII, Individuals, Others, plus ADR/GDR shares where a company has them) in % / ₹ crore / shares. Also pattern and what changed, valuation, earnings, and returns against the Nifty 50 and Nifty 500 |
+| Overview | Ownership trend over six filed quarters (Promoter, FII, DII, Individuals, Others, plus ADR/GDR shares where a company has them) in % / ₹ crore / shares. Also valuation, earnings, and returns against the Nifty 50 and Nifty 500 |
 | Shareholding | Top foreign and domestic holders and individuals. Each shows shares, value, % of total, % of free float and a quarterly trend, and expands to quarter-by-quarter detail |
 | Buyers & sellers | Top buyers and sellers between the last two filings (and quarter to date where the data allows), with net flow by holder type |
 | Evidence & gates | The eight holder checks, how each holder was categorised, category sums against the filing, quarter-end prices and a review queue |
@@ -57,7 +57,7 @@ These checks run on every data release. The results as of 25 Sep 2026 are in bra
 
 - **Shareholding %:** each company's latest promoter, FII and DII percentages are compared with NSE's published figure and BSE's copy of the filing (`scripts/validate_universe.py`). [2,443 of 2,444 comparable companies within 0.05 pp. The exception matches NSE exactly; BSE's copy differs.]
 - **Market cap:** NSE's issue size × close, compared with NSE's own market-cap file. [2,476 within 0.01%.]
-- **Earnings:** EPS × shares must equal PAT attributable to owners within 5%. Misses are flagged on the page, not hidden.
+- **Earnings:** EPS × shares must equal PAT attributable to owners within 5%. Misses are recorded as `flags` in `pipeline/inputs/results/<SYM>.json` and carried into the company file (`earn.flags`); the page does not print them.
 - **Holder lists:** eight checks against the filings: counts reconcile, promoter coverage, category sums, only the twelve categories, blank/zero pattern, every row evidenced, price provenance, and fund holdings within the filing's mutual-fund total. [94.6% of the filing-mode companies and 413 of the 532 Bloomberg runs of 25 Sep (78%) pass all eight; failures are shown on each page.]
 - **One line per holding:** holdermap keeps every row as Bloomberg and the filing have it. Before listing, the export (`reconcile()` in `pipeline/company.py`):
   - merges a holder that Bloomberg shows under two names (holdermap's "count it once" flag), and a fund house's trustee and asset-manager lines, taking the larger count each quarter;
