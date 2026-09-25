@@ -86,7 +86,9 @@ class CompanyRegression(unittest.TestCase):
         self.assertTrue(c["prom_vs_nse"])     # 41.37% = NSE's published pr_and_prgrp
 
     def test_prices(self):
-        self.assertEqual(diff(OLD["prices"][:5], self.new["prices"][:5], "prices"), [])
+        new = [{k: v for k, v in q.items() if k != "r"} for q in self.new["prices"][:5]]
+        self.assertEqual(diff(OLD["prices"][:5], new, "prices"), [])
+        self.assertTrue(all(q["r"] == q["a"] for q in self.new["prices"] if q["c"]))   # no demerger here
         p = self.new["prices"][5]
         self.assertEqual((p["d"], p["c"], p["a"], p["f"]), ("2026-09-23", 2169.2, 2169.2, 1.0))
         self.assertEqual(p["c"], OLD["px"][5])
