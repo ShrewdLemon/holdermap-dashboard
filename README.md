@@ -63,7 +63,8 @@ These checks run on every data release. The results as of 25 Sep 2026 are in bra
   - merges a holder that Bloomberg shows under two names (holdermap's "count it once" flag), and a fund house's trustee and asset-manager lines, taking the larger count each quarter;
   - drops filing-only rows that repeat a Bloomberg row (e.g. a partner's firm holding already inside the partner's Bloomberg line), a row equal to the promoter total's excess (an aggregate of other rows), and rows that are not holders ("1", category lines);
   - leaves a holder out of the FII/DII lists when it is larger than the whole filed category (a promoter entity under another name, e.g. "GSK plc");
-  - lists only natural persons as individuals (no ESOP trusts, firms or LLPs).
+  - lists only natural persons as individuals (no ESOP trusts, firms or LLPs);
+  - never shows less than the SEBI filing for a holder the filing lists (1% or more) in a filed quarter: when Bloomberg's figure is lower, zero or missing, the Bloomberg row of the same fund house and kind takes the filed count, or the filed holder is added (only if its category then stays within the filed total), and the page marks the row "filed count where Bloomberg shows less". The current quarter keeps Bloomberg's figure unless Bloomberg has none.
   Each change is logged per company in `cache/company_report.json`. [Promoter rows add up to the filed promoter total everywhere except INFY 104%, BAJAJHLDNG 106% and BAJAJFINSV 102%. 37 FII lists (27 from Bloomberg) still sum to more than the filed FII plus foreign companies, up to 158%: Bloomberg's own counts.]
 - **Pages:** a browser sweep opens every company on every tab with every toggle and looks for script errors or NaN/undefined. [9,904 views, 0 problems.]
 

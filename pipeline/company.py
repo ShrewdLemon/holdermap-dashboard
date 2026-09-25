@@ -245,6 +245,98 @@ def reconcile(rows, extra_ids, qi, filed_prom):
     return out, notes
 
 
+_BRAND_ALIAS = [(re.compile(p_, re.I), b_) for p_, b_ in (
+    (r"government pension fund global|\bgpfg\b|norges", "norges"),
+    (r"\blici\b|life insurance corporation of india|life insurance corp(oration)? of india", "lic"),
+    (r"smallcap world|new world fund|american funds|europacific|capital group|growth fund of america|fundamental investors",
+     "capgroup"),
+    (r"fidelity|\bfmr\b", "fidelity"), (r"vanguard", "vanguard"), (r"blackrock|ishares", "blackrock"))]
+_BRAND_SKIP = {"the", "limited", "ltd", "mutual", "fund", "funds", "trustee", "trustees", "company", "co", "pvt",
+               "private", "india", "a", "c", "ac"}
+
+
+def _brand(name):
+    name = re.sub(r"^\s*nps\s+trust\s*[-\u2013]?\s*(a/?c\.?)?\s*", "", name, flags=re.I)   # NPS: the pension fund manager
+    for p_, b_ in _BRAND_ALIAS:
+        if p_.search(name):
+            return b_
+    ws = [w for w in re.findall(r"[a-z0-9]+", name.lower()) if w not in _BRAND_SKIP]
+    return ws[0] if ws else None
+
+
+def fill_from_filing(rows, periods, frun, caps):
+    """Bloomberg over anything, except against the filing: a holder the SEBI filing lists (1% or more, the
+    public tables) never shows less than the filing in a filed quarter. The Bloomberg row of the same house
+    and category takes at least the filed count (all the house's filed rows together); a filed holder
+    Bloomberg lacks is added from the filing when its category's named total then stays within the filed
+    total (caps: category group -> Jun-26 filed shares); the open quarter carries the Jun-26 filing when
+    Bloomberg's figure is below it, as filing mode does. frun: the company's filing-mode run.
+    Returns (rows, notes)."""
+    fp = frun.get("periods") or []
+    closed = [p for p in periods if p != "Q3/2026" and p in fp]
+    jq = periods.index("Q2/2026") if "Q2/2026" in periods else None
+    oq = periods.index("Q3/2026") if "Q3/2026" in periods else None
+    filed = [r for r in frun.get("rows", []) + frun.get("extra_rows", [])
+             if r.get("tier") == "T1-filing" and (r.get("evidence") or "").startswith("SEBI public table")
+             and r.get("category") not in ("Promoter", "Individual") and not _is_prom(r)
+             and re.search(r"[A-Za-z]", r.get("holder") or "")]
+    want, names = {}, {}
+    def grp(c):
+        return "fii" if c in FOREIGN else ("dii" if c in DOM else c)
+
+    for f in filed:
+        k = (_brand(f["holder"]), f["category"])     # same house AND same kind: LIC the insurer is not LIC MF
+        if not k[0]:
+            continue
+        d = want.setdefault(k, {})
+        for p in closed:
+            j = fp.index(p)
+            v = (f["shares"][j] or 0) if j < len(f["shares"]) else 0
+            if v:
+                d[p] = d.get(p, 0) + v
+        names.setdefault(k, []).append(f)
+
+    def named(g):
+        return sum((r["shares"][jq] or 0) for r in out if jq is not None and jq < len(r["shares"])
+                   and grp(r["category"]) == g and not _is_prom(r))
+    out, notes = list(rows), []
+    for k, d in want.items():
+        if not d:
+            continue
+        cands = [r for r in out if r["category"] == k[1] and _brand(r["holder"]) == k[0]]
+        if cands:
+            host = max(cands, key=lambda r: (r["shares"][jq] or 0) if jq is not None and jq < len(r["shares"]) else 0)
+            sh = list(host["shares"]) + [None] * (len(periods) - len(host["shares"]))
+            changed = []
+            for p, v in d.items():
+                i = periods.index(p)
+                if (sh[i] or 0) < 0.97 * v:
+                    changed.append(f"{p} {sh[i] or 0:,} -> {v:,}")
+                    sh[i] = v
+            if not changed:
+                continue
+            if oq is not None and "Q2/2026" in d and not sh[oq]:     # Bloomberg has no current figure
+                changed.append(f"Q3/2026 {sh[oq] or 0:,} -> {sh[jq]:,} (the Jun-26 filing carried)")
+                sh[oq] = sh[jq]
+            out[out.index(host)] = dict(host, shares=sh, review=True, fill_note="filed count where Bloomberg shows less")
+            notes.append(f"'{host['holder']}': {'; '.join(changed)} (the filing lists "
+                         f"{'; '.join(f['holder'] for f in names[k])})")
+            continue
+        for f in names[k]:
+            sh = [(f["shares"][fp.index(p)] if fp.index(p) < len(f["shares"]) else None) if p in fp else None for p in periods]
+            v = (sh[jq] or 0) if jq is not None else 0
+            if not v:                  # not a 1% holder in the last filing: below the line, not an exit
+                continue
+            g = grp(f["category"])
+            if caps.get(g) and named(g) + v > 1.02 * caps[g]:
+                notes.append(f"not added '{f['holder']}' ({v:,}): the {g.upper()} names would exceed the filed total "
+                             f"(likely inside a Bloomberg fund house's figure)")
+                continue
+            out.append(dict(f, shares=sh, review=True, fill_note="from the SEBI filing; not in the Bloomberg export"))
+            notes.append(f"added '{f['holder']}' ({v:,} at Jun-26) from the SEBI filing: not in the Bloomberg export")
+    return out, notes
+
+
 def D(s): return dt.date.fromisoformat(s)
 
 
@@ -1068,6 +1160,13 @@ def build(ctx, sym, verbose=False):
     rows, rec = reconcile(rows, {id(r) for r in run.get("extra_rows", [])}, pidx.get("Q2/2026"),
                           int(round(jf["prom"] * jf["bf"])) if jf else 0)
     warn += [f"{sym}: holders: {x}" for x in rec]
+    frp = NSE500_RUNS / sym / "run.filing.json"
+    if (run.get("config") or {}).get("bloomberg_path") and frp.exists():
+        bfx = jf["bf"] if jf else 1
+        caps = {"fii": ((last.get("_fii_filed") or 0) + (last.get("fcos") or 0)) * bfx,
+                "dii": ((last.get("_dii_filed") or 0) + (last.get("govt") or 0)) * bfx}
+        rows, fill = fill_from_filing(rows, periods, json.loads(frp.read_text(encoding="utf-8")), caps)
+        warn += [f"{sym}: holders: {x}" for x in fill]
     use = PERIODS[:5] + (["Q3/2026"] if oq else [])
     hq_missing = [HQ[i] for i, p in enumerate(use) if p not in pidx]
     if hq_missing:
@@ -1136,9 +1235,12 @@ def build(ctx, sym, verbose=False):
 
     def H(r, n=None):
         s = [shn(r, i) for i in range(NQ if n is None else n)]
-        return dict(n=nm(r["holder"]), c=r["category"], sub=SUB.get(r["category"], r["category"]), cty=country(r),
-                    s=s, ow=((r.get("owner") or "").split(" · ")[0]), rv=bool(r.get("review")),
-                    alt=r.get("alternative") or "")
+        d = dict(n=nm(r["holder"]), c=r["category"], sub=SUB.get(r["category"], r["category"]), cty=country(r),
+                 s=s, ow=((r.get("owner") or "").split(" · ")[0]), rv=bool(r.get("review")),
+                 alt=r.get("alternative") or "")
+        if r.get("fill_note"):
+            d["note"] = r["fill_note"]
+        return d
 
     def is_prom(r):   # e.g. PSUs: 'Republic of India' is filed as promoter (Table II), categorised Government
         return r.get("alternative") == "Promoter" or "promoter & promoter group table" in (r.get("evidence") or "").lower()
