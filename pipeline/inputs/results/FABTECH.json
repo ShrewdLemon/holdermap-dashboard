@@ -1,0 +1,80 @@
+{
+ "sym": "FABTECH",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 68.01,
+   "pat": -6.13,
+   "pat_owners": -6.13,
+   "eps": -1.89,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_122013_28102025000231_iXBRL_WEB.html",
+   "shares": 32392200
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 121.48,
+   "pat": 28.11,
+   "pat_owners": 28.11,
+   "eps": 8.68,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_122444_28102025202921_iXBRL_WEB.html",
+   "shares": 32392200
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 62.76,
+   "pat": -5.68,
+   "pat_owners": -5.68,
+   "eps": -1.56,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_139727_02022026191422_iXBRL_WEB.html",
+   "shares": 44450800
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 158.52,
+   "pat": 22.06,
+   "pat_owners": 22.06,
+   "eps": 5.75,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_153347_27042026212036_iXBRL_WEB.html",
+   "shares": 44450800
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 74.98,
+   "pat": 4.21,
+   "pat_owners": 4.21,
+   "eps": 0.95,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_177936_24072026174655_iXBRL_WEB.html",
+   "shares": 44450800
+  }
+ ],
+ "bvps": 94.43,
+ "equity_cr": 419.77,
+ "bs_date": "2026-03-31",
+ "roe": 15.85,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.6,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "44,450,800 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q3 FY26: share count x1.37 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY26: owners-of-parent line blank; PAT = 22.06 used (within 15% of EPS x shares; see EPS gate)"
+ ],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS -1.56 x 4.445 cr sh = -6.9 vs pat_owners -5.68 (+22.1%); implied EPS denominator 3.641 cr sh",
+  "Q4 FY26 EPS gate: EPS 5.75 x 4.445 cr sh = 25.6 vs pat_owners 22.06 (+15.9%); implied EPS denominator 3.837 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:57+00:00"
+}

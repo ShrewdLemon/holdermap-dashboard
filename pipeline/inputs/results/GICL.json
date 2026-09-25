@@ -1,0 +1,106 @@
+{
+ "sym": "GICL",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 86.44,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 1.39,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_92686_22052025113009_iXBRL_WEB.html",
+   "shares": 49839000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 3540020.0,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 0.63,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_110724_13082025103341_iXBRL_WEB.html",
+   "shares": 111954600
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 37.57,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 0.63,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_135100_15012026144640_iXBRL_WEB.html",
+   "shares": 55977200
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 47.31,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 0.42,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_143419_14022026152206_iXBRL_WEB.html",
+   "shares": 111954600
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 54.65,
+   "pat": 1.56,
+   "pat_owners": null,
+   "eps": 0.28,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163845_29052026183924_iXBRL_WEB.html",
+   "shares": 111954600
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 37.18,
+   "pat": 1.62,
+   "pat_owners": 1.85,
+   "eps": 0.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187583_14082026184426_iXBRL_WEB.html",
+   "shares": 111954600
+  }
+ ],
+ "bvps": 8.76,
+ "equity_cr": 98.07,
+ "bs_date": "2026-03-31",
+ "roe": 1.89,
+ "roe_basis": "TTM PAT to owners / closing equity 2026-03-31 (one balance sheet only)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "111,954,600 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26: filing states face value 10; NSE face value Rs 5 used for the share count",
+  "Q1 FY26: filing's paid-up capital / face value gives 559,780,000,000 shares, inconsistent with the other quarters; 111,954,600 used (median, corporate-action adjusted)",
+  "Q1 FY26: share count x2.25 vs prior quarter (issue/buyback/merger)",
+  "Q2 FY26: filing states face value 10; NSE face value Rs 5 used for the share count",
+  "Q2 FY26: share count x0.50 vs prior quarter (issue/buyback/merger)",
+  "Q3 FY26: filing's paid-up capital / face value gives 11,195,458,800,000 shares, inconsistent with the other quarters; 111,954,600 used (median, corporate-action adjusted)",
+  "Q3 FY26: share count x2.00 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing states face value 10; NSE face value Rs 5 used for the share count",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY26: filing states face value 4209.6; NSE face value Rs 5 used for the share count",
+  "Q4 FY26: owners-of-parent line blank in filing and PAT 1.56 is >15% from EPS x shares (3.1) - minority interest likely; pat_owners left null"
+ ],
+ "flags": [
+  "Q4 FY25: pat missing",
+  "Q1 FY26: pat missing",
+  "Q2 FY26: pat missing",
+  "Q3 FY26: pat missing",
+  "Q1 FY27 EPS gate: EPS 0.15 x 11.195 cr sh = 1.7 vs pat_owners 1.85 (-9.2%) (EPS matches total PAT); implied EPS denominator 12.333 cr sh",
+  "Q1 FY26 revenue jump x40953.49 QoQ (86.44 -> 3540020.0)",
+  "Q2 FY26 revenue jump x0.00 QoQ (3540020.0 -> 37.57)"
+ ],
+ "generated": "2026-09-25T02:23:01+00:00"
+}

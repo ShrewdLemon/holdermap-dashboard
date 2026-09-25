@@ -1,0 +1,79 @@
+{
+ "sym": "BLUESTONE",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 492.68,
+   "pat": -34.74,
+   "pat_owners": -34.52,
+   "eps": -9.86,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_114012_04092025163810_iXBRL_WEB.html",
+   "shares": 35230000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 513.63,
+   "pat": -52.1,
+   "pat_owners": -51.75,
+   "eps": -3.73,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_124479_04112025230227_iXBRL_WEB.html",
+   "shares": 151320000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 748.65,
+   "pat": 68.85,
+   "pat_owners": 69.08,
+   "eps": 4.55,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_136838_22012026184805_iXBRL_WEB.html",
+   "shares": 151320000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 681.47,
+   "pat": 31.18,
+   "pat_owners": 32.03,
+   "eps": 2.05,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_180320_30072026113416_iXBRL_WEB.html",
+   "shares": 152230000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 736.85,
+   "pat": 5.96,
+   "pat_owners": 6.96,
+   "eps": 0.46,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_176213_20072026200912_iXBRL_WEB.html",
+   "shares": 152400000
+  }
+ ],
+ "bvps": 118.29,
+ "equity_cr": 1800.69,
+ "bs_date": "2026-03-31",
+ "roe": 3.25,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "152,230,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Millions' implausible; values read with factor 1e-07 to Rs cr",
+  "Q2 FY26: share count x4.30 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS -3.73 x 15.132 cr sh = -56.4 vs pat_owners -51.75 (+9.1%); implied EPS denominator 13.874 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:39+00:00"
+}

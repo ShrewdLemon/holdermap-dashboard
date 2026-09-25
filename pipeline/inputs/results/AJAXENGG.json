@@ -1,0 +1,78 @@
+{
+ "sym": "AJAXENGG",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 466.51,
+   "pat": 52.88,
+   "pat_owners": 52.88,
+   "eps": 4.62,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_108196_02082025184022_iXBRL_WEB.html",
+   "shares": 114410000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 444.81,
+   "pat": 39.07,
+   "pat_owners": 39.07,
+   "eps": 3.41,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_127369_13112025183242_iXBRL_WEB.html",
+   "shares": 114410000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 433.55,
+   "pat": 38.24,
+   "pat_owners": 38.24,
+   "eps": 3.34,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142600_12022026191533_iXBRL_WEB.html",
+   "shares": 114410000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 757.66,
+   "pat": 94.96,
+   "pat_owners": 94.96,
+   "eps": 8.3,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_158720_18052026220239_iXBRL_WEB.html",
+   "shares": 114410000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 474.6,
+   "pat": 55.6,
+   "pat_owners": 55.6,
+   "eps": 4.86,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_182862_05082026193413_iXBRL_WEB.html",
+   "shares": 114410000
+  }
+ ],
+ "bvps": 121.69,
+ "equity_cr": 1392.22,
+ "bs_date": "2026-03-31",
+ "roe": 17.23,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "114,410,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Millions' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [
+  "2025-03-31: filing not downloaded"
+ ],
+ "generated": "2026-09-25T02:22:41+00:00"
+}

@@ -1,0 +1,88 @@
+{
+ "sym": "SIMBHALS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 373.24,
+   "pat": 7.78,
+   "pat_owners": 28.31,
+   "eps": 6.86,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_145146_11032026213117_iXBRL_WEB.html",
+   "shares": 41279000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 232.47,
+   "pat": -22.43,
+   "pat_owners": -16.49,
+   "eps": -4.0,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_164151_29052026205536_iXBRL_WEB.html",
+   "shares": 41279000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 234.03,
+   "pat": -31.22,
+   "pat_owners": -26.76,
+   "eps": -6.48,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_164154_29052026205614_iXBRL_WEB.html",
+   "shares": 41279000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 219.64,
+   "pat": -14.21,
+   "pat_owners": -9.62,
+   "eps": -2.18,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_164157_29052026205630_iXBRL_WEB.html",
+   "shares": 41279000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 198.51,
+   "pat": -1.74,
+   "pat_owners": 1.88,
+   "eps": 0.53,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_174190_13072026192410_iXBRL_WEB.html",
+   "shares": 41279000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 146.11,
+   "pat": -25.35,
+   "pat_owners": -19.02,
+   "eps": -4.61,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_189930_26082026181404_iXBRL_WEB.html",
+   "shares": 41279000
+  }
+ ],
+ "bvps": -42.36,
+ "equity_cr": -174.85,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "41,279,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS -2.18 x 4.128 cr sh = -9.0 vs pat_owners -9.62 (-6.5%); implied EPS denominator 4.413 cr sh",
+  "Q4 FY26 EPS gate: EPS 0.53 x 4.128 cr sh = 2.2 vs pat_owners 1.88 (+16.4%); implied EPS denominator 3.547 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:09+00:00"
+}

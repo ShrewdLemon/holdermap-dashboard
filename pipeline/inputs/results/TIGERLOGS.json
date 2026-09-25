@@ -1,0 +1,67 @@
+{
+ "sym": "TIGERLOGS",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 168.73,
+   "pat": 8.62,
+   "pat_owners": 8.62,
+   "eps": 0.83,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129704_28112025154506_iXBRL_WEB.html",
+   "shares": 105725000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 139.02,
+   "pat": 5.94,
+   "pat_owners": 5.94,
+   "eps": 0.58,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142362_12022026163318_iXBRL_WEB.html",
+   "shares": 105725000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 162.55,
+   "pat": 2.22,
+   "pat_owners": 2.22,
+   "eps": 0.22,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_162381_27052026212826_iXBRL_WEB.html",
+   "shares": 105725000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 152.53,
+   "pat": 2.17,
+   "pat_owners": 2.17,
+   "eps": 0.23,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_194116_15092026160337_iXBRL_WEB.html",
+   "shares": 105725000
+  }
+ ],
+ "bvps": 15.13,
+ "equity_cr": 159.98,
+ "bs_date": "2026-03-31",
+ "roe": 12.15,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "105,725,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q4 FY26: filing states face value 1057.25; NSE face value Rs 1 used for the share count"
+ ],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 0.23 x 10.572 cr sh = 2.4 vs pat_owners 2.17 (+12.1%); implied EPS denominator 9.435 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:01+00:00"
+}

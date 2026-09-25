@@ -1,0 +1,33 @@
+{
+ "sym": "MERCURYEV",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 33.38,
+   "pat": 1.56,
+   "pat_owners": 1.65,
+   "eps": null,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186706_13082026180726_iXBRL_WEB.html",
+   "shares": 189973000
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "Q1 FY27: filing reports EPS 0 with pat_owners 1.65 - EPS set to null (not reported)",
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:22:56+00:00"
+}

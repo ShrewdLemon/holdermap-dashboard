@@ -1,0 +1,76 @@
+{
+ "sym": "BELLACASA",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 89.91,
+   "pat": 4.7,
+   "pat_owners": 4.7,
+   "eps": 3.51,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_112496_25082025152312_iXBRL_WEB.html",
+   "shares": 13387500
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 126.03,
+   "pat": 6.41,
+   "pat_owners": 6.41,
+   "eps": 4.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_125475_09112025144609_iXBRL_WEB.html",
+   "shares": 13387500
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 89.81,
+   "pat": 4.45,
+   "pat_owners": 4.45,
+   "eps": 3.33,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141157_07022026212316_iXBRL_WEB.html",
+   "shares": 13387500
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 110.65,
+   "pat": 4.57,
+   "pat_owners": 4.57,
+   "eps": 3.5,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161673_26052026221422_iXBRL_WEB.html",
+   "shares": 13387500
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 119.94,
+   "pat": 2.54,
+   "pat_owners": 2.54,
+   "eps": 1.89,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186901_13082026192546_iXBRL_WEB.html",
+   "shares": 13387500
+  }
+ ],
+ "bvps": 124.81,
+ "equity_cr": 167.09,
+ "bs_date": "2026-03-31",
+ "roe": 11.06,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "13,387,500 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:23:00+00:00"
+}

@@ -1,0 +1,43 @@
+{
+ "sym": "CEINSYS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 170.71,
+   "pat": 37.17,
+   "pat_owners": 37.17,
+   "eps": 20.29,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_157645_14052026191757_iXBRL_WEB.html",
+   "shares": 20940000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 157.79,
+   "pat": 30.95,
+   "pat_owners": 30.95,
+   "eps": 14.78,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185107_11082026171430_iXBRL_WEB.html",
+   "shares": 20940000
+  }
+ ],
+ "bvps": 321.42,
+ "equity_cr": 673.06,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "20,940,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS 20.29 x 2.094 cr sh = 42.5 vs pat_owners 37.17 (+14.3%); implied EPS denominator 1.832 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:51+00:00"
+}

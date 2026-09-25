@@ -1,0 +1,76 @@
+{
+ "sym": "LOTUSDEV",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 61.32,
+   "pat": 25.79,
+   "pat_owners": 25.61,
+   "eps": 0.59,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_112721_26082025201519_iXBRL_WEB.html",
+   "shares": 435910000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 176.11,
+   "pat": 46.36,
+   "pat_owners": 46.15,
+   "eps": 0.98,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_125697_10112025195138_iXBRL_WEB.html",
+   "shares": 488720000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 224.03,
+   "pat": 70.23,
+   "pat_owners": 69.75,
+   "eps": 1.43,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141254_09022026170422_iXBRL_WEB.html",
+   "shares": 488720000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 307.5,
+   "pat": 100.92,
+   "pat_owners": 95.58,
+   "eps": 1.96,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_157078_12052026211732_iXBRL_WEB.html",
+   "shares": 488720000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 132.35,
+   "pat": 45.72,
+   "pat_owners": 45.46,
+   "eps": 0.93,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_181671_03082026144224_iXBRL_WEB.html",
+   "shares": 488720000
+  }
+ ],
+ "bvps": 39.1,
+ "equity_cr": 1911.08,
+ "bs_date": "2026-03-31",
+ "roe": 14.05,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.3,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "488,720,000 shares: paid-up equity capital / face value Rs 1 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Millions' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:39+00:00"
+}

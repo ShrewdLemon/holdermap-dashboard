@@ -1,0 +1,74 @@
+{
+ "sym": "ANNAPURNA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 204.21,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 4.56,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_96195_29052025215152_iXBRL_WEB.html",
+   "shares": 21820000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 249.5,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 7.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_121294_23102025164912_iXBRL_WEB.html",
+   "shares": 21820000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 270.59,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 7.32,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_163986_29052026194733_iXBRL_WEB.html",
+   "shares": 21820000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 126.76,
+   "pat": 9.81,
+   "pat_owners": 9.81,
+   "eps": 4.5,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_188333_18082026195446_iXBRL_WEB.html",
+   "shares": 21820000
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT = 9.81 used (EPS-consistent)",
+  "Q2 FY26: filing's quarter column states period 2025-04-01 to 2025-09-30 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY26: filing's quarter column states period 2025-10-01 to 2026-03-31 - revenue is quarter-sized, treated as a date typo"
+ ],
+ "flags": [
+  "Q4 FY25: pat missing",
+  "Q2 FY26: pat missing",
+  "Q4 FY26: pat missing",
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

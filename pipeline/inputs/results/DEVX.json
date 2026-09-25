@@ -1,0 +1,81 @@
+{
+ "sym": "DEVX",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 55.63,
+   "pat": 0.14,
+   "pat_owners": 0.13,
+   "eps": 0.02,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_118773_07102025201654_iXBRL_WEB.html",
+   "shares": 66687500
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 51.84,
+   "pat": 1.75,
+   "pat_owners": 1.77,
+   "eps": 0.26,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_134451_12012026133049_iXBRL_WEB.html",
+   "shares": 90187500
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 59.2,
+   "pat": -1.01,
+   "pat_owners": -0.99,
+   "eps": -0.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_139559_31012026171724_iXBRL_WEB.html",
+   "shares": 90187500
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 59.26,
+   "pat": 7.96,
+   "pat_owners": 7.9,
+   "eps": 0.98,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159011_19052026200248_iXBRL_WEB.html",
+   "shares": 90187500
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 53.77,
+   "pat": 1.5,
+   "pat_owners": 1.48,
+   "eps": 0.16,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186084_12082026191234_iXBRL_WEB.html",
+   "shares": 94632000
+  }
+ ],
+ "bvps": 20.58,
+ "equity_cr": 185.59,
+ "bs_date": "2026-03-31",
+ "roe": 5.52,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "90,187,500 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q2 FY26: share count x1.35 vs prior quarter (issue/buyback/merger)",
+  "balance-sheet equity share capital implies 108,075,000 shares vs 90,187,500 from the results page (treasury shares / unit slip)"
+ ],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.26 x 9.019 cr sh = 2.3 vs pat_owners 1.77 (+32.5%); implied EPS denominator 6.808 cr sh",
+  "Q3 FY26 EPS gate: EPS -0.15 x 9.019 cr sh = -1.4 vs pat_owners -0.99 (+36.6%); implied EPS denominator 6.600 cr sh",
+  "Q4 FY26 EPS gate: EPS 0.98 x 9.019 cr sh = 8.8 vs pat_owners 7.9 (+11.9%); implied EPS denominator 8.061 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:00+00:00"
+}

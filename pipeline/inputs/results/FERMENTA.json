@@ -1,0 +1,32 @@
+{
+ "sym": "FERMENTA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 121.82,
+   "pat": 9.53,
+   "pat_owners": 9.74,
+   "eps": 3.4,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185505_11082026221721_iXBRL_WEB.html",
+   "shares": 28680600
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 3.75,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

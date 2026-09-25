@@ -1,0 +1,54 @@
+{
+ "sym": "POWERICA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 762.93,
+   "pat": 97.65,
+   "pat_owners": 95.83,
+   "eps": 8.83,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_151984_21042026213154_iXBRL_WEB.html",
+   "shares": 108820000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 801.15,
+   "pat": 45.11,
+   "pat_owners": 42.51,
+   "eps": 3.82,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_178146_24072026231014_iXBRL_WEB.html",
+   "shares": 126560000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 780.11,
+   "pat": 64.43,
+   "pat_owners": 63.07,
+   "eps": 4.99,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_184069_07082026225116_iXBRL_WEB.html",
+   "shares": 126560000
+  }
+ ],
+ "bvps": 157.32,
+ "equity_cr": 1991.1,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "126,560,000 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS 3.82 x 12.656 cr sh = 48.3 vs pat_owners 42.51 (+13.7%); implied EPS denominator 11.128 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:41+00:00"
+}

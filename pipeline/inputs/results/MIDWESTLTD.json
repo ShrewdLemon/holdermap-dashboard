@@ -1,0 +1,65 @@
+{
+ "sym": "MIDWESTLTD",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 158.69,
+   "pat": 27.71,
+   "pat_owners": 27.78,
+   "eps": 8.19,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_127023_12112025231156_iXBRL_WEB.html",
+   "shares": 33812000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 128.86,
+   "pat": 17.36,
+   "pat_owners": 18.31,
+   "eps": 4.87,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_142729_12022026212415_iXBRL_WEB.html",
+   "shares": 36160000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 215.81,
+   "pat": 37.02,
+   "pat_owners": 35.55,
+   "eps": 10.24,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161590_26052026205316_iXBRL_WEB.html",
+   "shares": 36160000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 191.84,
+   "pat": 31.04,
+   "pat_owners": 29.4,
+   "eps": 8.58,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185630_12082026150432_iXBRL_WEB.html",
+   "shares": 36160000
+  }
+ ],
+ "bvps": 266.14,
+ "equity_cr": 962.37,
+ "bs_date": "2026-03-31",
+ "roe": 13.57,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "36,160,000 shares: paid-up equity capital / face value Rs 5 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 8.58 x 3.616 cr sh = 31.0 vs pat_owners 29.4 (+5.5%) (EPS matches total PAT); implied EPS denominator 3.427 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:45+00:00"
+}

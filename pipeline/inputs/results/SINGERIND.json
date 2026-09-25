@@ -1,0 +1,41 @@
+{
+ "sym": "SINGERIND",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 166.32,
+   "pat": 5.9,
+   "pat_owners": 5.9,
+   "eps": 0.95,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_162438_27052026225620_iXBRL_WEB.html",
+   "shares": 62200000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 144.55,
+   "pat": 3.0,
+   "pat_owners": 3.0,
+   "eps": 0.48,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186040_12082026185416_iXBRL_WEB.html",
+   "shares": 62200000
+  }
+ ],
+ "bvps": 28.66,
+ "equity_cr": 178.25,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.4,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "62,200,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:22:58+00:00"
+}

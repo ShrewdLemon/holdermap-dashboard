@@ -1,0 +1,68 @@
+{
+ "sym": "EXCELSOFT",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 64.61,
+   "pat": 10.61,
+   "pat_owners": 10.61,
+   "eps": 1.05,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_130483_12122025205209_iXBRL_WEB.html",
+   "shares": 100084000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 71.03,
+   "pat": 10.3,
+   "pat_owners": 10.3,
+   "eps": 0.98,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141030_07022026010750_iXBRL_WEB.html",
+   "shares": 115084000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 81.16,
+   "pat": 16.6,
+   "pat_owners": 16.6,
+   "eps": 1.5,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_178795_27072026190716_iXBRL_WEB.html",
+   "shares": 115084000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 80.26,
+   "pat": 9.23,
+   "pat_owners": 9.23,
+   "eps": 0.8,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_184072_07082026230425_iXBRL_WEB.html",
+   "shares": 115084000
+  }
+ ],
+ "bvps": 50.25,
+ "equity_cr": 578.33,
+ "bs_date": "2026-03-31",
+ "roe": 9.68,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "115,084,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 9.23 used (EPS-consistent)",
+  "Q4 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 16.60 used (EPS-consistent)"
+ ],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS 0.98 x 11.508 cr sh = 11.3 vs pat_owners 10.3 (+9.5%); implied EPS denominator 10.510 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:54+00:00"
+}

@@ -1,0 +1,33 @@
+{
+ "sym": "CORDELIA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 190.11,
+   "pat": 22.77,
+   "pat_owners": 22.77,
+   "eps": 3.49,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_177008_22072026182423_iXBRL_WEB.html",
+   "shares": 72395000
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 3.49 x 7.239 cr sh = 25.3 vs pat_owners 22.77 (+11.0%); implied EPS denominator 6.524 cr sh",
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:22:40+00:00"
+}

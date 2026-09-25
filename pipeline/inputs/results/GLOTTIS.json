@@ -1,0 +1,81 @@
+{
+ "sym": "GLOTTIS",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 168.16,
+   "pat": 11.94,
+   "pat_owners": 11.94,
+   "eps": 1.49,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_122726_29102025162331_iXBRL_WEB.html",
+   "scope": "Standalone",
+   "shares": 80000000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 214.71,
+   "pat": 12.36,
+   "pat_owners": 12.36,
+   "eps": 1.54,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_129717_28112025170241_iXBRL_WEB.html",
+   "scope": "Standalone",
+   "shares": 80000000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 143.87,
+   "pat": 2.7,
+   "pat_owners": 2.7,
+   "eps": 0.29,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143274_13022026204426_iXBRL_WEB.html",
+   "scope": "Standalone",
+   "shares": 92403000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 195.85,
+   "pat": 10.67,
+   "pat_owners": 10.67,
+   "eps": 1.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_161044_25052026211432_iXBRL_WEB.html",
+   "shares": 92403000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 234.51,
+   "pat": 10.68,
+   "pat_owners": 10.69,
+   "eps": 1.16,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_184729_10082026191149_iXBRL_WEB.html",
+   "shares": 92403000
+  }
+ ],
+ "bvps": 30.4,
+ "equity_cr": 280.94,
+ "bs_date": "2026-03-31",
+ "roe": 15.23,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "92,403,000 shares: paid-up equity capital / face value Rs 2 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26: Consolidated filing absent - Standalone used",
+  "Q2 FY26: Consolidated filing absent - Standalone used",
+  "Q3 FY26: Consolidated filing absent - Standalone used"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:57+00:00"
+}

@@ -1,0 +1,52 @@
+{
+ "sym": "BUILDPRO",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 1666.25,
+   "pat": 25.0,
+   "pat_owners": 24.95,
+   "eps": 10.31,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_141917_11022026162826_iXBRL_WEB.html",
+   "shares": 24250000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 1996.3,
+   "pat": 41.5,
+   "pat_owners": 41.36,
+   "eps": 17.12,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_158983_19052026193242_iXBRL_WEB.html",
+   "shares": 24250000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 1889.79,
+   "pat": 35.78,
+   "pat_owners": 35.61,
+   "eps": 14.76,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_183075_06082026150508_iXBRL_WEB.html",
+   "shares": 24250000
+  }
+ ],
+ "bvps": 225.01,
+ "equity_cr": 545.64,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 5.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "24,250,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-25T02:22:46+00:00"
+}

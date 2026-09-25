@@ -1,0 +1,60 @@
+{
+ "sym": "INNOVISION",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 233.26,
+   "pat": 4.37,
+   "pat_owners": 4.47,
+   "eps": 2.97,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155371_04052026115015_iXBRL_WEB.html",
+   "shares": 18900000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 267.52,
+   "pat": 11.87,
+   "pat_owners": 11.94,
+   "eps": 5.86,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_172119_01072026203918_iXBRL_WEB.html",
+   "shares": 23813000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 263.81,
+   "pat": -7.36,
+   "pat_owners": -7.04,
+   "eps": -2.85,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_185994_12082026183544_iXBRL_WEB.html",
+   "shares": 18900000
+  }
+ ],
+ "bvps": 123.55,
+ "equity_cr": 294.2,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "23,813,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY27: filing's paid-up capital / face value gives 2,318,000 shares, inconsistent with the other quarters; 18,900,000 used (median, corporate-action adjusted)",
+  "Q1 FY27: share count x0.79 vs prior quarter (issue/buyback/merger)",
+  "Q4 FY26: share count x1.26 vs prior quarter (issue/buyback/merger)"
+ ],
+ "flags": [
+  "Q3 FY26 EPS gate: EPS 2.97 x 1.890 cr sh = 5.6 vs pat_owners 4.47 (+25.6%); implied EPS denominator 1.505 cr sh",
+  "Q4 FY26 EPS gate: EPS 5.86 x 2.381 cr sh = 14.0 vs pat_owners 11.94 (+16.9%); implied EPS denominator 2.038 cr sh",
+  "Q1 FY27 EPS gate: EPS -2.85 x 1.890 cr sh = -5.4 vs pat_owners -7.04 (-23.5%); implied EPS denominator 2.470 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:57+00:00"
+}

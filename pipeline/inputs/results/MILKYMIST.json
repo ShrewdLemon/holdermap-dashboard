@@ -1,0 +1,32 @@
+{
+ "sym": "MILKYMIST",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 973.45,
+   "pat": 64.68,
+   "pat_owners": 64.45,
+   "eps": 1.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_190810_31082026185515_iXBRL_WEB.html",
+   "shares": 642829000
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

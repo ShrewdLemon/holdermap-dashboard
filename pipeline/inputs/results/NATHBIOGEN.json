@@ -1,0 +1,99 @@
+{
+ "sym": "NATHBIOGEN",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 51.97,
+   "pat": 1.48,
+   "pat_owners": null,
+   "eps": 1.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_88541_30042025143822_iXBRL_WEB.html",
+   "shares": 19004000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 283.7,
+   "pat": 37.28,
+   "pat_owners": 37.28,
+   "eps": 19.58,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_102521_11072025165435_iXBRL_WEB.html",
+   "shares": 19004000
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 43.85,
+   "pat": 2.75,
+   "pat_owners": 2.75,
+   "eps": 1.4,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_127344_13112025181605_iXBRL_WEB.html",
+   "shares": 19004000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 65.96,
+   "pat": 1.6,
+   "pat_owners": 1.6,
+   "eps": 0.84,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_139524_31012026160116_iXBRL_WEB.html",
+   "shares": 19004000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 51.59,
+   "pat": -0.01,
+   "pat_owners": 0.0,
+   "eps": -0.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_155420_04052026171739_iXBRL_WEB.html",
+   "shares": 19004000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 328.4,
+   "pat": 32.26,
+   "pat_owners": 32.26,
+   "eps": 16.98,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_194728_18092026150446_iXBRL_WEB.html",
+   "shares": 19004000
+  }
+ ],
+ "bvps": 358.06,
+ "equity_cr": 680.46,
+ "bs_date": "2026-03-31",
+ "roe": 5.38,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 2.0,
+ "dps_basis": "1 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "19,004,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q1 FY26 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q1 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 37.28 used (EPS-consistent)",
+  "Q1 FY27: owners-of-parent line blank; PAT - NCI (both as filed) = 32.26 used (EPS-consistent)",
+  "Q2 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 2.75 used (EPS-consistent)",
+  "Q3 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 1.60 used (EPS-consistent)",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - revenue is quarter-sized, treated as a date typo",
+  "Q4 FY25: owners-of-parent line blank in filing and PAT 1.48 is >15% from EPS x shares (2.2) - minority interest likely; pat_owners left null"
+ ],
+ "flags": [
+  "Q4 FY26 EPS gate: EPS -0.79 but pat_owners 0.0",
+  "Q1 FY26 revenue jump x5.46 QoQ (51.97 -> 283.7)",
+  "Q2 FY26 revenue jump x0.15 QoQ (283.7 -> 43.85)",
+  "Q1 FY27 revenue jump x6.37 QoQ (51.59 -> 328.4)"
+ ],
+ "generated": "2026-09-25T02:23:01+00:00"
+}

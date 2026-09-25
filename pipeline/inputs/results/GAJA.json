@@ -1,0 +1,33 @@
+{
+ "sym": "GAJA",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 15.64,
+   "pat": 27.22,
+   "pat_owners": 26.82,
+   "eps": 9.5,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_193675_10092026182314_iXBRL_WEB.html",
+   "shares": 112885200
+  }
+ ],
+ "bvps": null,
+ "equity_cr": null,
+ "bs_date": null,
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": null,
+ "notes": [],
+ "flags": [
+  "Q1 FY27 EPS gate: EPS 9.5 x 11.289 cr sh = 107.2 vs pat_owners 26.82 (+299.9%); implied EPS denominator 2.823 cr sh",
+  "no statement of assets & liabilities parsed - BVPS/ROE null"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

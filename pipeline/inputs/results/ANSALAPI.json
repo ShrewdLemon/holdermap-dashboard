@@ -1,0 +1,66 @@
+{
+ "sym": "ANSALAPI",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 156.07,
+   "pat": -1433.91,
+   "pat_owners": -1433.91,
+   "eps": -91.1,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_125194_07112025182918_iXBRL_WEB.html",
+   "shares": 157400000
+  },
+  {
+   "q": "Q1 FY26",
+   "d": "Jun-25",
+   "end": "2025-06-30",
+   "rev": 12.77,
+   "pat": 13.22,
+   "pat_owners": 13.22,
+   "eps": 0.84,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_130554_15122025181641_iXBRL_WEB.html",
+   "shares": 157404800
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 7.16,
+   "pat": -0.63,
+   "pat_owners": -0.63,
+   "eps": 0.04,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_167554_17062026205410_iXBRL_WEB.html",
+   "shares": 157400000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 16.77,
+   "pat": 30.16,
+   "pat_owners": 30.16,
+   "eps": 1.92,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_167555_17062026205908_iXBRL_WEB.html",
+   "shares": 157400000
+  }
+ ],
+ "bvps": -114.58,
+ "equity_cr": -1803.49,
+ "bs_date": "2025-09-30",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "157,400,000 shares: paid-up equity capital / face value Rs 5 at 2025-09-30 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.04 x 15.740 cr sh = 0.6 vs pat_owners -0.63 (-199.9%) (sign differs); implied EPS denominator -15.750 cr sh",
+  "Q1 FY26 revenue jump x0.08 QoQ (156.07 -> 12.77)"
+ ],
+ "generated": "2026-09-25T02:23:08+00:00"
+}

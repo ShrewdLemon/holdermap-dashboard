@@ -1,0 +1,66 @@
+{
+ "sym": "ADVENTHTL",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 76.98,
+   "pat": -1.21,
+   "pat_owners": 0.3,
+   "eps": 0.01,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_134756_13012026172614_iXBRL_WEB.html",
+   "shares": 53942900
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 114.72,
+   "pat": 30.44,
+   "pat_owners": 28.49,
+   "eps": 0.53,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_140316_04022026204329_iXBRL_WEB.html",
+   "shares": 53942900
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 115.41,
+   "pat": 3.67,
+   "pat_owners": 2.87,
+   "eps": 0.53,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_159062_19052026211819_iXBRL_WEB.html",
+   "shares": 53942900
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 80.52,
+   "pat": 6.75,
+   "pat_owners": 6.17,
+   "eps": 1.14,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_183330_06082026191902_iXBRL_WEB.html",
+   "shares": 53942900
+  }
+ ],
+ "bvps": 167.66,
+ "equity_cr": 904.4,
+ "bs_date": "2026-03-31",
+ "roe": 4.27,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "53,942,900 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [
+  "Q2 FY26 EPS gate: EPS 0.01 x 5.394 cr sh = 0.1 vs pat_owners 0.3 (-82.0%); implied EPS denominator 30.000 cr sh",
+  "Q3 FY26 EPS gate: EPS 0.53 x 5.394 cr sh = 2.9 vs pat_owners 28.49 (-90.0%); implied EPS denominator 53.755 cr sh"
+ ],
+ "generated": "2026-09-25T02:22:56+00:00"
+}

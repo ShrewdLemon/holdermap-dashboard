@@ -1,0 +1,83 @@
+{
+ "sym": "LEMERITE",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY25",
+   "d": "Mar-25",
+   "end": "2025-03-31",
+   "rev": 217.86,
+   "pat": null,
+   "pat_owners": null,
+   "eps": 1.33,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_NONINDAS_95340_28052025224646_iXBRL_WEB.html",
+   "shares": 24298600
+  },
+  {
+   "q": "Q2 FY26",
+   "d": "Sep-25",
+   "end": "2025-09-30",
+   "rev": 98.21,
+   "pat": 4.36,
+   "pat_owners": 4.38,
+   "eps": 1.79,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_130311_10122025163438_iXBRL_WEB.html",
+   "shares": 24360000
+  },
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 73.49,
+   "pat": 2.05,
+   "pat_owners": 2.12,
+   "eps": 0.82,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_143267_13022026203410_iXBRL_WEB.html",
+   "shares": 25033600
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 75.31,
+   "pat": 0.86,
+   "pat_owners": 0.8,
+   "eps": 0.35,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_163662_29052026171842_iXBRL_WEB.html",
+   "shares": 25033600
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 89.75,
+   "pat": -4.58,
+   "pat_owners": -4.51,
+   "eps": 0.36,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_187463_14082026175301_iXBRL_WEB.html",
+   "shares": 125168000
+  }
+ ],
+ "bvps": 10.78,
+ "equity_cr": 134.93,
+ "bs_date": "2026-03-31",
+ "roe": 2.14,
+ "roe_basis": "TTM PAT to owners Q2 FY26-Q1 FY27 / avg equity to owners (Sep-25, Mar-26)",
+ "dps_ttm": 0.0,
+ "dps_basis": "0 dividend(s) with ex-date 2025-09-25 to 2026-09-25 (NSE corporate actions, file of 2026-09-20); no bonus/split after these ex-dates",
+ "shares_basis": "125,168,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions), x5 for bonus/split after that date (current basis)",
+ "notes": [
+  "BVPS on current share basis (x5 bonus/split after 2026-03-31)",
+  "Q1 FY27: share count x5.00 vs prior quarter = corporate action x5",
+  "Q4 FY25 units: declared rounding 'Lakhs' implausible; values read with factor 1e-07 to Rs cr"
+ ],
+ "flags": [
+  "Q4 FY25: pat missing",
+  "Q4 FY25: filing's quarter column states period 2024-10-01 to 2025-03-31 - may hold year-to-date figures",
+  "Q4 FY26 EPS gate: EPS 0.35 x 2.503 cr sh = 0.9 vs pat_owners 0.8 (+9.5%) (EPS matches total PAT); implied EPS denominator 2.286 cr sh",
+  "Q1 FY27 EPS gate: EPS 0.36 x 12.517 cr sh = 4.5 vs pat_owners -4.51 (-199.9%) (sign differs); implied EPS denominator -12.528 cr sh"
+ ],
+ "generated": "2026-09-25T02:23:02+00:00"
+}

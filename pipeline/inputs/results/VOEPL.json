@@ -1,0 +1,43 @@
+{
+ "sym": "VOEPL",
+ "scope": "Consolidated",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 316.81,
+   "pat": 4.45,
+   "pat_owners": 4.45,
+   "eps": 1.46,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_190530_29082026154914_iXBRL_WEB.html",
+   "shares": 31833100
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 375.88,
+   "pat": 9.05,
+   "pat_owners": 9.03,
+   "eps": 2.84,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_186051_12082026185816_iXBRL_WEB.html",
+   "shares": 31833100
+  }
+ ],
+ "bvps": 129.5,
+ "equity_cr": 412.22,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "31,833,100 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [
+  "Q4 FY26: owners-of-parent line blank; PAT - NCI (both as filed) = 4.45 used (EPS-consistent)"
+ ],
+ "flags": [],
+ "generated": "2026-09-25T02:22:50+00:00"
+}
