@@ -55,7 +55,7 @@ if (LP && LP.univ) U.forEach(u => { const x = LP.univ[u.s]; if (x) { u.p = x[0];
 U.sort((a, b) => b.m - a.m);
 const sdate = s => { if (!s) return '—'; const p = s.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; };
 const AR_META = { s: 'ANANDRATHI', n: 'Anand Rathi Wealth Ltd', isin: 'INE463V01026', bse: '543415', sector: 'Financial Services', bb: true, oq: true };
-let NEGEQ, CO, NOW, OQ, OQP, QE, BVPS, DPS, ROE, TTM, TTMP, MCAP, SHN, Y1, T, TOT, DEN, FF, PX, HQ, GROUPS, EQ, EQd, REV, PAT, PATO, EPSR, EPSA, EPSADJ, EPS, RET, AR;
+let CO, NOW, OQ, OQP, QE, BVPS, DPS, TTM, TTMP, MCAP, SHN, Y1, T, TOT, DEN, FF, PX, HQ, GROUPS, EQ, EQd, REV, PAT, PATO, EPSR, EPSA, EPSADJ, EPS, RET, AR;
 function setCompany(sym) {
   D = window.__CO__[sym]; S.sym = sym; store.set('sym', sym);
   if (D.snapshot) return setSnapshot(sym);
@@ -85,7 +85,6 @@ function setCompany(sym) {
   const val = D.val || {};
   BVPS = val.bvps != null ? val.bvps : AR ? 60.1 : null;   // latest book value per share
   DPS = val.dps != null ? val.dps : AR ? 6.5 : null;        // trailing dividend per share, bonus-adjusted
-  ROE = val.roe != null ? val.roe : AR ? 46.7 : null;
   T = D.trend; TOT = D.tot; DEN = T[T.length - 1].den || TOT; FF = D.ff; PX = D.px; HQ = D.hq;
   GROUPS = { fii: D.fii || [], dii: D.dii || [], ind: D.ind || [] };
   SHN = (CO.shares_now || TOT) * MULT;  // NSE's current share count when known (a merger or QIP after the last filing)
@@ -120,9 +119,6 @@ function setCompany(sym) {
     const pre = (k, name) => b[k + '_pre'] ? name + ' starts ' + dfmt(b[k + '_pre']) + ', after this date' : 'No ' + name + ' close on file for ' + dfmt(b.d);
     return { k: b.k, l: b.l, base: b.d, s: rcalc(NOW.c, b.s, b.yrs), sraw: b.sraw, ssrc: b.ssrc, n50: rcalc(NOW.n50, b.n50, b.yrs), n50b: b.n50, n500, n500b: b.n500, n500src: b.n500 != null ? 'close ' + fin(b.n500, 2) + ' → ' + fin(NOW.n500, 2) : ov ? ov[1] : null, n50na: pre('n50', 'Nifty 50'), n500na: pre('n500', 'Nifty 500'), note: b.note || '' };
   });
-  const eq = val.equity_cr != null ? val.equity_cr : BVPS != null ? BVPS * SHN / 1e7 : null;
-  if (ROE == null && TTMP && eq > 0) { ROE = Math.round(1000 * TTMP / eq) / 10; val.roe_basis = 'TTM PAT to owners ÷ equity at ' + (val.bs_date ? dfmt(val.bs_date) : 'the latest balance sheet'); }
-  NEGEQ = eq != null && eq < 0;
   document.title = CO.s + ' · holdermap';
 }
 function setSnapshot(sym) {
@@ -133,8 +129,8 @@ function setSnapshot(sym) {
   const ser = D.px_series, lr = ser[ser.length - 1];
   NOW = L ? Object.assign({}, L.now, LP.ix.now) : { d: lr[0], c: lr[1], prev: CO.ipo_price || lr[1], prevd: 'IPO' };
   const v = D.val || {};
-  BVPS = v.bvps; DPS = v.dps; ROE = v.roe; TTMP = v.ttm_pat; TTM = null; SHN = CO.shares_now || D.tot; TOT = D.tot;
-  MCAP = SHN * NOW.c / 1e7; NEGEQ = false; T = []; RET = [];
+  BVPS = v.bvps; DPS = v.dps; TTMP = v.ttm_pat; TTM = null; SHN = CO.shares_now || D.tot; TOT = D.tot;
+  MCAP = SHN * NOW.c / 1e7; T = []; RET = [];
   document.title = CO.s + ' · holdermap';
 }
 const pct = (a, b) => 100 * a / b;
@@ -198,7 +194,7 @@ function cu(to, dec, pre, suf) { return `<span data-cu="${to}" data-dec="${dec |
 function snapHeader() {
   const w = S.watch.includes(CO.s), I = D.ipo || {}, P = D.pattern || {};
   const vsIpo = I.price ? 100 * (NOW.c / I.price - 1) : null;
-  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (SHN / 1e7).toFixed(2) + ' cr shares', 'overview'], ['P/E (TTM)', TTMP > 0 ? (MCAP / TTMP).toFixed(1) + '×' : '—', 'TTM PAT ₹' + fin(TTMP || 0, 1) + ' cr', 'overview'], ['P/B', BVPS > 0 ? (NOW.c / BVPS).toFixed(1) + '×' : '—', BVPS ? 'BVPS ₹' + BVPS.toFixed(1) + ' (' + dfmt(D.val.bs_date) + ')' : '', 'overview'], ['Dividend yield', DPS != null ? (100 * DPS / NOW.c).toFixed(2) + '%' : '—', DPS != null ? 'FY26 DPS ₹' + DPS.toFixed(2) + ' incl. special' : '', 'overview'], ['ROE', ROE != null ? ROE.toFixed(1) + '%' : '—', 'TTM, avg equity', 'overview'], ['IPO price', '₹' + fin(I.price || 0, 2), (vsIpo == null ? '' : sgn(vsIpo, 1, '%') + ' vs issue price'), 'overview'], ['Shareholders', cu(P.holders_count || 0), 'Before listing, ' + dfmt(P.date), 'holders']];
+  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (SHN / 1e7).toFixed(2) + ' cr shares', 'overview'], ['IPO price', '₹' + fin(I.price || 0, 2), (vsIpo == null ? '' : sgn(vsIpo, 1, '%') + ' vs issue price'), 'overview'], ['Shareholders', cu(P.holders_count || 0), 'Before listing, ' + dfmt(P.date), 'holders']];
   const tabs = [['overview', 'Overview'], ['holders', 'Shareholding'], ['flows', 'Buyers &amp; sellers'], ['evidence', 'Sources']];
   return `<section class="co" aria-label="Company summary"><div class="wrap">
   <div class="crumb">${coCrumb(CO.s, CO.sector)}</div>
@@ -258,7 +254,7 @@ function snapEvidence() {
 }
 function companyHeader() {
   const w = S.watch.includes(CO.s), L5 = T[T.length - 1], L4 = T[T.length - 2];
-  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (QE && (QE.r || QE.a) ? sgn(100 * (NOW.c / (QE.r || QE.a) - 1), 1, '%') + ' since ' + sdate(QE.d) : 'No close at the last quarter-end'), 'overview'], ['P/E (TTM)', TTMP > 0 ? (MCAP / TTMP).toFixed(1) + '×' : TTMP == null ? '—' : 'n.m.', TTMP == null ? 'Results not loaded' : 'TTM PAT ₹' + fin(TTMP, 1) + ' cr', 'overview'], ['P/B', BVPS > 0 ? (NOW.c / BVPS).toFixed(1) + '×' : BVPS < 0 ? 'n.m.' : '—', BVPS ? 'BVPS ₹' + BVPS.toFixed(1) : 'Book value not on file', 'overview'], ['Dividend yield', DPS != null ? (100 * DPS / NOW.c).toFixed(2) + '%' : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', 'overview'], ['ROE', ROE != null ? ROE.toFixed(1) + '%' : NEGEQ ? 'n.m.' : '—', AR ? 'FY26, company-reported' : ROE != null ? ((D.val || {}).roe_basis || 'TTM, from filings') : NEGEQ ? 'Negative equity' : 'Not on file', 'overview'], ['Free float', (100 - pct(L5.prom, L5.den)).toFixed(2) + '%', L5.q + ' filing', 'holders'], ['Shareholders', cu(L5.nh), L4 ? sgn(100 * (L5.nh / L4.nh - 1), 1, '%') + ' ' + qoqLabel() : 'First filing ' + L5.q, 'overview']];
+  const stats = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (QE && (QE.r || QE.a) ? sgn(100 * (NOW.c / (QE.r || QE.a) - 1), 1, '%') + ' since ' + sdate(QE.d) : 'No close at the last quarter-end'), 'overview'], ['Free float', (100 - pct(L5.prom, L5.den)).toFixed(2) + '%', L5.q + ' filing', 'holders'], ['Shareholders', cu(L5.nh), L4 ? sgn(100 * (L5.nh / L4.nh - 1), 1, '%') + ' ' + qoqLabel() : 'First filing ' + L5.q, 'overview']];
   const W5 = D.w52, lo = W5.lo, hi = W5.hi;
   const tabs = [['overview', 'Overview'], ['holders', 'Shareholding'], ['flows', 'Buyers &amp; sellers'], ['evidence', 'Evidence &amp; gates']];
   return `<section class="co" aria-label="Company summary"><div class="wrap">
