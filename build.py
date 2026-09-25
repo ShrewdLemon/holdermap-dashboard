@@ -40,10 +40,22 @@ for old in co_dir.glob("*.js"):
     old.unlink()
 cos = {f.stem: f.read_text() for f in sorted((src / "co").glob("*.json"))} if (src / "co").exists() else {}
 cos.setdefault("ANANDRATHI", data)
+# Live prices (pipeline/live.py) are per company: each company's block rides in its own file, so the shared
+# prices.js stays small (asof, index closes, universe prices) however large the universe gets.
+prices_path = site / "prices.js"
+px_all = None
+if prices_path.exists():
+    raw_px = prices_path.read_text().partition("=")[2].strip().rstrip(";")
+    px_all = json.loads(raw_px) if raw_px and raw_px != "null" else None
 for sym, cjson in cos.items():
     assert "</script" not in cjson
-    (co_dir / f"{sym}.js").write_text(f"(window.__CO__=window.__CO__||{{}})[{json.dumps(sym)}]=" + cjson + ";\n")
-ar = cos["ANANDRATHI"]
+    live = json.dumps((px_all or {}).get("co", {}).get(sym), separators=(",", ":")) if px_all else "null"
+    (co_dir / f"{sym}.js").write_text(f"(window.__CO__=window.__CO__||{{}})[{json.dumps(sym)}]=" + cjson + ";"
+                                      + f"window.__CO__[{json.dumps(sym)}].live=" + live + ";\n")
+if px_all is not None:
+    slim = {k: v for k, v in px_all.items() if k != "co"}
+    prices_path.write_text("window.__PX__ = " + json.dumps(slim, separators=(",", ":")) + ";\n")
+ar = cos["ANANDRATHI"][:-1] + ',"live":' + (json.dumps(px_all["co"].get("ANANDRATHI")) if px_all else "null") + "}"
 prices = site / "prices.js"
 if not prices.exists():
     prices.write_text("window.__PX__ = null;\n")

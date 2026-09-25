@@ -7,3 +7,4 @@ cache/
 dashboard/
 .claude/
 pipeline/inputs/extra/*/raw/
+pipeline/inputs/sample_universe/
