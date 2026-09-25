@@ -64,6 +64,8 @@ def bse_figures(code):
 
 
 def check(sym, d):
+    if d.get("snapshot"):
+        return {"sym": sym, "status": "listing snapshot (no quarterly filing yet)"}
     t = next((x for x in d["trend"] if x["q"] == "Jun-26"), None)
     if t is None:
         return {"sym": sym, "status": "no Jun-26 quarter"}
