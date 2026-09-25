@@ -1,0 +1,52 @@
+{
+ "sym": "BHARATCOAL",
+ "scope": "Standalone",
+ "format": "INDAS",
+ "rev_basis": "revenue from operations",
+ "quarters": [
+  {
+   "q": "Q3 FY26",
+   "d": "Dec-25",
+   "end": "2025-12-31",
+   "rev": 2782.8,
+   "pat": -22.88,
+   "pat_owners": -22.88,
+   "eps": -0.05,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_139844_03022026155534_iXBRL_WEB.html",
+   "shares": 4657000000
+  },
+  {
+   "q": "Q4 FY26",
+   "d": "Mar-26",
+   "end": "2026-03-31",
+   "rev": 3282.95,
+   "pat": 27.28,
+   "pat_owners": 27.28,
+   "eps": 0.06,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_152216_22042026223314_iXBRL_WEB.html",
+   "shares": 4657000000
+  },
+  {
+   "q": "Q1 FY27",
+   "d": "Jun-26",
+   "end": "2026-06-30",
+   "rev": 3587.27,
+   "pat": -68.09,
+   "pat_owners": -68.09,
+   "eps": -0.15,
+   "src": "https://nsearchives.nseindia.com/corporate/ixbrl/INTEGRATED_FILING_INDAS_176729_22072026110152_iXBRL_WEB.html",
+   "shares": 4657000000
+  }
+ ],
+ "bvps": 12.41,
+ "equity_cr": 5778.8,
+ "bs_date": "2026-03-31",
+ "roe": null,
+ "roe_basis": null,
+ "dps_ttm": 0.0,
+ "dps_basis": "NSE corporate-actions list has no records for this symbol (file of 2026-09-20)",
+ "shares_basis": "4,657,000,000 shares: paid-up equity capital / face value Rs 10 at 2026-03-31 (capital per filing; face value per NSE corporate actions)",
+ "notes": [],
+ "flags": [],
+ "generated": "2026-09-24T23:07:36+00:00"
+}

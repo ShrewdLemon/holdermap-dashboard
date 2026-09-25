@@ -60,6 +60,9 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 UDIFF = "https://nsearchives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_{:%Y%m%d}_F_0000.csv.zip"
 OLD_BHAV = "https://nsearchives.nseindia.com/content/historical/EQUITIES/{y}/{m}/cm{d:%d}{m}{y}bhav.csv.zip"
 INDEX = "https://nsearchives.nseindia.com/content/indices/ind_close_all_{:%d%m%Y}.csv"
+# Companies that trade only on BSE (e.g. NSE, the exchange company, cannot list on itself): BSE's daily file,
+# same UDiFF columns, matched by ISIN.
+BSE_BHAV = "https://www.bseindia.com/download/BhavCopy/Equity/BhavCopy_BSE_CM_0_0_0_{:%Y%m%d}_F_0000.CSV"
 UDIFF_FROM = dt.date(2024, 7, 8)
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 
@@ -122,6 +125,28 @@ def fetch_equities(day: dt.date, symbols: set[str]) -> dict[str, list[float]] | 
     return out
 
 
+def fetch_bse(day: dt.date, isins: dict[str, str]) -> dict[str, list[float]] | None:
+    """{symbol: [close, high, low, prev close]} for BSE-only companies (isins: ISIN -> our symbol)."""
+    req = urllib.request.Request(BSE_BHAV.format(day), headers={"User-Agent": UA, "Referer": "https://www.bseindia.com/"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            text = r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None
+        raise Refused(f"BSE bhavcopy {day}: HTTP {e.code}") from e
+    except (urllib.error.URLError, TimeoutError) as e:
+        raise Refused(f"BSE bhavcopy {day}: {e}") from e
+    if not text.startswith("TradDt"):
+        raise Refused(f"BSE bhavcopy {day}: unexpected body ({text[:60]!r})")
+    out = {}
+    for row in csv.DictReader(io.StringIO(text)):
+        sym = isins.get((row.get("ISIN") or "").strip())
+        if sym and row.get("FinInstrmTp", "").strip() == "STK":
+            out[sym] = [float(row["ClsPric"]), float(row["HghPric"]), float(row["LwPric"]), float(row.get("PrvsClsgPric") or 0)]
+    return out
+
+
 def fetch_indices(day: dt.date) -> dict[str, float] | None:
     body = _get(INDEX.format(day))
     if body is None:
@@ -141,8 +166,9 @@ def fetch_indices(day: dt.date) -> dict[str, float] | None:
 class Closes:
     """cache/closes.json: {"YYYY-MM-DD": {"eq": {...}, "ix": {...}} | {"holiday": true}}."""
 
-    def __init__(self, path: Path, symbols: set[str], today: dt.date, offline: bool):
+    def __init__(self, path: Path, symbols: set[str], today: dt.date, offline: bool, bse: dict[str, str] | None = None):
         self.path, self.symbols, self.today, self.offline = path, symbols, today, offline
+        self.bse = bse or {}  # ISIN -> symbol for BSE-only companies
         self.days = json.loads(path.read_text()) if path.exists() else {}
         self.fetched = 0
         self.refused: list[str] = []
@@ -153,11 +179,20 @@ class Closes:
             return None
         key = d.isoformat()
         got = self.days.get(key)
+        if got is not None and not got.get("holiday") and self.bse and not self.offline and not self.refused \
+                and (self.today - d).days <= 10 and not set(self.bse.values()) <= set(got["eq"]):
+            try:
+                extra = fetch_bse(d, self.bse)
+                if extra:
+                    got["eq"].update(extra)
+            except Refused as e:
+                print(f"warning: {e}", file=sys.stderr)
         if got is not None and not got.get("holiday"):
             # A day cached for a smaller universe is refetched while it is recent.
             missing = len(self.symbols - set(got["eq"]))
             old = got.get("v", 1) < 2  # cached before NSE's previous close was kept
-            if (missing <= 0.2 * len(self.symbols) and not old) or (self.today - d).days > 10 or self.offline or self.refused:
+            recent_gap = missing and (self.today - d).days <= 3  # a company added since this day was cached
+            if (missing <= 0.2 * len(self.symbols) and not old and not recent_gap) or (self.today - d).days > 10 or self.offline or self.refused:
                 return got
         elif got is not None:
             return None
@@ -166,6 +201,11 @@ class Closes:
         try:
             eq = fetch_equities(d, self.symbols)
             ix = fetch_indices(d) if eq is not None else None
+            if eq is not None and self.bse:
+                try:
+                    eq.update(fetch_bse(d, self.bse) or {})
+                except Refused as e:  # BSE unreachable: the NSE side of the day is still good
+                    print(f"warning: {e}", file=sys.stderr)
         except Refused as e:
             self.refused.append(str(e))
             print(f"warning: {e}; using the cache from here on", file=sys.stderr)
@@ -265,6 +305,7 @@ def company_prices(sym: str, D: dict, C: "Closes", today: dt.date, events: list,
         rb *= r
     w3y = {d: c / fac(d) / rb for d, c in hist.get("w3y", [])}
     listing = hist.get("listing")
+    since = None if listing else hist.get("since")  # earliest verified day when the listing close is withheld
 
     def close_on(day: dt.date):
         for i in range(10):
@@ -296,6 +337,13 @@ def company_prices(sym: str, D: dict, C: "Closes", today: dt.date, events: list,
                 continue
         bd, s, sraw = got
         bases.append(dict(k=k, l=label, d=bd, s=s, sraw=sraw if sraw is not None else s, ssrc="NSE bhavcopy", yrs=yrs, **ix_on(bd)))
+    if since and not listing:
+        sd, sadj = since[0], since[1] / fac(since[0]) / rb
+        yrs = (asof - dt.date.fromisoformat(sd)).days / 365.25
+        if yrs > 3.05:
+            bases.append(dict(k="sl", l="Since " + dt.date.fromisoformat(sd).strftime("%b %Y") + ", annualised",
+                              d=sd, s=round(sadj, 4), sraw=since[2] if len(since) > 2 else sadj, ssrc="NSE bhavcopy",
+                              yrs=yrs, note=since[3] if len(since) > 3 else "", **ix_on(sd)))
     if listing or sym == SYM:
         if listing:
             ld, ladj, lraw = listing[0], listing[1] / fac(listing[0]) / rb, listing[2]
@@ -333,7 +381,8 @@ def build(today: dt.date, offline: bool = False) -> dict:
     for s, u in univ.items():
         pxu.setdefault(s, {"shares": u["shares"], "qbase_close": u.get("close_q2"), "bonus_events": []})
     symbols = set(pxu) | set(cos)
-    C = Closes(CACHE, symbols, today, offline)
+    bse = {v["isin"]: s for s, v in pxu.items() if v.get("exch") == "BSE" and v.get("isin")}
+    C = Closes(CACHE, symbols - set(bse.values()), today, offline, bse)
 
     # every trading day since the oldest snapshot end, for all symbols (one bhavcopy per day)
     start = min(dt.date.fromisoformat((D.get("co") or {}).get("px_end") or D["px_series"][-1][0]) for D in cos.values())

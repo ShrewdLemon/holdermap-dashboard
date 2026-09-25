@@ -77,7 +77,9 @@ def check(sym, d):
     np = nse_promoter(sym)
     if np is not None:
         res["diffs"]["prom_vs_nse"] = round(ours["prom"] - np, 3)
-    b = bse_figures((d.get("co") or {}).get("bse"))
+    # BSE's stored copy is the company's LATEST filing; after a special filing (merger, QIP) it is not the quarter-end one
+    later = ((d.get("co") or {}).get("fil") or "") > "2026-06-30"
+    b = None if later else bse_figures((d.get("co") or {}).get("bse"))
     if b:
         for k in ("prom", "fii", "dii"):
             if b.get(k) is not None:
