@@ -68,6 +68,10 @@ NSE500_RUNS = HOME / "nse500-runs"
 N500_CSV = [INP / "ind_nifty500list.csv", NSE500_RUNS / "ind_nifty500list.csv",
             ROOT / "cache" / "results_raw" / "ind_nifty500list.csv"]
 PR_ZIP = ROOT / "cache" / "pr" / "PR230926.zip"   # NSE PR archive: issue size + mcap on END
+NTM_CSV = INP / "ind_niftytotalmarket_list.csv"   # names / industry for names outside the Nifty 500
+EQ_MASTER = HOME / "msci" / "data_dump" / "nse_equity_master.csv"
+IDX_CHANGES = HOME / "netra" / "data" / "nifty_index_changes.csv"   # NSE Indices press releases
+EXTRA_RUNS = INP / "extra"                                         # <SYM>/run.json for non-index extras
 
 END = "2026-09-23"                                # last close in the snapshot
 FIL = ["2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"]
@@ -112,6 +116,24 @@ def write_atomic(path, text):
 # --------------------------------------------------------------------------------------------
 # reference data
 # --------------------------------------------------------------------------------------------
+def index_list(p):
+    if not p.exists():
+        return {}
+    rows = list(csv.DictReader(open(p, encoding="utf-8-sig")))
+    return {r["Symbol"].strip(): dict(n=r["Company Name"].strip(), ind=r["Industry"].strip(),
+                                       isin=r["ISIN Code"].strip()) for r in rows}
+
+
+def n500_changes():
+    """Scheduled Nifty 500 changes after END: ({entrant: effective date}, {leaver: effective date})."""
+    add, drop = {}, {}
+    if IDX_CHANGES.exists():
+        for r in csv.DictReader(open(IDX_CHANGES, encoding="utf-8")):
+            if r.get("index_name") == "Nifty 500" and (r.get("effective_date") or "") > END:
+                (add if r.get("action") == "ADD" else drop if r.get("action") == "DROP" else {})[r["symbol"].strip()] = r["effective_date"]
+    return add, drop
+
+
 def nifty500():
     for p in N500_CSV:
         if p.exists():
@@ -352,7 +374,11 @@ def price_rows(con, sym, symhist):
     return [best[d][1] for d in sorted(best)], [s for s, _, _ in spans]
 
 
-_RATIO_BONUS = re.compile(r"bonus\D{0,20}?(\d+)\s*:\s*(\d+)", re.I)
+_RATIO_BONUS = re.compile(r"\bbon(?:us)?\b\D{0,20}?(\d+)\s*:\s*(\d+)", re.I)     # 'Bonus 1:1', 'Bon 5:1'
+_RATIO_FVSPL = re.compile(r"f\.?v\.?\s*spl\w*\W*r[se]\.?\s*([\d.]+)\s*/?-?\s*to\s*r[se]\.?\s*([\d.]+)", re.I)  # 'Fv Spl-Rs10tors2'
+_RIGHTS = re.compile(r"rights\s*(\d+)\s*:\s*(\d+)\s*@\s*(premium\s*(?:of\s*)?|par\b|discount\s*(?:of\s*)?)?"
+                     r"\s*(?:rs\.?|re\.?|inr)?\s*([\d.]+)?", re.I)
+_DIVIDEND = re.compile(r"(?:dividend|\bdiv\b)[^/]*?(?:rs\.?|re\.?|inr)\s*([\d.]+)", re.I)
 _RATIO_SPLIT = re.compile(r"(?:split|sub-?division|consolidat)\D*?(?:from\s*)?(?:rs\.?|re\.?|inr)?\s*([\d.]+)\s*/?-?\s*"
                           r"(?:per\s*share\s*)?(?:each\s*)?to\s*(?:rs\.?|re\.?|inr)?\s*([\d.]+)", re.I)
 
@@ -369,9 +395,9 @@ def parse_subject(subj):
     s = subj or ""
     for a, b in _RATIO_BONUS.findall(s):
         a, b = int(a), int(b)
-        if a > 0 and b > 0 and not _pref(s):
+        if a > 0 and b > 0 and not _pref(s) and "dvr" not in s.lower():
             out.append(("bonus", (a + b) / b))
-    for a, b in _RATIO_SPLIT.findall(s):
+    for a, b in _RATIO_SPLIT.findall(s) + _RATIO_FVSPL.findall(s):
         try:
             a, b = float(a), float(b)
         except ValueError:
@@ -392,7 +418,11 @@ def ca_events(symbols, isins, ffca):
                 except ValueError:
                     continue
                 subj = x.get("subject") or ""
-                text.append((d, subj))
+                try:
+                    fv = float(x.get("faceVal") or 0) or None
+                except ValueError:
+                    fv = None
+                text.append((d, subj, fv))
                 for kind, r in parse_subject(subj):
                     raw.append((d, r, kind, "nse-ca"))
     try:
@@ -506,7 +536,7 @@ def snap_and_adjust(rows, events, sym, manual=(), catext=(), infer_before=""):
         if jp.get("gap"):
             continue
         k = idx[jp["d"]]
-        near = [t.strip() for d, t in catext if abs((d - D(jp["d"])).days) <= 10
+        near = [t.strip() for d, t, *_ in catext if abs((d - D(jp["d"])).days) <= 10
                 and re.search(r"demerg|arrangement", t, re.I)]
         if near and opn[k]:
             r = round(close[k - 1] / opn[k], 6)
@@ -516,21 +546,62 @@ def snap_and_adjust(rows, events, sym, manual=(), catext=(), infer_before=""):
     if dm:
         applied = sorted(applied + dm, key=lambda a: a["d"])
         S, jumps = _adjust(rows, applied, idx)
-    # Before the 3-year window only: a gap that NEVER trades through intraday and whose open equals a
-    # standard bonus/split ratio (within 2%) is a share-count action missing from the CA records (they
-    # thin out before ~2010). It is applied, labelled 'inferred', so the since-listing base stays usable.
-    # Inside the window nothing is inferred: an unexplained gap there fails the company.
+    # Rights issues and extraordinary dividends on record within 10 days of a still-unexplained gap:
+    # adjust earlier prices by the standard price-only factor - rights: prev close / TERP, where
+    # TERP = (b x prev close + a x issue price) / (a + b) for 'Rights a:b @ premium X' (issue = face
+    # value + X); dividend: prev close / (prev close - D) when D >= 10% of the price (NSE's own threshold
+    # for adjusting derivatives). Applied only when the factor brings that day's move within 25%.
+    rd = []
+    for jp in jumps:
+        if jp.get("gap"):
+            continue
+        k = idx[jp["d"]]
+        P, mv = close[k - 1], jp["move"] / 100
+        best = None
+        for d, t, *fv in catext:
+            if abs((d - D(jp["d"])).days) > 10:
+                continue
+            fv = fv[0] if fv else None
+            f = kind = None
+            m = _RIGHTS.search(t)
+            if m and fv:
+                a, b = int(m.group(1)), int(m.group(2))
+                how, val = (m.group(3) or "").lower(), float(m.group(4)) if m.group(4) else None
+                issue = (fv + val if how.startswith("premium") and val is not None else
+                         fv - val if how.startswith("discount") and val is not None else
+                         fv if how.startswith("par") else val)
+                if a > 0 and b > 0 and issue and issue > 0 and issue < P and "partly" not in t.lower():
+                    f, kind = P / ((b * P + a * issue) / (a + b)), "rights"
+            elif re.search(r"dividend|\bdiv\b", t, re.I):
+                dv = sum(float(x) for x in _DIVIDEND.findall(t) if x.replace(".", "", 1).isdigit())
+                if 0.10 * P <= dv < P:
+                    f, kind = P / (P - dv), "dividend"
+            if f and f > 1 and abs((1 + mv) * f - 1) <= MAX_JUMP:
+                cand = (abs((1 + mv) * f - 1), f, kind, t.strip())
+                best = min(best, cand) if best else cand
+        if best:
+            rd.append(dict(d=jp["d"], r=round(best[1], 6), kind=best[2], src=["CA record: " + best[3]], snapped=True, cl=-4))
+            notes.append(f"{sym}: {best[2]} ex {jp['d']} ({best[3]}): prices before adjusted by {best[1]:.6g} "
+                         f"({jp['move']:+.1f}% -> {100 * ((1 + mv) * best[1] - 1):+.1f}%)")
+    if rd:
+        applied = sorted(applied + rd, key=lambda a: a["d"])
+        S, jumps = _adjust(rows, applied, idx)
+    # Before the 3-year window only: a gap that never trades back through intraday and whose close or
+    # open equals a standard bonus/split ratio within 5.5% (the ex-date often closes on a 5% circuit:
+    # NMDC 2008-04-10 prev close / close = 9.5238 = 10 / 1.05) is a share-count action missing from the
+    # CA records (they thin out before ~2010). It is applied, labelled 'inferred', so the since-listing
+    # base stays usable. Inside the window nothing is inferred: an unexplained gap there fails the company.
     inf = []
     for jp in jumps:
         if jp["d"] >= infer_before or jp.get("gap"):
             continue
         k = idx[jp["d"]]
         if any(re.search(r"demerg|arrangement|amalgam|capital reduction", t, re.I)
-               for d, t in catext if abs((d - D(jp["d"])).days) <= 10):
+               for d, t, *_ in catext if abs((d - D(jp["d"])).days) <= 10):
             continue
         obs = [close[k - 1] / close[k]] + ([close[k - 1] / opn[k]] if opn[k] else [])
         err, r = min((min(abs(math.log(o / r)) for o in obs), r) for r in CANON)
-        if err < 0.03:
+        if err < INFER_TOL:
             inf.append(dict(d=jp["d"], r=r, kind="inferred", src=["price-gap"], snapped=True, cl=-2))
             notes.append(f"{sym}: x{r:g} on {jp['d']} inferred from a non-traded price gap "
                          f"({jp['move']:+.1f}%, no CA record); pre-window, since-listing base only")
@@ -544,6 +615,8 @@ def snap_and_adjust(rows, events, sym, manual=(), catext=(), infer_before=""):
 # 3:1 bonus, 5/10/20-for-1 splits, and their consolidation inverses. 1:2 or 1:3 bonuses (-33%/-25%) look
 # like demergers and are never inferred.
 CANON = [2.0, 2.5, 3.0, 4.0, 5.0, 10.0, 20.0, 0.5, 0.2, 0.1]
+INFER_TOL = math.log(1.055)
+PRICE_ONLY = {"demerger", "rights", "dividend"}      # adjust prices, never share counts
 
 
 def _adjust(rows, applied, idx):
@@ -554,7 +627,7 @@ def _adjust(rows, applied, idx):
         k = idx[a["d"]]
         for i in range(k):
             fac[i] *= a["r"]
-            if a["kind"] != "demerger":
+            if a["kind"] not in PRICE_ONLY:
                 sfac[i] *= a["r"]
     S = [dict(d=r[0], o=r[1] / f, h=r[2] / f, l=r[3] / f, c=r[4] / f, raw=r[4], f=f, sf=sf, ser=r[5], sym=r[6])
          for r, f, sf in zip(rows, fac, sfac)]
@@ -583,7 +656,7 @@ def _adjust(rows, applied, idx):
 # the company build
 # --------------------------------------------------------------------------------------------
 def load_run(sym):
-    for p in (NSE100_RUNS / sym / "run.json", NSE500_RUNS / sym / "run.json"):
+    for p in (NSE100_RUNS / sym / "run.json", NSE500_RUNS / sym / "run.json", EXTRA_RUNS / sym / "run.json"):
         if p.exists():
             return json.load(open(p)), p
     if sym == "ANANDRATHI" and (INP / "run.json").exists():
@@ -613,6 +686,13 @@ class Ctx:
 
     def __init__(self):
         self.n500 = nifty500()
+        self.ntm = index_list(NTM_CSV)                     # Nifty Total Market (750): names/industry fallback
+        self.n500_add, self.n500_drop = n500_changes()
+        self.master = {}
+        if EQ_MASTER.exists():
+            for r in csv.DictReader(open(EQ_MASTER, encoding="utf-8-sig")):
+                r = {k.strip(): (v or "").strip() for k, v in r.items()}
+                self.master[r.get("SYMBOL")] = dict(n=r.get("NAME OF COMPANY"), isin=r.get("ISIN NUMBER"))
         self.bse = bse_codes()
         self.reg = foreign_registry()
         self.symhist = symbol_history()
@@ -634,6 +714,23 @@ class Ctx:
                         self.nse_mcap[r[1].strip()] = (int(float(r[7])), float(r[8]), float(r[9]))
                     except ValueError:
                         pass
+
+
+def ref(ctx, sym):
+    """Name / industry / ISIN from the Nifty 500 list, else Nifty Total Market, else NSE's equity master."""
+    return ctx.n500.get(sym) or ctx.ntm.get(sym) or dict(ctx.master.get(sym) or {}, ind="")
+
+
+def membership(ctx, sym):
+    """idx = index membership as of END (the Nifty 500 list before the 30-Sep-2026 change), plus the
+    scheduled change dates; extra = a company outside the index that the dashboard carries anyway."""
+    m = dict(idx=["n500"] if sym in ctx.n500 else [])
+    if sym in ctx.n500_add:
+        m["n500_from"] = ctx.n500_add[sym]
+    if sym in ctx.n500_drop:
+        m["n500_to"] = ctx.n500_drop[sym]
+    m["extra"] = not m["idx"] and "n500_from" not in m
+    return m
 
 
 def filings(sym, alts=()):
@@ -680,6 +777,20 @@ def latest_filing(sym, alts=()):
     return None
 
 
+def idx_of(S, d):
+    """Index of trading day d in S (exact match)."""
+    lo, hi = 0, len(S) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if S[mid]["d"] < d:
+            lo = mid + 1
+        else:
+            hi = mid
+    if S[lo]["d"] != d:
+        raise KeyError(d)
+    return lo
+
+
 def on_or_before(S, d):
     lo, hi = 0, len(S) - 1
     if not S or S[0]["d"] > d:
@@ -696,6 +807,9 @@ def on_or_before(S, d):
 def prices_for(ctx, sym, isins, manual=()):
     rows, syms = price_rows(ctx.con, sym, ctx.symhist)
     if not rows:
+        ser = {r[0] for r in ctx.con.execute("select distinct series from bhav where symbol=?", (sym,))}
+        if ser & {"RR", "IV"}:
+            raise Fail(f"REIT/InvIT (series {'/'.join(sorted(ser))}): unitholding pattern, not supported yet")
         raise Fail(f"no bhavcopy rows for {sym}")
     if rows[-1][0] != END:
         raise Fail(f"last bhavcopy close is {rows[-1][0]}, not {END}")
@@ -714,7 +828,7 @@ def build(ctx, sym, verbose=False):
     if not run:
         raise Fail("no holdermap run.json")
     ov = load_override(sym)
-    n5 = ctx.n500.get(sym, {})
+    n5 = ref(ctx, sym)
     warn = []
     alts = [o for o, _ in ctx.symhist.get(sym, [])]
 
@@ -739,7 +853,7 @@ def build(ctx, sym, verbose=False):
     hard = [j for j in jumps if j["d"] >= w3lo]
     if hard:
         def why(j):
-            near = [s.strip() for d, s in catext if abs((d - D(j["d"])).days) <= 10]
+            near = [s.strip() for d, s, *_ in catext if abs((d - D(j["d"])).days) <= 10]
             x = next(s for s in S if s["d"] == j["d"])
             sug = f"; prev close/ex-day open = {j['raw'][0] / (x['o'] * x['f']):.4f}"
             return (f"{j['prev']}->{j['d']} {j['move']:+.1f}% (raw {j['raw'][0]}->{j['raw'][1]}"
@@ -920,15 +1034,27 @@ def build(ctx, sym, verbose=False):
     pre = [j for j in jumps if j["d"] < w3lo] + [dict(j, move=j["move"]) for j in gaps
                                                if (D(j["d"]) - D(j["prev"])).days > 180 and j["d"] < w3lo]
     listing = [lst["d"], round(lst["c"], 4), lst["raw"]]
-    listing_note = None
+    listing_note = since = None
     if pre:
-        listing_note = ("since-listing base withheld: unexplained adjusted day move(s) or >180-day trading gap(s) before the 3-year window: " +
-                        "; ".join(f"{j['prev']}->{j['d']} {j['move']:+.1f}%" for j in pre[:5]))
+        pre.sort(key=lambda j: j["d"])
+        listing_note = (f"since-listing base withheld: {len(pre)} unexplained adjusted day move(s) or >180-day trading "
+                        f"gap(s) before the 3-year window, last {pre[-1]['prev']}->{pre[-1]['d']} {pre[-1]['move']:+.1f}%: " +
+                        "; ".join(f"{j['prev']}->{j['d']} {j['move']:+.1f}%" for j in pre[-5:]))
         warn.append(f"{sym}: {listing_note}")
         listing = None
+        # the longest verified base instead: the close that completed the last unexplained move - every
+        # day-on-day move after it is explained and adjusted. Only when it reaches further back than the
+        # 3-year base by more than 30 days (otherwise the 3-year return already covers it).
+        lj = pre[-1]
+        b = S[idx_of(S, lj["d"])]
+        if b["d"] < iso(D(W3) - dt.timedelta(days=30)):
+            since = [b["d"], round(b["c"], 4), b["raw"],
+                     f"close of {b['d']}, the day that completed the last unexplained move ({lj['prev']}->{lj['d']} "
+                     f"{lj['move']:+.1f}%{', across a trading gap' if lj.get('gap') else ''}); every later day is "
+                     f"explained and adjusted"]
     else:
         anch[lst["d"]] = [lst["d"], round(lst["c"], 4), lst["raw"], "NSE bhavcopy"]
-    px_hist = dict(w3y=[[s["d"], round(s["c"], 4)] for s in S if w3lo <= s["d"] <= w3hi], listing=listing)
+    px_hist = dict(w3y=[[s["d"], round(s["c"], 4)] for s in S if w3lo <= s["d"] <= w3hi], listing=listing, since=since)
     if first_avail:
         px_hist["listing_is_first_available"] = True
     if listing_note:
@@ -958,8 +1084,9 @@ def build(ctx, sym, verbose=False):
                                                         and "no iXBRL table" not in n])
 
     bse = str(meta.get("ScripCode") or ctx.bse.get(isin) or "")
-    co = dict(s=sym, n=run.get("company") or n5.get("n", "").rstrip(".") or sym, isin=isin, bse=bse,
-              sector=n5.get("ind") or "", industry=n5.get("ind") or "",
+    rf = ref(ctx, sym)
+    co = dict(s=sym, n=run.get("company") or (rf.get("n") or "").rstrip(".") or sym, isin=isin, bse=bse,
+              sector=rf.get("ind") or "", industry=rf.get("ind") or "", **membership(ctx, sym),
               bb=(run.get("holder_source") or "").lower().startswith("bloomberg"),
               fil=lf["fd"], fil_q=last["fd"], fil_missing=miss, hq_missing=hq_missing, oq=oq, px_end=END, bonus_after=[], listed=lst["d"],
               listed_is_first_available=first_avail, symbols=syms,
@@ -1065,6 +1192,14 @@ def validate(ctx, sym, out, fl, S, applied, bse_code=None):
         dif = {k: round(f[k] - v, 3) for k, v in bse.items() if v is not None}
         checks["bse"][q] = dif
         bad = {k: v for k, v in dif.items() if abs(v) > 0.05 + 1e-9}
+        lt = out["latest"]
+        if bad and q == "Jun-26" and lt["d"] != r["fd"]:
+            # BSE files a later intra-quarter filing under the same quarter name (SHRIPISTON: its
+            # 'June 2026' record is the 20-Aug-2026 filing): compare with our latest filing instead
+            dl = {k: round(lt["filed"][k] - v, 3) for k, v in bse.items() if v is not None}
+            if all(abs(v) <= 0.05 + 1e-9 for v in dl.values()):
+                checks["bse"][q] = dict(dl, note=f"BSE's June 2026 record is the {lt['d']} filing")
+                bad = {}
         if bad:
             fail.append(f"vs BSE published {q} %: " + ", ".join(f"{k} {f[k]:.2f} vs {bse[k]:.2f} ({v:+.2f}pp)"
                                                                for k, v in bad.items()))
@@ -1132,7 +1267,7 @@ def bse_pcts(code, base=None, qname="June 2026"):
 # --------------------------------------------------------------------------------------------
 def univ_row(ctx, sym, built=None):
     """One universe row. Uses the built file when present, else the filings + bhavcopy directly."""
-    n5 = ctx.n500.get(sym, {})
+    n5 = ref(ctx, sym)
     run, _ = load_run(sym)
     built_px = None
     if built:
@@ -1154,7 +1289,7 @@ def univ_row(ctx, sym, built=None):
             row = dict(s=sym, n=n5.get("n", "").rstrip(".") or sym, m=round(nse[0] * rawc / 1e7), p=rawc,
                        q=round(100 * (rawc / qb["c"] - 1), 2) if qb else None, pr=None, fi=None, di=None,
                        h=None, fl=None, ok=None, sh=None, f=None, shares=None, shares_now=nse[0], dash=False,
-                       note="no NSE shareholding XBRL (files with BSE); shares = NSE issue size")
+                       note="no NSE shareholding XBRL (files with BSE); shares = NSE issue size", **membership(ctx, sym))
             return row, dict(shares=nse[0], shares_filing=None, qbase_close=qb["raw"] if qb else None,
                              bonus_events=[[a["d"], float(a["r"])] for a in applied if a["kind"] in ("bonus", "split", "inferred")],
                              price_events=[[a["d"], float(a["r"]), a["kind"]] for a in applied])
@@ -1179,7 +1314,7 @@ def univ_row(ctx, sym, built=None):
                pr=round(100 * t["prom"] / T, 2), fi=round(100 * t["fii"] / T, 2), di=round(100 * t["dii"] / T, 2),
                h=len(run["rows"]) if run else None, fl=run.get("review_count") if run else None,
                ok=bool(run.get("all_passed")) if run else None, sh=t["nh"], f=fil, shares=shf, shares_now=tot,
-               dash=(OUT_CO / f"{sym}.json").exists())
+               dash=(OUT_CO / f"{sym}.json").exists(), **membership(ctx, sym))
     return row, (None if built else built_px)
 
 
@@ -1248,7 +1383,15 @@ def build_many(ctx, todo, pxu, rep, log=print):
 
 
 def universe_syms(ctx):
-    return sorted(set(ctx.n500) | set(nse100()) | {p.stem for p in OUT_CO.glob("*.json")})
+    """Nifty 500 today + scheduled entrants + the NSE 100 runs + every exported company (leavers and
+    --add extras keep their pages). REIT/InvIT entrants are skipped (unitholding patterns)."""
+    return sorted((set(ctx.n500) | set(ctx.n500_add) | set(nse100()) | {p.stem for p in OUT_CO.glob("*.json")})
+                  - reits(ctx))
+
+
+def reits(ctx):
+    return {s for s in ctx.n500_add
+            if {r[0] for r in ctx.con.execute("select distinct series from bhav where symbol=?", (s,))} & {"RR", "IV"}}
 
 
 def save(ctx, pxu, rep, univ=True):
@@ -1310,19 +1453,21 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("syms", nargs="*")
     ap.add_argument("--nse100", action="store_true")
-    ap.add_argument("--nifty500", action="store_true")
+    ap.add_argument("--nifty500", action="store_true", help="the Nifty 500 today + its scheduled entrants")
+    ap.add_argument("--add", nargs="+", default=[], metavar="SYM",
+                    help="export companies outside the Nifty 500 (run.json in nse500-runs/<SYM>/ or inputs/extra/<SYM>/)")
     ap.add_argument("--univ-only", action="store_true")
     ap.add_argument("--no-univ", action="store_true")
     ap.add_argument("--watch", type=float, metavar="HOURS", help="poll for new runs/results for HOURS")
     a = ap.parse_args(argv)
     t0 = time.time()
     ctx = Ctx()
-    todo = list(a.syms)
+    todo = list(a.syms) + list(a.add)
     if a.nse100:
         todo += nse100()
     if a.nifty500:
         mcap = {u["s"]: u["m"] or 0 for u in json.loads(OUT_UNIV.read_text())} if OUT_UNIV.exists() else {}
-        todo += sorted(ctx.n500, key=lambda s: -mcap.get(s, 0))
+        todo += sorted(set(ctx.n500) | (set(ctx.n500_add) - reits(ctx)), key=lambda s: -mcap.get(s, 0))
     todo = list(dict.fromkeys(todo))
     OUT_CO.mkdir(parents=True, exist_ok=True)
     pxu = json.loads(OUT_PXU.read_text()) if OUT_PXU.exists() else {}

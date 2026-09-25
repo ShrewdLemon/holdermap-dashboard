@@ -6,3 +6,4 @@ __pycache__/
 cache/
 dashboard/
 .claude/
+pipeline/inputs/extra/*/raw/
