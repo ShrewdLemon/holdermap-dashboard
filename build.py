@@ -3,9 +3,11 @@
     python3 pipeline/live.py     # latest NSE/BSE closes -> dashboard/prices_full.json (optional)
     python3 build.py
 
-Writes data.js (the universe: src/univ.json + src/univ_extra.json), co/<SYM>.js for every company in src/co/
-(each with its own live price block from prices_full.json), a small shared prices.js (as-of date, index
-closes, universe prices) and index.html. Without prices_full.json the pages use each snapshot's own prices.
+Writes data.js (the universe: src/univ.json + src/univ_extra.json, plus what the landing page groups by:
+exchanges, the exchanges' industry classification and AMFI's market-cap rank), co/<SYM>.js for every
+company in src/co/ (each with its own live price block from prices_full.json), a small shared prices.js
+(as-of date, index closes, universe prices) and index.html. Without prices_full.json the pages use each
+snapshot's own prices.
 """
 import re
 from pathlib import Path
@@ -33,14 +35,47 @@ if extra_src.exists():
     rows = json.loads(univ)
     have = {r["s"] for r in rows}
     univ = json.dumps(rows + [r for r in json.loads(extra_src.read_text()) if r["s"] not in have], separators=(",", ":"))
-assert "</script" not in univ
-(site / "data.js").write_text("window.__UNIV__ = " + univ + ";\n")
 co_dir = site / "co"
 co_dir.mkdir(exist_ok=True)
 for old in co_dir.glob("*.js"):
     old.unlink()
 cos = {f.stem: f.read_text() for f in sorted((src / "co").glob("*.json"))} if (src / "co").exists() else {}
 cos.setdefault("ANANDRATHI", data)
+# What the landing page groups by, added to each universe row:
+#   sec / ind / bi / mac  the exchanges' classification (sector > industry > basic industry, macro-economic
+#                         sector) from pipeline/inputs/industry.json (pipeline/industry.py). Until a company
+#                         is there: the sector in its company file (NSE's index lists), no industry.
+#   mk                    exchanges: "NB" NSE and BSE, "N" NSE only (BSE code 000000), "B" BSE only.
+#   ar / am               rank and six-month average market cap (Rs crore) in AMFI's half-yearly list
+#                         (pipeline/inputs/amfi_mcap.json, pipeline/amfi.py), matched by ISIN, then NSE symbol.
+# window.__CAP__ carries the list's period and the market caps at ranks 100, 250 and 500, which place
+# companies AMFI does not list yet (new listings) by their current market cap.
+inp = ROOT / "pipeline" / "inputs"
+industry = json.loads((inp / "industry.json").read_text()) if (inp / "industry.json").exists() else {}
+amfi = json.loads((inp / "amfi_mcap.json").read_text()) if (inp / "amfi_mcap.json").exists() else None
+by_isin = {r[2]: r for r in amfi["rows"]} if amfi else {}
+by_nse = {r[4]: r for r in amfi["rows"] if r[4]} if amfi else {}
+rows = json.loads(univ)
+for r in rows:
+    co = (json.loads(cos[r["s"]]).get("co") or {}) if r["s"] in cos else {}
+    k = industry.get(r["s"])
+    if k:
+        r.update(sec=k["sec"], ind=k["ind"], bi=k["bi"], mac=k["mac"])
+    else:
+        r["sec"] = co.get("sector") or ""
+        if co.get("industry") and co["industry"] != r["sec"]:
+            r["ind"] = co["industry"]
+    bse = str(co.get("bse") or "")
+    r["mk"] = "B" if (co.get("exch") or r.get("exch")) == "BSE" else "NB" if bse.isdigit() and int(bse) else "N"
+    a = by_isin.get(co.get("isin")) or by_nse.get(r["s"])
+    if a:
+        r["ar"], r["am"] = a[0], round(a[5])
+univ = json.dumps(rows, separators=(",", ":"), ensure_ascii=False)
+cap = {"period": amfi["period"], "asof": amfi["asof"], "src": amfi["source"], "n": len(amfi["rows"]),
+       "basis": amfi.get("category_basis"), "cut": [amfi["rows"][k - 1][5] for k in (100, 250, 500)]} if amfi else None
+univ_js = "window.__UNIV__ = " + univ + ";\nwindow.__CAP__ = " + json.dumps(cap, ensure_ascii=False) + ";\n"
+assert "</script" not in univ_js
+(site / "data.js").write_text(univ_js)
 # Live prices (pipeline/live.py) are per company: each company's block rides in its own file, so the shared
 # prices.js stays small (asof, index closes, universe prices) however large the universe gets.
 prices_path = site / "prices.js"
@@ -76,5 +111,5 @@ assert "</script" not in px
 </html>
 """)
 (ROOT / "dashboard" / "standalone.html").write_text(
-    head + "\n" + body + "\n<script>window.__UNIV__=" + univ + ";window.__CO__={ANANDRATHI:" + ar + "};</script>\n<script>" + px + "</script>\n<script>\n" + js + "</script>\n")
+    head + "\n" + body + "\n<script>" + univ_js + "window.__CO__={ANANDRATHI:" + ar + "};</script>\n<script>" + px + "</script>\n<script>\n" + js + "</script>\n")
 print("built", site, f"({len(cos)} company dashboards) and dashboard/standalone.html")
