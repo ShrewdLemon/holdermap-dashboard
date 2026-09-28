@@ -146,10 +146,19 @@ const CATS = [
 // Shares underlying ADRs/GDRs sit outside SEBI's percentages; they get their own line (no % value) when a company has them.
 const DRCAT = { k: 'dr', l: 'Shares under ADRs / GDRs', sub: [] };
 function cats() { return T && T.some(t => t.dr > 0) ? CATS.concat([DRCAT]) : CATS; }
-function tv(t, k, u) { if (u === 'pct') return k === 'dr' ? null : k === 'tot' ? 100 : 100 * t[k] / t.den; if (u === 'val') return t[k] * t.px / 1e7; return t[k] * t.bf / 1e6; }
-const fmtU = (x, u) => x == null ? '—' : u === 'val' ? fin(x) : x.toFixed(2);
+// The ownership trend's three bases, each a % of a different whole:
+//   pct  full float: all shares on SEBI's basis (total less shares under ADRs/GDRs, which carry no %)
+//   ff   free float: all shares outside the promoter group, as on the Shareholding tab (promoters carry no %)
+//   mc   market cap: one quarter-end close values every share, so ADR/GDR shares count too
+function tv(t, k, u) {
+  if (u === 'ff') { const f = t.tot - t.prom; return k === 'prom' || f <= 0 ? null : k === 'tot' ? 100 : 100 * t[k] / f; }
+  if (u === 'mc') return k === 'tot' ? 100 : 100 * t[k] / t.tot;
+  return k === 'dr' ? null : k === 'tot' ? 100 : 100 * t[k] / t.den;
+}
+const fmtU = x => x == null ? '—' : x.toFixed(2);
 const avg = vs => vs.some(v => v == null) ? null : vs.reduce((a, b) => a + b, 0) / vs.length;
-const fmtD = (x, u) => u === 'pct' ? sgn(x, 2, ' pp') : u === 'val' ? sgnI(Math.round(x)) : sgn(x, 2);
+const fmtD = x => sgn(x, 2, ' pp');
+const dif = (a, b) => a == null || b == null ? null : a - b;  // no change where either quarter has no %
 
 function hq(h) { return h.g === 'ind' ? 4 : 5; }
 function hMetric(h, i, basis) {
@@ -282,33 +291,50 @@ function qoqLabel() {
   const a = T[T.length - 2], b = T[T.length - 1];
   return a && b && qi(b.q) - qi(a.q) === 1 ? 'QoQ' : 'vs ' + (a ? a.q : '—');
 }
+// Cell tip: the holding on all three bases, whichever the table shows, and the shares and value behind them.
+function ownTip(t, k, l) {
+  const f = tv(t, k, 'pct'), g = tv(t, k, 'ff');
+  return `<b>${l} · ${t.q}</b><br>${f == null ? 'Outside SEBI\'s % (full float)' : f.toFixed(2) + '% of full float'}<br>${g == null ? 'Outside the free float' : g.toFixed(2) + '% of free float'}<br>${tv(t, k, 'mc').toFixed(2)}% of mcap<br>${fin(t[k] * t.bf)} sh (adj.)${t.px == null ? '' : `<br>₹${fin(t[k] * t.px / 1e7)} cr at ₹${fin(t.px, 1)}`}`;
+}
+// Total row tip: what 100% is in that quarter.
+function baseTip(t, u) {
+  if (u === 'ff') return `<b>Free float · ${t.q}</b><br>${fin((t.tot - t.prom) * t.bf)} sh (adj.), ${pct(t.tot - t.prom, t.tot).toFixed(2)}% of all shares`;
+  if (u === 'mc') return `<b>Market cap · ${t.q}</b><br>${t.px == null ? 'No quarter-end close on file' : `₹${fin(t.tot * t.px / 1e7)} cr at ₹${fin(t.px, 1)}`}`;
+  return `<b>Full float · ${t.q}</b><br>${fin(t.den * t.bf)} sh (adj.)${t.dr > 0 ? `: all shares less the ${fin(t.dr * t.bf)} under ADRs/GDRs` : ''}`;
+}
 function ownTable() {
   const u = S.unit;
   let h = `<div class="tscroll"><table class="t"><thead><tr><th class="l" scope="col">Category</th>${T.map(t => `<th scope="col">${t.q}</th>`).join('')}<th scope="col">${qoqLabel()}</th><th scope="col">${T.length}Q Δ</th><th scope="col" data-tip="Average of the ${T.length} filed quarters, in the unit shown">${T.length}Q avg</th></tr></thead><tbody>`;
   cats().forEach(c => {
-    const vs = T.map(t => tv(t, c.k, u)), nq = vs.length - 1, na = vs.some(v => v == null), q = na ? null : vs[nq] - vs[nq - 1], s6 = na ? null : vs[nq] - vs[0], open = !!S.openCat[c.k];
+    const vs = T.map(t => tv(t, c.k, u)), nq = vs.length - 1, q = dif(vs[nq], vs[nq - 1]), s6 = dif(vs[nq], vs[0]), open = !!S.openCat[c.k];
     h += `<tr><td class="l"><button type="button" data-act="cat" data-k="${c.k}" aria-expanded="${open}" style="display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:4px 0;cursor:pointer;font-weight:500;min-height:32px">${c.l}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="transition:transform .3s var(--ease);transform:rotate(${open ? 180 : 0}deg);color:var(--ink3)"><path d="M6 9l6 6 6-6"></path></svg></button></td>` +
-      vs.map((v, i) => `<td data-tip="<b>${c.l} · ${T[i].q}</b><br>${(100 * T[i][c.k] / (c.k === 'dr' ? T[i].tot : T[i].den)).toFixed(2)}%${c.k === 'dr' ? ' of all shares (outside SEBI %)' : ''} · ${fin(T[i][c.k] * T[i].bf)} sh (adj.)<br>₹${fin(T[i][c.k] * T[i].px / 1e7)} cr at ₹${fin(T[i].px, 1)}">${fmtU(v, u)}</td>`).join('') +
-      `<td class="${cl(q)}" style="font-weight:600">${fmtD(q, u)}</td><td class="${cl(s6)}">${fmtD(s6, u)}</td><td class="mut">${fmtU(avg(vs), u)}</td></tr>`;
+      vs.map((v, i) => `<td data-tip="${ownTip(T[i], c.k, c.l)}">${fmtU(v)}</td>`).join('') +
+      `<td class="${cl(q)}" style="font-weight:600">${fmtD(q)}</td><td class="${cl(s6)}">${fmtD(s6)}</td><td class="mut">${fmtU(avg(vs))}</td></tr>`;
     if (open) {
-      h += `<tr class="sub"><td class="l" style="padding-left:28px">Change vs prior quarter</td><td>—</td>${vs.slice(1).map((v, i) => `<td class="${cl(v - vs[i])}">${fmtD(v - vs[i], u)}</td>`).join('')}<td></td><td></td><td></td></tr>`;
+      h += `<tr class="sub"><td class="l" style="padding-left:28px">Change vs prior quarter</td><td>—</td>${vs.slice(1).map((v, i) => { const d = dif(v, vs[i]); return `<td class="${cl(d)}">${fmtD(d)}</td>`; }).join('')}<td></td><td></td><td></td></tr>`;
       c.sub.forEach(sb => {
         if (!T.some(t => t[sb[0]] > 0)) return;
-        const sv = T.map(t => tv(t, sb[0], u));
-        h += `<tr class="sub swap"><td class="l" style="padding-left:28px">${sb[1]}</td>${sv.map(v => `<td>${fmtU(v, u)}</td>`).join('')}<td class="${cl(sv[sv.length - 1] - sv[sv.length - 2])}">${fmtD(sv[sv.length - 1] - sv[sv.length - 2], u)}</td><td class="${cl(sv[sv.length - 1] - sv[0])}">${fmtD(sv[sv.length - 1] - sv[0], u)}</td><td>${fmtU(avg(sv), u)}</td></tr>`;
+        const sv = T.map(t => tv(t, sb[0], u)), n = sv.length - 1, d1 = dif(sv[n], sv[n - 1]), d6 = dif(sv[n], sv[0]);
+        h += `<tr class="sub swap"><td class="l" style="padding-left:28px">${sb[1]}</td>${sv.map(v => `<td>${fmtU(v)}</td>`).join('')}<td class="${cl(d1)}">${fmtD(d1)}</td><td class="${cl(d6)}">${fmtD(d6)}</td><td>${fmtU(avg(sv))}</td></tr>`;
       });
       if (c.k !== 'prom' && c.k !== 'dr') h += `<tr class="sub"><td class="l" style="padding-left:28px" colspan="10"><a href="#${c.k === 'ind' ? 'individuals' : c.k === 'oth' ? 'holders' : c.k}" style="color:var(--acc);font-weight:600;display:inline-flex;gap:6px;align-items:center">${c.k === 'oth' ? 'See named holders' : 'See top holders'} ${arrow}</a></td></tr>`;
     }
   });
-  const tl = { pct: 'Total', val: 'Market cap', sh: 'Shares outstanding' }[u], tvs = T.map(t => tv(t, 'tot', u));
-  h += `<tr class="tot"><td class="l">${tl}</td>${tvs.map(v => `<td>${fmtU(v, u)}</td>`).join('')}<td class="${u === 'pct' ? '' : cl(tvs[tvs.length - 1] - tvs[tvs.length - 2])}">${u === 'pct' ? '' : fmtD(tvs[tvs.length - 1] - tvs[tvs.length - 2], u)}</td><td class="${u === 'pct' ? '' : cl(tvs[tvs.length - 1] - tvs[0])}">${u === 'pct' ? '' : fmtD(tvs[tvs.length - 1] - tvs[0], u)}</td><td></td></tr>`;
+  const tl = { pct: 'Full float', ff: 'Free float', mc: 'Market cap' }[u];
+  h += `<tr class="tot"><td class="l">${tl}</td>${T.map(t => `<td data-tip="${baseTip(t, u)}">${fmtU(tv(t, 'tot', u))}</td>`).join('')}<td></td><td></td><td></td></tr>`;
   const nh = T.map(t => t.nh);
   h += `<tr class="sub"><td class="l">Shareholders (count)</td>${nh.map(v => `<td>${fin(v)}</td>`).join('')}<td>${sgn(100 * (nh[nh.length - 1] / nh[nh.length - 2] - 1), 1, '%')}</td><td>${sgn(100 * (nh[nh.length - 1] / nh[0] - 1), 1, '%')}</td><td></td></tr>`;
   return h + '</tbody></table></div>';
 }
 function ownBody() {
-  const cap = { pct: '% of total shares. Tap a category to see its breakdown and quarterly change.', val: '₹ crore at each quarter-end close. Tap a category to see its breakdown.', sh: 'Million shares, adjusted for the Jun-26 1:1 bonus. Tap a category to see its breakdown.' }[S.unit];
-  const Lf = T[T.length - 1], drn = Lf.dr_in_public && Lf.filed ? `<p class="note grey">The ${Lf.q} filing counts the ${fin(Lf.dr)} shares underlying ADRs/GDRs (${pct(Lf.dr, Lf.tot).toFixed(2)}% of all shares) inside foreign institutions. They are shown on their own line here so every quarter compares on the same basis. As filed: FII ${(+Lf.filed.fii).toFixed(2)}%, DII ${(+Lf.filed.dii).toFixed(2)}%${Lf.filed.prom != null ? ', promoter ' + (+Lf.filed.prom).toFixed(2) + '%' : ''}.</p>` : T.some(t => t.dr > 0) ? `<p class="note grey">Shares underlying ADRs/GDRs sit outside SEBI's percentages (as in the filings), so they are listed separately and carry no %.</p>` : '';
+  const u = S.unit, Lf = T[T.length - 1], dr = T.some(t => t.dr > 0);
+  const cap = {
+    pct: '% of the full float: all shares, on SEBI\'s basis as filed.',
+    ff: `% of the free float: all shares outside the promoter group (${pct(Lf.tot - Lf.prom, Lf.tot).toFixed(2)}% of all shares at ${Lf.q}).`,
+    mc: '% of market cap: each holding valued at the quarter-end close, over the company\'s value at that close.' + (dr ? '' : ' One price values every share, so this matches the full-float %.')
+  }[u] + ' Tap a category to see its breakdown and quarterly change.';
+  const drc = u === 'pct' ? '' : ' The free float and the market cap count them like any other share.';
+  const drn = Lf.dr_in_public && Lf.filed ? `<p class="note grey">The ${Lf.q} filing counts the ${fin(Lf.dr)} shares underlying ADRs/GDRs (${pct(Lf.dr, Lf.tot).toFixed(2)}% of all shares) inside foreign institutions. They are shown on their own line here so every quarter compares on the same basis.${drc} As filed: FII ${(+Lf.filed.fii).toFixed(2)}%, DII ${(+Lf.filed.dii).toFixed(2)}%${Lf.filed.prom != null ? ', promoter ' + (+Lf.filed.prom).toFixed(2) + '%' : ''}.</p>` : dr ? `<p class="note grey">Shares underlying ADRs/GDRs sit outside SEBI's percentages (as in the filings), so they are listed separately${u === 'pct' ? ' and carry no %.' : '.' + drc}</p>` : '';
   return `<span class="cap">${cap}</span>${ownTable()}${drn}`;
 }
 function viewOverview() {
@@ -317,7 +343,7 @@ function viewOverview() {
   const uu = U.find(x => x.s === CO.s), newer = uu && uu.f && uu.f > qEnd(L.q) ? `<p class="note grey">A later filing dated ${dfmt(uu.f)} (after a merger, allotment or sale) shows promoter ${(uu.pr || 0).toFixed(2)}%, FII ${(uu.fi || 0).toFixed(2)}%, DII ${(uu.di || 0).toFixed(2)}%. The universe table uses it; this page stays on quarter-end filings so quarters compare.</p>` : '';
   const tiles = [['Market cap', cu(Math.round(MCAP), 0, '₹', ' cr'), (QE && (QE.r || QE.a) ? sgn(100 * (NOW.c / (QE.r || QE.a) - 1), 1, '%') + ' since ' + sdate(QE.d) : 'No close at the last quarter-end'), 'Shares ' + (SHN / 1e7).toFixed(2) + ' cr' + (SHN !== TOT ? ' (NSE, current)' : '') + ' × ₹' + fin(NOW.c, 2)], ['P/E (TTM)', TTMP > 0 ? cu(+(MCAP / TTMP).toFixed(1), 1, '', '×') : '—', TTMP ? 'On TTM reported PAT ₹' + fin(TTMP, 1) + ' cr' : 'Results not loaded', TTMP ? 'Market cap ₹' + fin(MCAP) + ' cr ÷ PAT' + (PATO !== PAT ? ' attributable to owners' : '') + ' of the last four quarters (₹' + TTM.join(' + ') + ' cr)' : 'No results on file'], ['P/B', BVPS > 0 ? cu(+(NOW.c / BVPS).toFixed(1), 1, '', '×') : BVPS < 0 ? 'n.m.' : '—', BVPS ? 'Book value ₹' + BVPS.toFixed(1) + ' per share' + (BVPS < 0 ? ' (negative equity)' : '') : 'Book value not on file', AR ? 'Mar-26 consolidated equity ≈ ₹999 cr ÷ 166.04 mn shares' : BVPS ? 'Equity attributable to owners ÷ shares, ' + ((D.val || {}).bs_date || 'latest balance sheet') : ''], ['Dividend yield', DPS != null ? cu(+(100 * DPS / NOW.c).toFixed(2), 2, '', '%') : '—', DPS != null ? 'Trailing DPS ₹' + DPS.toFixed(2) : 'Not on file', AR ? '₹6 interim (ex 17 Oct 2025) + ₹7 final (ex 15 May 2026), halved for the Jun-26 bonus' : 'Dividends with an ex-date in the last 12 months (NSE corporate actions)']];
   return `<div class="g12">
-  <section class="card s12" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, ' + (T.length === 6 ? 'six' : T.length) + ' filed quarters', seg('unit', [['pct', '% of shares'], ['val', 'Value ₹ cr'], ['sh', 'Shares mn']], S.unit, 'Ownership unit'))}<div id="ownBody">${ownBody()}</div>${newer}</section>
+  <section class="card s12" id="own" style="--i:0">${sh('Ownership', 'Ownership trend', 'SEBI shareholding pattern, ' + (T.length === 6 ? 'six' : T.length) + ' filed quarters', seg('unit', [['pct', '% full float'], ['ff', '% free float'], ['mc', '% mcap']], S.unit, 'Ownership basis'))}<div id="ownBody">${ownBody()}</div>${newer}</section>
   <section class="card s5" style="--i:1">${sh('Valuation', 'Valuation', 'Price ₹' + fin(NOW.c, 2) + ' · ' + dfmt(NOW.d))}<div class="tiles">${tiles.map(t => `<div class="tile" tabindex="0" data-tip="<b>${t[0]}</b><br>${esc(t[3])}"><span class="lbl">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('')}</div>${mcapTable()}</section>
   ${earnCard()}
   <section class="card s12" style="--i:3">${sh('Returns', 'Price returns', 'Computed from daily NSE closes · to ' + dfmt(NOW.d))}${retTable()}</section>

@@ -34,7 +34,7 @@ The 26 companies leaving the Nifty 500 on 30 Sep keep their pages and are tagged
 | Screen | What it shows |
 |---|---|
 | Universe | Every company with search, market-cap and index filters, sorting, a watchlist and a quick view |
-| Overview | Ownership trend over six filed quarters (Promoter, FII, DII, Individuals, Others, plus ADR/GDR shares where a company has them) in % / ₹ crore / shares. Also valuation, earnings, and returns against the Nifty 50 and Nifty 500 |
+| Overview | Ownership trend over six filed quarters (Promoter, FII, DII, Individuals, Others, plus ADR/GDR shares where a company has them) as % of the full float (SEBI's basis), the free float (shares outside the promoter group) or market cap. Also valuation, earnings, and returns against the Nifty 50 and Nifty 500 |
 | Shareholding | Top foreign and domestic holders and individuals. Each shows shares, value, % of total, % of free float and a quarterly trend, and expands to quarter-by-quarter detail |
 | Buyers & sellers | Top buyers and sellers between the last two filings (and quarter to date where the data allows), with net flow by holder type |
 | Evidence & gates | The eight holder checks, how each holder was categorised, category sums against the filing, quarter-end prices and a review queue |
