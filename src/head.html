@@ -170,7 +170,7 @@ main.view{padding-block:28px 40px}
 .ltot .l{text-align:left}
 
 /* holders grid */
-.gH{grid-template-columns:24px minmax(200px,2.4fr) 48px repeat(4,minmax(70px,1fr)) minmax(70px,.8fr) repeat(3,minmax(48px,.6fr)) 16px}
+.gH{grid-template-columns:minmax(160px,2fr) 64px repeat(9,minmax(60px,1fr)) minmax(76px,1fr) 16px}
 .gF{grid-template-columns:22px minmax(160px,2.4fr) repeat(4,minmax(64px,1fr)) 16px}
 
 /* tiles */
@@ -304,13 +304,15 @@ footer.src{font-size:11px;line-height:1.6;color:var(--ink3);padding-block:8px 32
   .s8,.s4,.s7,.s5{grid-column:span 12}
   .g2{grid-template-columns:minmax(0,1fr)}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .gH{grid-template-columns:24px minmax(180px,2.4fr) 44px repeat(4,minmax(64px,1fr)) minmax(64px,.8fr) 16px}
+  .gH{grid-template-columns:minmax(140px,2fr) 60px repeat(6,minmax(56px,1fr)) 16px}
+  .lhead.gH,.lrow>.rb.gH,.ltot.gH{column-gap:8px}
   .gH .xm{display:none}
   .tnav{gap:18px}
   .tright .dt{display:none}
 }
 @media (max-width:900px){
   .s6{grid-column:span 12}
+  .gH{grid-template-columns:minmax(116px,2fr) 60px repeat(6,minmax(56px,1fr)) 16px}
   .rv{grid-template-columns:minmax(0,1fr) auto;row-gap:6px}
   .rv.h{display:none}
   .rv .c2,.rv .c3,.rv .c4,.rv .c5{grid-column:1;font-size:12px;color:var(--ink3)}

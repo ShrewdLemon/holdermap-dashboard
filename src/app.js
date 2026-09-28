@@ -36,7 +36,7 @@ const arrow = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" strok
 /* ---------- state ---------- */
 const S = {
   route: 'universe', unit: 'pct', openCat: {},
-  hTab: 'fii', basis: 'pct', hSort: 's', hDir: -1,
+  hTab: 'fii', basis: 'ff', hSort: 'q5', hDir: -1,
   fP: 'A', fG: null,
   // landing page: grouping (cap | sector | watch), market-cap bucket, sector slug ('' = all sectors), index and
   // size filters, search, sort and page of the company table, sort of the sector table
@@ -72,7 +72,7 @@ function setCompany(sym) {
     // SEBI's percentages exclude shares underlying depository receipts (C1): den = total - dr.
     // 'Others' is the residual of the full total, so the DR shares come out of it into their own line.
     D.trend.forEach(t => { t.dr = t.dr || 0; t.den = t.den || (t.tot - t.dr); t.oth = t.den - t.prom - t.fii - t.dii - t.ind; t.orest = t.oth - t.bc - t.nri; });
-    ['fii', 'dii', 'ind'].forEach(g => (D[g] || []).forEach((h, i) => { h.g = g; h.id = slug(h.n); h.rank = i + 1; }));
+    ['fii', 'dii', 'ind'].forEach(g => (D[g] || []).forEach(h => { h.g = g; h.id = slug(h.n); }));
     D._init = true;
   }
   const ser = D.px_series, lr = ser[ser.length - 1], pr = ser[ser.length - 2];
@@ -161,27 +161,26 @@ const fmtD = x => sgn(x, 2, ' pp');
 const dif = (a, b) => a == null || b == null ? null : a - b;  // no change where either quarter has no %
 
 function hq(h) { return h.g === 'ind' ? 4 : 5; }
+// A holder's quarter i on the Shareholding tab's basis: % of free float (none for promoters), million shares or ₹ crore.
 function hMetric(h, i, basis) {
   if (h.s[i] == null || (basis === 'val' && PX[i] == null)) return null;
   const s = h.s[i];
-  if (basis === 'pct') return 100 * s / DEN;
+  if (basis === 'sh') return s / 1e6;
   if (basis === 'ff') return h.c === 'Promoter' || !FF[i] ? null : 100 * s / FF[i];
   return s * PX[i] / 1e7;
+}
+// Mean, min, max and standard deviation (sample, n − 1) of the quarters that have a figure.
+function qStats(vals) {
+  const ok = vals.filter(v => v != null), n = ok.length, mean = n ? ok.reduce((a, b) => a + b, 0) / n : null;
+  return { mean, mn: n ? Math.min.apply(null, ok) : null, mx: n ? Math.max.apply(null, ok) : null, sd: n > 1 ? Math.sqrt(ok.reduce((a, v) => a + (v - mean) * (v - mean), 0) / (n - 1)) : null };
 }
 function hStats(h, basis) {
   const n = h.g === 'ind' ? 5 : 6, q = hq(h);
   const vals = []; for (let i = 0; i < n; i++) vals.push(hMetric(h, i, basis));
-  const ok = vals.filter(v => v != null);
-  const at = i => vals[i] != null ? vals[i] : h.s[i] == null && !(basis === 'val' && PX[i] == null) && !(basis === 'ff' && (h.c === 'Promoter' || !FF[i])) ? 0 : null;
-  const a0 = at(0), z = at(n - 1);
-  return {
-    vals, q, ch: a0 == null || z == null ? null : z - a0, sh: h.s[q] || 0, v: (h.s[q] || 0) * PX[q] / 1e7, pt: 100 * (h.s[q] || 0) / DEN, pff: h.c === 'Promoter' || !FF[q] ? null : 100 * (h.s[q] || 0) / FF[q],
-    mean: ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : null, mx: ok.length ? Math.max.apply(null, ok) : null, mn: ok.length ? Math.min.apply(null, ok) : null
-  };
+  return Object.assign({ vals, q, sh: h.s[q] || 0, v: (h.s[q] || 0) * PX[q] / 1e7, pt: 100 * (h.s[q] || 0) / DEN, pff: h.c === 'Promoter' || !FF[q] ? null : 100 * (h.s[q] || 0) / FF[q] }, qStats(vals));
 }
 const fmtB = (x, basis) => x == null ? '—' : basis === 'val' ? fin(x, 1) : x.toFixed(3);
-const fmtBD = (x, basis) => x == null ? '—' : basis === 'val' ? sgn(x, 1) : sgn(x, 3);
-const unitB = { pct: '% of total shares', ff: '% of free float', val: '₹ crore' };
+const unitB = { ff: '% of free float', sh: 'million shares', val: '₹ crore' };
 function findHolder(name) {
   for (const g of ['fii', 'dii', 'ind']) { const h = GROUPS[g].find(x => x.n === name); if (h) return h; }
   return null;
@@ -386,34 +385,39 @@ function holdersHead() {
   const sub = { fii: CO.bb ? 'Every foreign holder Bloomberg names with a position today, ranked by shares' : 'Foreign holders named in SEBI filings (1% and above) and US funds from SEC N-PORT filings, ranked by shares', dii: CO.bb ? 'Mutual funds and insurers, grouped at fund-house level' : 'Mutual funds from monthly portfolio disclosures (fund-house level); insurers and others from SEBI filings', ind: D.ind.length + ' individuals and family trusts named in SEBI filings: the promoter group plus public holders above 1%' }[S.hTab];
   return sh('Shareholding', title, sub, seg('hTab', [['fii', 'FIIs', D.fii.length], ['dii', 'DIIs', D.dii.length], ['ind', 'Individuals', D.ind.length]], S.hTab, 'Holder group'));
 }
+const lastQ = () => S.hTab === 'ind' ? 4 : 5;  // individuals have no open quarter
+// The sort in force: a quarter this tab doesn't have falls back to its latest.
+function hKey() { const m = /^q(\d)$/.exec(S.hSort); return m && +m[1] > lastQ() ? 'q' + lastQ() : S.hSort; }
 function holdersBody() {
-  const L = GROUPS[S.hTab].slice(), b = S.basis, q = S.hTab === 'ind' ? 4 : 5;
+  const L = GROUPS[S.hTab].slice(), b = S.basis, q = lastQ(), sk = hKey();
   const st = new Map(L.map(h => [h, hStats(h, b)]));
-  const key = { n: h => h.n.toLowerCase(), cty: h => h.cty, s: h => st.get(h).sh, v: h => st.get(h).v, pt: h => st.get(h).pt, pff: h => st.get(h).pff == null ? -1 : st.get(h).pff, mean: h => st.get(h).mean || 0, mx: h => st.get(h).mx || 0, mn: h => st.get(h).mn || 0, ch: h => st.get(h).ch == null ? -Infinity : st.get(h).ch }[S.hSort] || (h => st.get(h).sh);
-  L.sort((a, c) => { const x = key(a), y = key(c); return (x > y ? 1 : x < y ? -1 : 0) * S.hDir; });
+  const key = sk === 'n' ? h => h.n.toLowerCase() : sk === 'cty' ? h => h.cty || null : sk[0] === 'q' ? h => st.get(h).vals[+sk[1]] : h => st.get(h)[sk];
+  // no figure (no filing that quarter, promoters on free float, no country) sorts last either way
+  L.sort((a, c) => { const x = key(a), y = key(c); return x == null ? (y == null ? 0 : 1) : y == null ? -1 : (x > y ? 1 : x < y ? -1 : 0) * S.hDir; });
   const asof = S.hTab === 'ind' ? T[T.length - 1].q + ' filing · value at ' + (QE && QE.a ? '₹' + fin(QE.a, 2) + ' (' + dfmt(QE.d) + ')' : 'the quarter-end close') : 'Q3/2026 to date · ' + (CO.oq_src || (CO.bb ? 'Bloomberg, 22 Sep 2026' : 'latest fund disclosures')) + ' · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
-  const sortBtn = (k, lab, cls) => `<span class="${cls || ''}"><button type="button" data-sort="h" data-k="${k}" ${S.hSort === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${S.hSort === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
-  const qlab = S.hTab === 'ind' ? '5Q' : '6Q';
-  let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['pct', '% of total'], ['ff', '% of free float'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
-    <label class="pm2" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)">Sort <select class="field" id="hSortSel" data-sortsel="h">${[['s', 'Shares'], ['v', 'Value'], ['pt', '% total'], ['mean', 'Mean'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${S.hSort === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></label></div>
+  const sortBtn = (k, lab, cls, tip) => `<span class="${cls || ''}"${tip ? ` data-tip="${esc(tip)}"` : ''}><button type="button" data-sort="h" data-k="${k}" ${sk === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${sk === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
+  // combined: each quarter's column total (holders without a figure add nothing), and the stats of those totals
+  const tq = HQ.map((_, j) => { const vs = L.map(x => st.get(x).vals[j]).filter(v => v != null); return vs.length ? vs.reduce((a, v) => a + v, 0) : null; }), ts = qStats(tq);
+  // decimals follow the table's largest figure (a column total), so large caps' figures fit their columns
+  const big = Math.max.apply(null, tq.map(v => v || 0)), dp = b === 'ff' ? 3 : b === 'sh' ? (big >= 1000 ? 1 : 3) : big >= 1e4 ? 0 : 1;
+  const fmt = v => v == null ? '—' : fin(v, dp);
+  const fmtL = v => v == null ? '—' : b === 'val' ? '₹' + fmt(v) + ' cr' : fmt(v) + (b === 'ff' ? '%' : ' mn');  // phones: latest quarter with its unit
+  let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['ff', '% free float'], ['sh', 'No. of shares'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
+    <label class="pm2" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)">Sort <select class="field" id="hSortSel" data-sortsel="h">${[['q' + q, 'Latest quarter'], ['mean', 'Mean'], ['mn', 'Min'], ['mx', 'Max'], ['sd', 'Std dev'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${sk === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></label></div>
     <span class="cap"><b style="color:var(--ink);font-weight:600">As of</b> ${asof}</span></div>
-    <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>${qlab} Δ (first to latest quarter), mean, max and min use ${unitB[b]} across ${HQ[0]} to ${HQ[qlab === '6Q' ? 5 : 4]}. Tap a row for quarter-by-quarter detail.</span></div>
-    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row"><span class="l">#</span>${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Cty', 'l')}${sortBtn('s', 'Shares mn')}${sortBtn('v', 'Value ₹ cr')}${sortBtn('pt', '% total')}${sortBtn('pff', '% FF')}${sortBtn('ch', qlab + ' Δ')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('mn', 'Min', 'xm')}<span></span></div>`;
+    <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>Quarters, mean, min, max and standard deviation in ${unitB[b]}, ${HQ[0]} to ${HQ[q]}${q === 5 ? ' (' + HQ[5] + ' to date)' : ''}. Tap a column to sort, a row for quarter-by-quarter detail.</span></div>
+    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row">${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Country', 'l')}${HQ.map((l, i) => sortBtn('q' + i, l, '', i === 5 ? (q === 5 ? 'Open quarter: ' + asof : 'Individuals appear only in quarterly filings, so the open quarter has no figure yet') : '')).join('')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mn', 'Min', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('sd', 'Std dev', 'xm', 'Standard deviation of the quarters shown (sample, n − 1)')}<span></span></div>`;
   L.forEach((x, i) => {
     const s = st.get(x);
-    const pm = b === 'val' ? `₹${fin(s.v, 1)} cr` : b === 'ff' ? (s.pff == null ? '—' : s.pff.toFixed(3) + '%') : s.pt.toFixed(3) + '%';
     h += `<div class="lrow" data-row="${x.id}" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gH" data-act="row" aria-expanded="false">
-      <span class="rk">${x.rank}</span>
-      <span class="l" style="min-width:0"><span class="nm">${esc(x.n)}${x.rv ? '<span class="flag" aria-label="Flagged for review"></span>' : ''}</span><span class="sb">${esc(x.sub)}${x.ow ? ' · ' + esc(x.ow) : ''}${x.note ? ' · ' + esc(x.note) : ''}<span class="pm2"> · ${x.cty}</span></span></span>
-      <span class="l xp"><span class="chip" title="${CTY[x.cty] || x.cty}">${x.cty}</span></span>
-      <span class="xp">${(s.sh / 1e6).toFixed(3)}</span><span class="xp">${fin(s.v, 1)}</span><span class="xp" style="font-weight:600">${s.pt.toFixed(3)}%</span><span class="xp">${s.pff == null ? '—' : s.pff.toFixed(3) + '%'}</span>
-      <span class="xp ${cl(s.ch)}">${fmtBD(s.ch, b)}</span>
-      <span class="xp xm mut">${fmtB(s.mean, b)}</span><span class="xp xm mut">${fmtB(s.mx, b)}</span><span class="xp xm mut">${fmtB(s.mn, b)}</span>
-      <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">${pm}</b></span>
+      <span class="l" style="min-width:0"><span class="nm">${esc(x.n)}${x.rv ? '<span class="flag" aria-label="Flagged for review"></span>' : ''}</span><span class="sb">${esc(x.sub)}${x.ow ? ' · ' + esc(x.ow) : ''}${x.note ? ' · ' + esc(x.note) : ''}${x.cty ? `<span class="pm2"> · ${x.cty}</span>` : ''}</span></span>
+      <span class="l xp">${x.cty ? `<span class="chip" title="${CTY[x.cty] || x.cty}">${x.cty}</span>` : '<span class="mut">—</span>'}</span>
+      ${HQ.map((_, j) => `<span class="xp"${j === q ? ' style="font-weight:600"' : ''}>${fmt(s.vals[j])}</span>`).join('')}
+      <span class="xp xm mut">${fmt(s.mean)}</span><span class="xp xm mut">${fmt(s.mn)}</span><span class="xp xm mut">${fmt(s.mx)}</span><span class="xp xm mut">${fmt(s.sd)}</span>
+      <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">${fmtL(s.vals[q])}</b></span>
       ${chev}</button><div class="det"><div></div></div></div>`;
   });
-  const tS = L.reduce((a, x) => a + st.get(x).sh, 0), tV = L.reduce((a, x) => a + st.get(x).v, 0);
-  h += `<div class="ltot gH"><span class="xp"></span><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span><span class="xp">${(tS / 1e6).toFixed(3)}</span><span class="xp">${fin(tV, 1)}</span><span class="xp">${(100 * tS / DEN).toFixed(3)}%</span><span class="xp">${S.hTab === 'ind' ? '' : FF[q] ? (100 * tS / FF[q]).toFixed(3) + '%' : '—'}</span><span class="xp"></span><span class="xp xm"></span><span class="xp xm"></span><span class="xp xm"></span><span class="pm pm2">${(100 * tS / DEN).toFixed(2)}% · ₹${fin(tV)} cr</span><span class="xp"></span></div></div>`;
+  h += `<div class="ltot gH"><span class="l">${S.hTab === 'ind' ? 'All ' + L.length + ' combined' : 'Top ' + L.length + ' combined'}</span><span class="xp"></span>${tq.map(v => `<span class="xp">${fmt(v)}</span>`).join('')}<span class="xp xm">${fmt(ts.mean)}</span><span class="xp xm">${fmt(ts.mn)}</span><span class="xp xm">${fmt(ts.mx)}</span><span class="xp xm">${fmt(ts.sd)}</span><span class="pm pm2">${fmtL(tq[q])}</span><span class="xp"></span></div></div>`;
   if (S.hTab === 'fii') {
     const fpd = D.fii_total - (T[T.length - 1].fdi || 0), fps = D.fii.filter(x => x.c !== 'Foreign corporate').reduce((a, x) => a + (x.s[4] || 0), 0);
     if (fpd > 0 && fps > 0) h += fps <= fpd * 1.005
@@ -433,7 +437,7 @@ function holderDetail(x) {
     <div class="k"><span class="lbl">Value</span><b>₹${fin(s.v, 1)} cr</b></div>
     <div class="k"><span class="lbl">% of total</span><b>${s.pt.toFixed(3)}%</b></div>
     <div class="k"><span class="lbl">% of free float</span><b>${s.pff == null ? '— (promoter)' : s.pff.toFixed(3) + '%'}</b></div>
-    <div class="k"><span class="lbl">Mean · Max · Min</span><b style="font-size:13px">${fmtB(s.mean, S.basis)} · ${fmtB(s.mx, S.basis)} · ${fmtB(s.mn, S.basis)}</b><span class="cap">${unitB[S.basis]}</span></div>
+    <div class="k"><span class="lbl">Mean · Min · Max · Std dev</span><b style="font-size:13px">${fmtB(s.mean, S.basis)} · ${fmtB(s.mn, S.basis)} · ${fmtB(s.mx, S.basis)} · ${fmtB(s.sd, S.basis)}</b><span class="cap">${unitB[S.basis]}</span></div>
     <div class="k"><span class="lbl">Country · type</span><b style="font-size:13px">${CTY[x.cty] || x.cty} · ${esc(x.sub)}</b></div>
     <div class="wide"><span class="lbl">By quarter</span>${qt}</div>
     ${x.rv ? `<div class="wide note">Category is <b>${esc(x.c)}</b> by default. The alternative on file is <b>${esc(x.alt || 'none')}</b>. <a href="#evidence" style="color:var(--acc);font-weight:600">Open the review queue</a></div>` : ''}
@@ -803,7 +807,7 @@ document.addEventListener('click', e => {
     if (S[k] === v && k !== 'hTab') return;
     S[k] = v;
     if (k === 'unit') patch('ownBody', ownBody);
-    else if (k === 'hTab') { S.hSort = 's'; S.hDir = -1; const c = $('#hCard'); if (c) { c.firstElementChild.outerHTML = holdersHead(); patch('hBody', holdersBody); } }
+    else if (k === 'hTab') { S.hSort = 'q' + lastQ(); S.hDir = -1; const c = $('#hCard'); if (c) { c.firstElementChild.outerHTML = holdersHead(); patch('hBody', holdersBody); } }
     else if (k === 'basis') patch('hBody', holdersBody);
     else if (k === 'fP') { S.fG = null; patch('fBody', flowsBody); }
     else if (k === 'lz') { S.uPg = 1; patch('uBody', uBody); }
@@ -813,7 +817,7 @@ document.addEventListener('click', e => {
   }
   if (t.dataset.sort) {
     const w = t.dataset.sort, k = t.dataset.k;
-    if (w === 'h') { if (S.hSort === k) S.hDir *= -1; else { S.hSort = k; S.hDir = k === 'n' || k === 'cty' ? 1 : -1; } patch('hBody', holdersBody); }
+    if (w === 'h') { if (hKey() === k) S.hDir *= -1; else S.hDir = k === 'n' || k === 'cty' ? 1 : -1; S.hSort = k; patch('hBody', holdersBody); }
     else if (w === 's') { if (S.sSort === k) S.sDir *= -1; else { S.sSort = k; S.sDir = k === 'n' || k === 'top' ? 1 : -1; } patch('sdBody', sectorTable); }
     else { if (S.uSort === k) S.uDir *= -1; else { S.uSort = k; S.uDir = k === 'm' ? -1 : 1; } S.uPg = 1; patch('uBody', uBody); }  // category sorts by AMFI rank
     return;
@@ -822,7 +826,7 @@ document.addEventListener('click', e => {
     e.preventDefault();
     const p = t.dataset.go.split('|');
     if (p[0] === 'flows') { S.fP = p[1]; S.fG = null; S.focus = p[2]; go('flows'); }
-    else if (p[0] === 'holders') { S.hTab = p[1]; S.focus = p[2] || null; S.hSort = 's'; S.hDir = -1; S.basis = 'pct'; go('holders'); }
+    else if (p[0] === 'holders') { S.hTab = p[1]; S.focus = p[2] || null; S.hSort = 'q' + lastQ(); S.hDir = -1; S.basis = 'ff'; go('holders'); }
     return;
   }
   const a = t.dataset.act;
