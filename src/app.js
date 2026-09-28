@@ -411,9 +411,9 @@ function holdersBody() {
     <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>Quarters, mean, min, max and standard deviation in ${unitB[b]}, ${QL[0]} to ${QL[q]}${q === 5 ? ' (' + QL[5] + ' to date)' : ''}. Tap a column to sort, a row for quarter-by-quarter detail.</span></div>
     <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row">${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Country', 'l')}${QL.map((l, i) => sortBtn('q' + i, l, '', i === 5 ? (q === 5 ? 'Open quarter: ' + asof : 'Individuals appear only in quarterly filings, so the open quarter has no figure yet') : '')).join('')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mn', 'Min', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('sd', 'Std dev', 'xm', 'Standard deviation of the quarters shown (sample, n − 1)')}<span></span></div>`;
   L.forEach((x, i) => {
-    const s = st.get(x);
+    const s = st.get(x), sb = esc([x.c, x.ow, x.note].filter(Boolean).join(' · '));  // category, owner, note
     h += `<div class="lrow" data-row="${x.id}" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gH" data-act="row" aria-expanded="false">
-      <span class="l" style="min-width:0"><span class="nm">${esc(x.n)}${x.rv ? '<span class="flag" aria-label="Flagged for review"></span>' : ''}</span><span class="sb">${esc(x.sub)}${x.ow ? ' · ' + esc(x.ow) : ''}${x.note ? ' · ' + esc(x.note) : ''}${x.cty ? `<span class="pm2"> · ${x.cty}</span>` : ''}</span></span>
+      <span class="l" style="min-width:0"><span class="nm">${esc(x.n)}${x.rv ? '<span class="flag" aria-label="Flagged for review"></span>' : ''}</span><span class="sb" title="${sb}">${sb}${x.cty ? `<span class="pm2"> · ${x.cty}</span>` : ''}</span></span>
       <span class="l xp">${x.cty ? `<span class="chip" title="${CTY[x.cty] || x.cty}">${x.cty}</span>` : '<span class="mut">—</span>'}</span>
       ${QL.map((_, j) => `<span class="xp"${j === q ? ' style="font-weight:600"' : ''}>${fmt(s.vals[j])}</span>`).join('')}
       <span class="xp xm mut">${fmt(s.mean)}</span><span class="xp xm mut">${fmt(s.mn)}</span><span class="xp xm mut">${fmt(s.mx)}</span><span class="xp xm mut">${fmt(s.sd)}</span>
@@ -441,7 +441,7 @@ function holderDetail(x) {
     <div class="k"><span class="lbl">% of total</span><b>${s.pt.toFixed(3)}%</b></div>
     <div class="k"><span class="lbl">% of free float</span><b>${s.pff == null ? '— (promoter)' : s.pff.toFixed(3) + '%'}</b></div>
     <div class="k"><span class="lbl">Mean · Min · Max · Std dev</span><b style="font-size:13px">${fmtB(s.mean, S.basis)} · ${fmtB(s.mn, S.basis)} · ${fmtB(s.mx, S.basis)} · ${fmtB(s.sd, S.basis)}</b><span class="cap">${unitB[S.basis]}</span></div>
-    <div class="k"><span class="lbl">Country · type</span><b style="font-size:13px">${CTY[x.cty] || x.cty} · ${esc(x.sub)}</b></div>
+    <div class="k"><span class="lbl">Country · category</span><b style="font-size:13px">${CTY[x.cty] || x.cty || '—'} · ${esc(x.c)}</b></div>
     <div class="wide"><span class="lbl">By quarter</span>${qt}</div>
     ${x.rv ? `<div class="wide note">Category is <b>${esc(x.c)}</b> by default. The alternative on file is <b>${esc(x.alt || 'none')}</b>. <a href="#evidence" style="color:var(--acc);font-weight:600">Open the review queue</a></div>` : ''}
     ${inFlow ? `<div class="wide"><button type="button" class="btn" data-go="flows|${D.flows.A && D.flows.A.all.some(f => f.n === x.n) ? 'A' : 'B'}|${esc(x.n)}">See this holder's trades ${arrow}</button></div>` : ''}
@@ -479,7 +479,7 @@ function flowList(L, buy) {
   let h = `<div><div class="lhead gF"><span class="l">#</span><span class="l">Holder</span><span>Δ shares</span><span>Δ ₹ cr</span><span>Δ pp</span><span>Now mn</span><span></span></div>`;
   L.forEach((x, i) => {
     const tag = x.t ? `<span class="tag ${buy ? 'b' : 's'}" style="margin-left:8px">${x.t.toUpperCase()}</span>` : '';
-    h += `<div class="lrow" data-row="${slug(x.n)}" data-flow="1" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gF" data-act="frow" aria-expanded="false"><span class="rk">${i + 1}</span><span class="l" style="min-width:0"><span class="nm">${esc(x.n)}</span><span class="sb">${x.t ? tag.replace('margin-left:8px', 'margin-right:6px') : ''}${esc(x.sub)} · ${x.cty}</span></span><span class="xp ${buy ? 'up' : 'dn'}" style="font-weight:600">${sgnI(x.d)}</span><span class="xp">${sgnC(x.v)}</span><span class="xp mut">${sgn(100 * x.d / DEN, 3)}</span><span class="xp">${((x.a || 0) / 1e6).toFixed(3)}</span><span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b class="${buy ? 'up' : 'dn'}" style="font-weight:600">${sgnI(x.d)}</b><span style="font-size:11px;color:var(--ink3)">${sgnC(x.v)} cr</span></span>${chev}</button><div class="det"><div></div></div></div>`;
+    h += `<div class="lrow" data-row="${slug(x.n)}" data-flow="1" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gF" data-act="frow" aria-expanded="false"><span class="rk">${i + 1}</span><span class="l" style="min-width:0"><span class="nm">${esc(x.n)}</span><span class="sb">${x.t ? tag.replace('margin-left:8px', 'margin-right:6px') : ''}${esc([x.c, x.cty].filter(Boolean).join(' · '))}</span></span><span class="xp ${buy ? 'up' : 'dn'}" style="font-weight:600">${sgnI(x.d)}</span><span class="xp">${sgnC(x.v)}</span><span class="xp mut">${sgn(100 * x.d / DEN, 3)}</span><span class="xp">${((x.a || 0) / 1e6).toFixed(3)}</span><span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b class="${buy ? 'up' : 'dn'}" style="font-weight:600">${sgnI(x.d)}</b><span style="font-size:11px;color:var(--ink3)">${sgnC(x.v)} cr</span></span>${chev}</button><div class="det"><div></div></div></div>`;
   });
   return h + '</div>';
 }
