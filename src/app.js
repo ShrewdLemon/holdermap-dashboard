@@ -386,10 +386,13 @@ function holdersHead() {
   return sh('Shareholding', title, sub, seg('hTab', [['fii', 'FIIs', D.fii.length], ['dii', 'DIIs', D.dii.length], ['ind', 'Individuals', D.ind.length]], S.hTab, 'Holder group'));
 }
 const lastQ = () => S.hTab === 'ind' ? 4 : 5;  // individuals have no open quarter
+const nextQ = q => { const m = ['Mar', 'Jun', 'Sep', 'Dec'], i = m.indexOf(q.slice(0, 3)); return i < 3 ? m[i + 1] + q.slice(3) : 'Mar-' + String(+q.slice(4) + 1).padStart(2, '0'); };
+// Six quarter columns always; a company with no named holders carries only five labels.
+function qLabels() { const l = HQ.slice(0, 6); while (l.length < 6) l.push(l.length ? nextQ(l[l.length - 1]) : ''); return l; }
 // The sort in force: a quarter this tab doesn't have falls back to its latest.
 function hKey() { const m = /^q(\d)$/.exec(S.hSort); return m && +m[1] > lastQ() ? 'q' + lastQ() : S.hSort; }
 function holdersBody() {
-  const L = GROUPS[S.hTab].slice(), b = S.basis, q = lastQ(), sk = hKey();
+  const L = GROUPS[S.hTab].slice(), b = S.basis, q = lastQ(), sk = hKey(), QL = qLabels();
   const st = new Map(L.map(h => [h, hStats(h, b)]));
   const key = sk === 'n' ? h => h.n.toLowerCase() : sk === 'cty' ? h => h.cty || null : sk[0] === 'q' ? h => st.get(h).vals[+sk[1]] : h => st.get(h)[sk];
   // no figure (no filing that quarter, promoters on free float, no country) sorts last either way
@@ -397,7 +400,7 @@ function holdersBody() {
   const asof = S.hTab === 'ind' ? T[T.length - 1].q + ' filing · value at ' + (QE && QE.a ? '₹' + fin(QE.a, 2) + ' (' + dfmt(QE.d) + ')' : 'the quarter-end close') : 'Q3/2026 to date · ' + (CO.oq_src || (CO.bb ? 'Bloomberg, 22 Sep 2026' : 'latest fund disclosures')) + ' · value at ₹' + fin(OQ.c, 2) + ' (' + dfmt(OQ.d) + ')';
   const sortBtn = (k, lab, cls, tip) => `<span class="${cls || ''}"${tip ? ` data-tip="${esc(tip)}"` : ''}><button type="button" data-sort="h" data-k="${k}" ${sk === k ? `aria-sort="${S.hDir > 0 ? 'ascending' : 'descending'}"` : ''}>${lab}${sk === k ? (S.hDir > 0 ? ' ↑' : ' ↓') : ''}</button></span>`;
   // combined: each quarter's column total (holders without a figure add nothing), and the stats of those totals
-  const tq = HQ.map((_, j) => { const vs = L.map(x => st.get(x).vals[j]).filter(v => v != null); return vs.length ? vs.reduce((a, v) => a + v, 0) : null; }), ts = qStats(tq);
+  const tq = QL.map((_, j) => { const vs = L.map(x => st.get(x).vals[j]).filter(v => v != null); return vs.length ? vs.reduce((a, v) => a + v, 0) : null; }), ts = qStats(tq);
   // decimals follow the table's largest figure (a column total), so large caps' figures fit their columns
   const big = Math.max.apply(null, tq.map(v => v || 0)), dp = b === 'ff' ? 3 : b === 'sh' ? (big >= 1000 ? 1 : 3) : big >= 1e4 ? 0 : 1;
   const fmt = v => v == null ? '—' : fin(v, dp);
@@ -405,14 +408,14 @@ function holdersBody() {
   let h = `<div class="frow"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${seg('basis', [['ff', '% free float'], ['sh', 'No. of shares'], ['val', 'Value ₹ cr']], b, 'Metric basis')}
     <label class="pm2" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)">Sort <select class="field" id="hSortSel" data-sortsel="h">${[['q' + q, 'Latest quarter'], ['mean', 'Mean'], ['mn', 'Min'], ['mx', 'Max'], ['sd', 'Std dev'], ['n', 'Name']].map(o => `<option value="${o[0]}" ${sk === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select></label></div>
     <span class="cap"><b style="color:var(--ink);font-weight:600">As of</b> ${asof}</span></div>
-    <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>Quarters, mean, min, max and standard deviation in ${unitB[b]}, ${HQ[0]} to ${HQ[q]}${q === 5 ? ' (' + HQ[5] + ' to date)' : ''}. Tap a column to sort, a row for quarter-by-quarter detail.</span></div>
-    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row">${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Country', 'l')}${HQ.map((l, i) => sortBtn('q' + i, l, '', i === 5 ? (q === 5 ? 'Open quarter: ' + asof : 'Individuals appear only in quarterly filings, so the open quarter has no figure yet') : '')).join('')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mn', 'Min', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('sd', 'Std dev', 'xm', 'Standard deviation of the quarters shown (sample, n − 1)')}<span></span></div>`;
+    <div class="legend" style="color:var(--ink3)"><span><span class="flag" style="margin:0 8px 0 0"></span>Category flagged for review</span><span>Quarters, mean, min, max and standard deviation in ${unitB[b]}, ${QL[0]} to ${QL[q]}${q === 5 ? ' (' + QL[5] + ' to date)' : ''}. Tap a column to sort, a row for quarter-by-quarter detail.</span></div>
+    <div role="table" aria-label="${esc(S.hTab)} holders"><div class="lhead gH" role="row">${sortBtn('n', 'Holder', 'l')}${sortBtn('cty', 'Country', 'l')}${QL.map((l, i) => sortBtn('q' + i, l, '', i === 5 ? (q === 5 ? 'Open quarter: ' + asof : 'Individuals appear only in quarterly filings, so the open quarter has no figure yet') : '')).join('')}${sortBtn('mean', 'Mean', 'xm')}${sortBtn('mn', 'Min', 'xm')}${sortBtn('mx', 'Max', 'xm')}${sortBtn('sd', 'Std dev', 'xm', 'Standard deviation of the quarters shown (sample, n − 1)')}<span></span></div>`;
   L.forEach((x, i) => {
     const s = st.get(x);
     h += `<div class="lrow" data-row="${x.id}" style="--i:${Math.min(i, 20)}"><button type="button" class="rb gH" data-act="row" aria-expanded="false">
       <span class="l" style="min-width:0"><span class="nm">${esc(x.n)}${x.rv ? '<span class="flag" aria-label="Flagged for review"></span>' : ''}</span><span class="sb">${esc(x.sub)}${x.ow ? ' · ' + esc(x.ow) : ''}${x.note ? ' · ' + esc(x.note) : ''}${x.cty ? `<span class="pm2"> · ${x.cty}</span>` : ''}</span></span>
       <span class="l xp">${x.cty ? `<span class="chip" title="${CTY[x.cty] || x.cty}">${x.cty}</span>` : '<span class="mut">—</span>'}</span>
-      ${HQ.map((_, j) => `<span class="xp"${j === q ? ' style="font-weight:600"' : ''}>${fmt(s.vals[j])}</span>`).join('')}
+      ${QL.map((_, j) => `<span class="xp"${j === q ? ' style="font-weight:600"' : ''}>${fmt(s.vals[j])}</span>`).join('')}
       <span class="xp xm mut">${fmt(s.mean)}</span><span class="xp xm mut">${fmt(s.mn)}</span><span class="xp xm mut">${fmt(s.mx)}</span><span class="xp xm mut">${fmt(s.sd)}</span>
       <span class="pm2" style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-weight:600">${fmtL(s.vals[q])}</b></span>
       ${chev}</button><div class="det"><div></div></div></div>`;
